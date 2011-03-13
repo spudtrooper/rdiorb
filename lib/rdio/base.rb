@@ -27,10 +27,13 @@ module Rdio
     end
 
     def call(method,args)
-      args['method'] = method
-      args_str = args.map {|k,v| k.to_s + '=' + BaseApi.key(v).to_s}.join '&'
+      new_args = {}
+      new_args['method'] = method
+      args.each do |k,v|
+        new_args[k] = BaseApi.key(v).to_s
+      end
       url = 'http://api.rdio.com/1/'
-      resp,data = access_token.post url,args
+      resp,data = access_token.post url,new_args
       return data
     end
 
@@ -41,7 +44,11 @@ module Rdio
     private
 
     def self.key(v)
-      return (v.kind_of? BaseObj) ? v.key : v
+      begin
+        return v.key
+      rescue
+      end
+      return v
     end
 
     def to_o(base_type,v)
@@ -85,6 +92,15 @@ module Rdio
     end
 
     def create_object(type,json)
+      begin
+        _create_object(type,json)
+      rescue Exception => e
+        puts json
+        raise e
+      end
+    end
+
+    def _create_object(type,json)
       obj = JSON.parse json
       status = obj['status']
       if status == 'ok'
@@ -95,14 +111,30 @@ module Rdio
         if type == false
           return false
         end
-        if type == Boolean or type == String or type == Fixnum or type == Float
+        if type == Boolean or type == String or 
+            type == Fixnum or type == Float
           return to_o type,res
         end
-        res = type.new self
-        result.each do |k,v|
-          sym = (camel2underscores(k)+'=').to_sym
-          o = to_o type,v
-          res.send sym,o
+        def fill_obj(type,x)
+          res = type.new self
+          x.each do |k,v|
+            sym = (camel2underscores(k)+'=').to_sym
+            o = to_o type,v
+            begin
+              res.send sym,o
+            rescue Exception => e
+              STDERR.puts "Couldn't find symbol: #{sym} => #{o}"
+            end
+          end
+          return res
+        end
+        #
+        # This could be an array (TODO: could not be general enough)
+        #
+        if result.is_a? Array
+          res = result.map {|x| fill_obj type,x}
+        else 
+          res = fill_obj type,result
         end
         return res
       end

@@ -1,14 +1,8 @@
 #!/usr/bin/env ruby
 # -*- ruby -*-
 
+require 'common'
 require 'open-uri'
-
-def camel2underscores(s)
-  while s.match /([A-Z]+)/
-    s = s.gsub /#{$1}/,'_'+$1.downcase
-  end
-  s
-end
 
 url = 'http://developer.rdio.com/docs/read/rest/types'
 puts 'module Rdio'

@@ -70,7 +70,7 @@ module Rdio
     
     # Find a user either by email address or by their username.  Exactly
     # one of email or vanityName must be supplied.
-    def findUserByEmailVanityName(name)
+    def findUserByVanityName(name)
       method = 'findUser'
       type = User
       args = {'vanityName'=>name}
@@ -79,6 +79,9 @@ module Rdio
     
     # Fetch one or more objects from Rdio.
     def get(objs,type=nil)
+      if not objs.is_a? Array
+        objs = [objs]
+      end
       method = 'get'
       cls = type
       args = {'keys'=>keys(objs)}
@@ -172,18 +175,18 @@ module Rdio
     
     # Return the object that the supplied Rdio short-code is a
     # representation of, or null if the short-code is invalid.
-    def getObjectFromShortCode(short_code)
+    def getObjectFromShortCode(short_code,type=nil)
       method = 'getObjectFromShortCode'
-      type = BaseObj
+      type = BaseObj if not type
       args = {'short_code'=>short_code}
       return_object type,method,args
     end
     
     # Return the object that the supplied Rdio url is a representation
     # of, or null if the url doesn't represent an object.
-    def getObjectFromUrl(url)
+    def getObjectFromUrl(url,type=nil)
       method = 'getObjectFromUrl'
-      type = BaseObj
+      type = BaseObj if not type
       args = {'url'=>url}
       return_object type,method,args
     end
