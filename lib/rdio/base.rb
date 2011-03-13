@@ -35,7 +35,7 @@ module Rdio
     end
 
     def keys(objs)
-      objs.map {|x| BaseApi.to_s x}
+      objs.map {|x| BaseApi.keys x}
     end
 
     private

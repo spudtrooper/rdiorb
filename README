@@ -1,0 +1,26 @@
+-*- outline -*-
+
+* ABOUT
+
+This is a ruby implementation of the rd.io API here:
+
+  http:/developer.rdio.com
+
+
+* USAGE
+
+To use it you have to get an api key and secret here:
+
+And then, currently, you can do something like the following:
+
+  key = <RDIO_KEY>
+  secret = <RDIO_SECRET>
+  r = Rdio::Api.new key,secret
+  user = r.findUserByEmail 'jeff@jeffpalm.com'
+  'Jeffrey' == user.first_name
+  'Palm' == user.last_name
+
+
+* TODO
+
+Lots
