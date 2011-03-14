@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 module Rdio
 
   # Represents an artist on Rdio, either an individual performer or a
@@ -270,8 +271,18 @@ module Rdio
   # Represents an Rdio user
   class User < UserData
 
+    Rdio::symbols_to_types[self] = {
+      :albums => Album,
+    }
+
     def initialize(api)
       super api
+    end
+
+    # Get the activity events for a user, a user's friends, or
+    # everyone on Rdio.
+    def activity_stream(scope='user',last_id=nil)
+      return api.getActivityStream self,scope,last_id
     end
 
     # Get information about the currently logged in user.
@@ -400,6 +411,64 @@ module Rdio
     def self.top_charts
       return Rdio::api.getTopCharts User
     end
+
+  end
+  
+  class ActivityStream < ApiObj
+
+    # used to walk through activity
+    attr_accessor :last_id
+
+    # the User object for the user that was passed in
+    attr_accessor :user
+
+    # the updates
+    attr_accessor :updates
+
+    def initialize(api)
+      super api
+    end
+
+    class Update < ApiObj
+
+      # One of the following
+      #   0 — track added to collection
+      #   1 — track added to playlist
+      #   3 — friend added
+      #   5 — user joined
+      #   6 — comment added to track
+      #   7 — comment added to album
+      #   8 — comment added to artist
+      #   9 — comment added to playlist
+      #  10 — track added via match collection
+      #  11 — user subscribed to Rdio
+      #  12 — track synced to mobile
+      attr_accessor :update_type
+
+      # string date
+      attr_accessor :date
+
+      # User owner
+      attr_accessor :owner
+
+      # Albums
+      attr_accessor :albums
+      
+      Rdio::symbols_to_types[self] = {
+        :owner => User,
+        :albums => Album
+      }
+      
+      def initialize(api)
+        super api
+      end
+
+    end
+
+    Rdio::symbols_to_types[self] = {
+      :user => User,
+      :updates => Update
+    }
 
   end
 

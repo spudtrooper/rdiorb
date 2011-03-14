@@ -103,5 +103,23 @@ class TestUser < Test::Unit::TestCase
       assert_fail "Couldn't find #{name}"
     end
   end
+
+  def test_tracks_for_album_in_collection
+    user = User.current
+    album = Album.get 'a256779'
+    tracks = user.tracks_for_album_in_collection album
+    assert_not_nil tracks
+    name = 'Face Pollution'
+    found = false
+    tracks.each do |t|
+      if t.name == name
+        found = true
+        break
+      end
+    end
+    if not found
+      assert_fail "Couldn't find #{name}"
+    end
+  end
   
 end

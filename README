@@ -15,8 +15,8 @@ And then, currently, you can do something like the following:
 
   key = <RDIO_KEY>
   secret = <RDIO_SECRET>
-  r = Rdio::Api.new key,secret
-  user = r.findUserByEmail 'jeff@jeffpalm.com'
+  Rdio::init key,sec
+  user = Rdio::User.find_by_email 'jeff@jeffpalm.com'
   'Jeffrey' == user.first_name
   'Palm' == user.last_name
 

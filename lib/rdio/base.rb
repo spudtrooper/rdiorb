@@ -3,13 +3,125 @@ require 'json'
 
 module Rdio
 
-  class BaseObj
+  # string -> string
+  #
+  # Converts camel-case string to underscore-delimited one.
+  #
+  def camel2underscores(s)
+    while s.match /([A-Z]+)/
+      s = s.gsub /#{$1}/,'_'+$1.downcase
+    end
+    s
+  end
 
+  # object -> value
+  #
+  # Converts v which is probably a string, to a primitive value, so we
+  # can have primitives other than strings as attributes of BaseObjs.
+  #
+  def to_o(v)
+    if not v
+      return nil
+    end
+    s = v.to_s
+    if not s
+      return nil
+    end
+    if s == 'nil'
+      return nil
+    end
+    if s =~ /^\d+/
+      return s.to_i
+    end
+    if s =~ /^\d+\.?\d*$/
+      return s.to_f
+    end
+    if s == 'true'
+      return true
+    end
+    if s == 'false'
+      return false
+    end
+    if s =~ /^\[.*\]$/
+      s = s.gsub /^\[/,''
+      s = s.gsub /\]$/,''
+      return s.split(',').map {|x| to_o x}
+    end
+    return s
+  end
+
+  # Override this to declare how certain attributes are constructed, e.g:
+  #
+  #    Rdio::symbols_to_types[self] = {
+  #      :user => User,
+  #      :updates => Update
+  #    }
+  #
+  # This (found in the ActivityStream class) instructs us to create
+  # the json object of the 'user' as a User object, and the 'updates'
+  # as an Update object.  In fact, 'updates' is an array, and this if
+  # fine.
+  #
+  class << self
+    attr_accessor :symbols_to_types
+  end
+  self.symbols_to_types = {}
+
+  class ApiObj
     attr_reader :api
+    
+    def initialize(api)
+      @api = api
+    end
+
+    def fill(x)
+      syms_to_types = Rdio::symbols_to_types[self.class] || {}
+      x.each do |k,v|
+        sym = camel2underscores(k).to_sym
+        #
+        # If we have an actual type for this symbol, then use that
+        # type to construct this value.  Otherwise, it's just a
+        # primitive type
+        #
+        type = syms_to_types[sym]
+        if Rdio::log_symbols
+          Rdio::log "#{self.class}.#{sym} => #{type}"
+        end
+        if type
+          #
+          # Allow simple types that are used for arrays
+          #
+          if v.is_a? Array
+            o = v.map do |x|
+              obj = type.new api
+              obj.fill x
+              obj
+            end
+          else
+            o = type.new api
+            o.fill v
+          end
+        else
+          o = to_o v
+        end
+        begin
+          sym_eq = (camel2underscores(k)+'=').to_sym
+          self.send sym_eq,o
+        rescue Exception => e
+          STDERR.puts "Couldn't find symbol: " +
+            "#{sym} => #{o} for type: #{self.class}"
+        end
+      end
+    end
+
+  end
+
+  class BaseObj < ApiObj
+
     attr_accessor :key
 
     def initialize(api)
-      @api = api
+      super api
     end
 
   end
@@ -57,52 +169,9 @@ module Rdio
       return v
     end
 
-    def to_o(base_type,v)
-      s = v.to_s
-      if not s
-        return nil
-      end
-      if s == 'nil'
-        return nil
-      end
-      if s =~ /^\d+/
-        return s.to_i
-      end
-      if s =~ /^\d+\.?\d*$/
-        return s.to_f
-      end
-      if s == 'true'
-        return true
-      end
-      if s == 'false'
-        return false
-      end
-      if s =~ /^\[.*\]$/
-        s = s.gsub /^\[/,''
-        s = s.gsub /\]$/,''
-        return s.split(',').map {|x| to_o base_type,x}
-      end
-      return s
-    end
-    
-    def camel2underscores(s)
-      while s.match /([A-Z]+)/
-        s = s.gsub /#{$1}/,'_'+$1.downcase
-      end
-      s
-    end
-
-    def fill_obj(type,x,json=nil)
+    def fill_obj(type,x)
       res = type.new self
-      x.each do |k,v|
-        sym = (camel2underscores(k)+'=').to_sym
-        o = to_o type,v
-        begin
-          res.send sym,o
-        rescue Exception => e
-          STDERR.puts "Couldn't find symbol: #{sym} => #{o} for type: #{type}"
-        end
-      end
+      res.fill x
       return res
     end
 
@@ -128,7 +197,7 @@ module Rdio
         end
         if type == Boolean or type == String or 
             type == Fixnum or type == Float
-          return to_o type,res
+          return to_o res
         end
         #
         # A mild hack, but for get the result is a hash of keys to
@@ -141,9 +210,24 @@ module Rdio
         # This could be an array (TODO: could not be general enough)
         #
         if result.is_a? Array
-          res = result.map {|x| fill_obj type,x,json}
+          res = result.map {|x| fill_obj type,x}
+        elsif false and type == ActivityStream
+          user = fill_obj User,result['user']
+          last_id = to_o result['last_id']
+          updates = []
+          result['updates'].each do |x| 
+            u = ActivityStream::Update.new self
+            u.update_type = to_o x['update_type']
+            u.date = to_o x['date']
+            u.owner = fill_obj User,x['owner']
+            updates << u
+          end
+          res = ActivityStream.new self
+          res.user = user
+          res.last_id = last_id
+          res.updates = updates
         else 
-          res = fill_obj type,result,json
+          res = fill_obj type,result
         end
         return res
       end

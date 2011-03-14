@@ -10,7 +10,7 @@ module Rdio
     def addFriend(user)
       method = 'addFriend'
       type = true
-      args = {'user'=>user}
+      args = {:user=>user}
       return_object type,method,args
     end
     
@@ -18,7 +18,7 @@ module Rdio
     def addToCollection(objs)
       method = 'addToCollection'
       type = true
-      args = {'keys'=>keys(objs)}
+      args = {:keys=>keys(objs)}
       return_object type,method,args
     end
     
@@ -26,7 +26,7 @@ module Rdio
     def addToPlaylist(playlist,tracks)
       method = 'addToPlaylist'
       type = true
-      args = {'playlist'=>playlist, 'tracks'=>keys(tracks)}
+      args = {:playlist=>playlist, :tracks=>keys(tracks)}
       return_object type,method,args
     end
     
@@ -36,9 +36,9 @@ module Rdio
     def createPlaylist(name,description,tracks,extras=nil)
       method = 'createPlaylist'
       type = Playlist
-      args = {'name'=>name,'description'=>description,
-        'tracks'=>keys(tracks)}
-      args['extras'] = extras if extras
+      args = {:name=>name,:description=>description,
+        :tracks=>keys(tracks)}
+      args[:extras] = extras if extras
       return_object type,method,args
     end
     
@@ -47,7 +47,7 @@ module Rdio
       method = 'currentUser'
       type = User
       args = {}
-      args['extras'] = extras if extras
+      args[:extras] = extras if extras
       return_object type,method,args
     end
     
@@ -55,7 +55,7 @@ module Rdio
     def deletePlaylist(playlist)
       method = 'deletePlaylist'
       type = Boolean
-      args = {'playlist'=>playlist}
+      args = {:playlist=>playlist}
       return_object type,method,args
     end
     
@@ -64,7 +64,7 @@ module Rdio
     def findUserByEmail(email)
       method = 'findUser'
       type = User
-      args = {'email'=>email}
+      args = {:email=>email}
       return_object type,method,args
     end
     
@@ -73,7 +73,7 @@ module Rdio
     def findUserByVanityName(name)
       method = 'findUser'
       type = User
-      args = {'vanityName'=>name}
+      args = {:vanityName=>name}
       return_object type,method,args
     end
     
@@ -84,15 +84,17 @@ module Rdio
       end
       method = 'get'
       cls = type
-      args = {'keys'=>keys(objs)}
+      args = {:keys=>keys(objs)}
       return_object cls,method,args,true
     end
     
-    # Get the activity events for a user, a user's friends, or everyone on Rdio.
-    def getActivityStream(user)
+    # Get the activity events for a user, a user's friends, or
+    # everyone on Rdio.
+    def getActivityStream(user,scope,last_id=nil)
       method = 'getActivityStream'
-      type = TODO
-      args = {'user'=>user}
+      type = ActivityStream
+      args = {:user=>user,:scope=>scope}
+      args[:last_id] = last_id if last_id
       return_object type,method,args
     end
     
@@ -100,11 +102,11 @@ module Rdio
     def getAlbumsForArtist(artist,featuring=nil,extras=nil,start=nil,count=nil)
       method = 'getAlbumsForArtist'
       type = Album
-      args = {'artist'=>artist}
-      args['featuring'] = featuring if featuring
-      args['extras'] = extras if extras
-      args['start'] = start if start
-      args['count'] = count if count
+      args = {:artist=>artist}
+      args[:featuring] = featuring if featuring
+      args[:extras] = extras if extras
+      args[:start] = start if start
+      args[:count] = count if count
       return_object type,method,args
     end
     
@@ -112,8 +114,8 @@ module Rdio
     def getAlbumsForArtistInCollection(artist,user=nil)
       method = 'getAlbumsForArtistInCollection'
       type = Album
-      args = {'artist'=>artist}
-      args['user'] = user if user
+      args = {:artist=>artist}
+      args[:user] = user if user
       return_object type,method,args
     end
     
@@ -122,11 +124,11 @@ module Rdio
       method = 'getAlbumsInCollection'
       type = Album
       args = {}
-      args['user'] = user if user
-      args['start'] = start if start
-      args['count'] = count if count
-      args['sort'] = sort if sort
-      args['query'] = query if query
+      args[:user] = user if user
+      args[:start] = start if start
+      args[:count] = count if count
+      args[:sort] = sort if sort
+      args[:query] = query if query
       return_object type,method,args
     end
     
@@ -135,11 +137,11 @@ module Rdio
       method = 'getArtistsInCollection'
       type = Artist
       args = {}
-      args['user'] = user if user
-      args['start'] = start if start
-      args['count'] = count if count
-      args['sort'] = sort if sort
-      args['query'] = query if query
+      args[:user] = user if user
+      args[:start] = start if start
+      args[:count] = count if count
+      args[:sort] = sort if sort
+      args[:query] = query if query
       return_object type,method,args
     end
     
@@ -154,10 +156,10 @@ module Rdio
         cls = Album
       end
       args = {}
-      args['user'] = user if user
-      args['type'] = type if type
-      args['friends'] = friends if friends
-      args['limit'] = limit if limit
+      args[:user] = user if user
+      args[:type] = type if type
+      args[:friends] = friends if friends
+      args[:limit] = limit if limit
       return_object cls,method,args
     end
     
@@ -166,10 +168,10 @@ module Rdio
       method = 'getNewReleases'
       type = Album
       args = {}
-      args['time'] = time if time
-      args['start'] = start if start
-      args['count'] = count if count
-      args['extras'] = extras if extras
+      args[:time] = time if time
+      args[:start] = start if start
+      args[:count] = count if count
+      args[:extras] = extras if extras
       return_object type,method,args
     end
     
@@ -178,7 +180,7 @@ module Rdio
     def getObjectFromShortCode(short_code,type=nil)
       method = 'getObjectFromShortCode'
       type = BaseObj if not type
-      args = {'short_code'=>short_code}
+      args = {:short_code=>short_code}
       return_object type,method,args
     end
     
@@ -187,7 +189,7 @@ module Rdio
     def getObjectFromUrl(url,type=nil)
       method = 'getObjectFromUrl'
       type = BaseObj if not type
-      args = {'url'=>url}
+      args = {:url=>url}
       return_object type,method,args
     end
     
@@ -197,7 +199,7 @@ module Rdio
       method = 'getPlaybackToken'
       type = String
       args = {}
-      args['domain'] = domain if domain
+      args[:domain] = domain if domain
       return_object type,method,args
     end
       
@@ -206,7 +208,7 @@ module Rdio
       method = 'getPlaylists'
       type = Playlist
       args = {}
-      args['extras'] = extras if extras
+      args[:extras] = extras if extras
       return_object type,method,args
     end
     
@@ -224,7 +226,7 @@ module Rdio
       when 'Playlist':
           cls = Playlist
       end
-      args = {'type'=>type}
+      args = {:type=>type}
       return_object cls,method,args
     end
     
@@ -232,9 +234,9 @@ module Rdio
     def getTracksForAlbumInCollection(album,user=nil,extras=nil)
       method = 'getTracksForAlbumInCollection'
       type = Track
-      args = {'album'=>album}
-      args['user'] = user if user
-      args['extras'] = extras if extras
+      args = {:album=>album}
+      args[:user] = user if user
+      args[:extras] = extras if extras
       return_object type,method,args
     end
     
@@ -242,11 +244,11 @@ module Rdio
     def getTracksForArtist(artist,appears_on=nil,start=nil,count=nil,extras=nil)
       method = 'getTracksForArtist'
       type = Track
-      args = {'artist'=>artist}
-      args['appears_on'] = appears_on if appears_on
-      args['start'] = start if start
-      args['count'] = count if count
-      args['extras'] = extras if extras
+      args = {:artist=>artist}
+      args[:appears_on] = appears_on if appears_on
+      args[:start] = start if start
+      args[:count] = count if count
+      args[:extras] = extras if extras
       return_object type,method,args
     end
     
@@ -254,9 +256,9 @@ module Rdio
     def getTracksForArtistInCollection(artist,user=nil,extras=nil)
       method = 'getTracksForArtistInCollection'
       type = Track
-      args = {'artist'=>artist}
-      args['user'] = user if user
-      args['extras'] = extras if extras
+      args = {:artist=>artist}
+      args[:user] = user if user
+      args[:extras] = extras if extras
       return_object type,method,args
     end
     
@@ -265,11 +267,11 @@ module Rdio
       method = 'getTracksInCollection'
       type = Track
       args = {}
-      args['user'] = user if user
-      args['start'] = start if start
-      args['count'] = count if count
-      args['sort'] = sort if sort
-      args['query'] = query if query
+      args[:user] = user if user
+      args[:start] = start if start
+      args[:count] = count if count
+      args[:sort] = sort if sort
+      args[:query] = query if query
       return_object type,method,args
     end
     
@@ -277,7 +279,7 @@ module Rdio
     def removeFriend(user)
       method = 'removeFriend'
       type = Boolean
-      args = {'user'=>user}
+      args = {:user=>user}
       return_object type,method,args
     end
     
@@ -285,7 +287,7 @@ module Rdio
     def removeFromCollection(objs)
       method = 'removeFromCollection'
       type = Boolean
-      args = {'keys'=>keys(objs)}
+      args = {:keys=>keys(objs)}
       return_object type,method,args
     end
     
@@ -294,8 +296,8 @@ module Rdio
       method = 'removeFromPlaylist'
       type = TODO
       args = {
-        'playlist'=>playlist,'index'=>index,
-        'count'=>count,'tracks'=>keys(tracks)
+        :playlist=>playlist,:index=>index,
+        :count=>count,:tracks=>keys(tracks)
       }
       return_object type,method,args
     end
@@ -304,12 +306,12 @@ module Rdio
     def search(query,types=nil,never_or=nil,extras=nil,start=nil,count=nil)
       method = 'search'
       type = TODO
-      args = {'query'=>query}
-      args['types'] = types if types
-      args['never_or'] = never_or if never_or
-      args['extras'] = extras if extras
-      args['start'] = start if start
-      args['count'] = count if count
+      args = {:query=>query}
+      args[:types] = types if types
+      args[:never_or] = never_or if never_or
+      args[:extras] = extras if extras
+      args[:start] = start if start
+      args[:count] = count if count
       return_object type,method,args
     end
     
@@ -318,8 +320,8 @@ module Rdio
     def searchSuggestions(query,extras)
       method = 'searchSuggestions'
       type = TODO
-      args = {'query'=>query}
-      args['extras'] = extras if extras
+      args = {:query=>query}
+      args[:extras] = extras if extras
       return_object type,method,args
     end
     

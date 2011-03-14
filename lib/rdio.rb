@@ -25,6 +25,7 @@ module Rdio
     attr_accessor :logger
     attr_accessor :log_json
     attr_accessor :log_methods
+    attr_accessor :log_symbols
     def log(str)
       logger.debug { str }
     end
@@ -32,6 +33,7 @@ module Rdio
   self.debug = false
   self.log_json = false
   self.log_methods = false
+  self.log_symbols = false
 
   @logger ||= ::Logger.new(STDERR)
   @api = nil
