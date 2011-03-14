@@ -112,9 +112,6 @@ module Rdio
       super api
     end
 
-    # the secondary id
-    attr_accessor :secondary_id
-
     # the name of the track
     attr_accessor :name
 

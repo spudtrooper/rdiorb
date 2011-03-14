@@ -21,12 +21,10 @@ module Rdio
       @access_token = nil
     end
 
-    def return_object(type,method,args)
-      json = call method,args
-      create_object type,json
-    end
-
     def call(method,args)
+      if Rdio::log_methods
+        Rdio::log "Called method: #{method}"
+      end
       new_args = {}
       new_args['method'] = method
       args.each do |k,v|
@@ -37,8 +35,16 @@ module Rdio
       return data
     end
 
+    def return_object(type,method,args,keys_to_objects=false)
+      json = call method,args
+      if Rdio::log_json
+        Rdio::log json
+      end
+      create_object type,json,keys_to_objects
+    end
+
     def keys(objs)
-      objs.map {|x| BaseApi.keys x}
+      objs.map {|x| BaseApi.key x}
     end
 
     private
@@ -60,11 +66,6 @@ module Rdio
         return nil
       end
       if s =~ /^\d+/
-        if base_type
-          v = base_type.new self
-          v.key = s.to_i
-          return v
-        end
         return s.to_i
       end
       if s =~ /^\d+\.?\d*$/
@@ -91,16 +92,30 @@ module Rdio
       s
     end
 
-    def create_object(type,json)
+    def fill_obj(type,x,json=nil)
+      res = type.new self
+      x.each do |k,v|
+        sym = (camel2underscores(k)+'=').to_sym
+        o = to_o type,v
+        begin
+          res.send sym,o
+        rescue Exception => e
+          STDERR.puts "Couldn't find symbol: #{sym} => #{o} for type: #{type}"
+        end
+      end
+      return res
+    end
+
+    def create_object(type,json,keys_to_objects=false)
       begin
-        _create_object(type,json)
+        _create_object(type,json,keys_to_objects)
       rescue Exception => e
         puts json
         raise e
       end
     end
-
-    def _create_object(type,json)
+    
+    def _create_object(type,json,keys_to_objects=false)
       obj = JSON.parse json
       status = obj['status']
       if status == 'ok'
@@ -115,26 +130,20 @@ module Rdio
             type == Fixnum or type == Float
           return to_o type,res
         end
-        def fill_obj(type,x)
-          res = type.new self
-          x.each do |k,v|
-            sym = (camel2underscores(k)+'=').to_sym
-            o = to_o type,v
-            begin
-              res.send sym,o
-            rescue Exception => e
-              STDERR.puts "Couldn't find symbol: #{sym} => #{o}"
-            end
-          end
-          return res
+        #
+        # A mild hack, but for get the result is a hash of keys to
+        # objects, in this case return an array of those objects
+        #
+        if keys_to_objects
+          result = result.values
         end
         #
         # This could be an array (TODO: could not be general enough)
         #
         if result.is_a? Array
-          res = result.map {|x| fill_obj type,x}
+          res = result.map {|x| fill_obj type,x,json}
         else 
-          res = fill_obj type,result
+          res = fill_obj type,result,json
         end
         return res
       end

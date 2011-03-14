@@ -85,7 +85,7 @@ module Rdio
       method = 'get'
       cls = type
       args = {'keys'=>keys(objs)}
-      return_object cls,method,args
+      return_object cls,method,args,true
     end
     
     # Get the activity events for a user, a user's friends, or everyone on Rdio.
