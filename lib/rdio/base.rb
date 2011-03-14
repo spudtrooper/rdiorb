@@ -211,21 +211,6 @@ module Rdio
         #
         if result.is_a? Array
           res = result.map {|x| fill_obj type,x}
-        elsif false and type == ActivityStream
-          user = fill_obj User,result['user']
-          last_id = to_o result['last_id']
-          updates = []
-          result['updates'].each do |x| 
-            u = ActivityStream::Update.new self
-            u.update_type = to_o x['update_type']
-            u.date = to_o x['date']
-            u.owner = fill_obj User,x['owner']
-            updates << u
-          end
-          res = ActivityStream.new self
-          res.user = user
-          res.last_id = last_id
-          res.updates = updates
         else 
           res = fill_obj type,result
         end
