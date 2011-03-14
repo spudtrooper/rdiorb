@@ -50,23 +50,18 @@ module Rdio
     return s
   end
 
-  # Override this to declare how certain attributes are constructed, e.g:
-  #
-  #    Rdio::symbols_to_types[self] = {
-  #      :user => User,
-  #      :updates => Update
-  #    }
-  #
-  # This (found in the ActivityStream class) instructs us to create
-  # the json object of the 'user' as a User object, and the 'updates'
-  # as an Update object.  In fact, 'updates' is an array, and this if
-  # fine.
-  #
+  # Override this to declare how certain attributes are constructed.
+  # This is done at the end of types.rb.
   class << self
     attr_accessor :symbols_to_types
   end
   self.symbols_to_types = {}
 
+  # ----------------------------------------------------------------------
+  # Base class for remote objects.  They contain an api instance, and
+  # also have a fill method that will set the values to the
+  # appropriate values
+  # ----------------------------------------------------------------------
   class ApiObj
     attr_reader :api
     
@@ -75,7 +70,7 @@ module Rdio
     end
 
     def fill(x)
-      syms_to_types = Rdio::symbols_to_types[self.class] || {}
+      syms_to_types = Rdio::symbols_to_types || {}
       x.each do |k,v|
         sym = camel2underscores(k).to_sym
         #
@@ -115,7 +110,10 @@ module Rdio
     end
 
   end
-
+  
+  # ----------------------------------------------------------------------
+  # An ApiObj with a 'key'
+  # ----------------------------------------------------------------------
   class BaseObj < ApiObj
 
     attr_accessor :key
@@ -124,8 +122,19 @@ module Rdio
       super api
     end
 
+    # Compares only by key
+    def eql?(that)  
+      self.class.equal?(that.class) and 
+        self.key.equal?(that.key)
+    end
+
   end
 
+  # ----------------------------------------------------------------------
+  # Basis for making web-service calls and constructing the values.
+  # Subclasses should declare the api by calling 'call',
+  # 'return_object', and 'create_object'
+  # ----------------------------------------------------------------------
   class BaseApi
 
     def initialize(key,secret)
@@ -179,7 +188,8 @@ module Rdio
       begin
         _create_object(type,json,keys_to_objects)
       rescue Exception => e
-        puts json
+        STDERR.puts "create_json: #{json}"
+        STDERR.puts "create_json: #{e}"
         raise e
       end
     end
@@ -197,7 +207,8 @@ module Rdio
         end
         if type == Boolean or type == String or 
             type == Fixnum or type == Float
-          return to_o res
+          return false if not result
+          return to_o result
         end
         #
         # A mild hack, but for get the result is a hash of keys to

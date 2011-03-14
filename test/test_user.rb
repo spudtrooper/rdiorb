@@ -55,25 +55,19 @@ class TestUser < Test::Unit::TestCase
   def test_albums_in_collection
     user = User.current
     arr = user.albums_in_collection
-    if arr.length < 100
-      assert_fail "Not enough albums: #{arr.length} < 100"
-    end
+    assert_length_at_least 100,arr,'album'
   end
 
   def test_artists_in_collection
     user = User.current
     arr = user.artists_in_collection
-    if arr.length < 50
-      assert_fail "Not enough albums: #{arr.length} < 50"
-    end
+    assert_length_at_least 100,arr,'album'
   end
 
   def test_tracks_in_collection
     user = User.current
     arr = user.tracks_in_collection
-    if arr.length < 100
-      assert_fail "Not enough tracks: #{arr.length} < 100"
-    end
+    assert_length_at_least 100,arr,'track'
   end
 
   def test_albums_for_artist_in_collection
@@ -119,6 +113,40 @@ class TestUser < Test::Unit::TestCase
     end
     if not found
       assert_fail "Couldn't find #{name}"
+    end
+  end
+
+  def test_activity_stream
+    user = User.current
+    as = user.activity_stream
+    assert_length_at_least 10,as.updates,'update'
+    assert_not_nil as.last_id
+    assert_equal user.key,as.user.key
+  end
+
+  def test_add_friend
+    user = User.current
+    assert_equal true,User.add_friend(user)
+  end
+
+  def test_add_friend2
+    that = User.find_by_email 'tim.julien@gmail.com'
+    assert_equal true,User.add_friend(that)
+  end
+
+  def test_add_and_remove_friend
+    that = User.find_by_email 'tim.julien@gmail.com'
+    assert_equal true,User.add_friend(that)
+    assert_equal true,User.remove_friend(that)
+    assert_equal false,User.remove_friend(that)
+    assert_equal true,User.add_friend(that)
+  end
+  
+  private
+  
+  def assert_length_at_least(num,arr,thing)
+    if arr.length < num
+      assert_fail "Not enough #{thing}s: #{arr.length} < #{num}"
     end
   end
   

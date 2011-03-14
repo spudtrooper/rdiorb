@@ -2,7 +2,7 @@ NAME=rdio
 VERSION=0.0.1
 DATE=$(shell date +"%Y-%m-%d")
 
-.PHONY: runtest
+.PHONY: test
 
 %.gemspec:%.gemspec.in
 	cat $< | sed \
@@ -11,7 +11,7 @@ DATE=$(shell date +"%Y-%m-%d")
 		-e 's/%VERSION%/$(VERSION)/g' \
 		> $@
 
-$(NAME)-$(VERSION).gem: $(NAME).gemspec
+$(NAME)-$(VERSION).gem: $(NAME).gemspec rdoc
 	gem build $<
 
 lib/rdio/datatypes.rb: gen_types
@@ -27,7 +27,10 @@ all: $(NAME)-$(VERSION).gem
 push: $(NAME)-$(VERSION).gem
 	gem push 
 
-runtest:
+rdoc:
+	rdoc --title "Rd.io API" `find lib -name "*.rb"`
+
+test:
 	ruby test/suite.rb
 
 api: lib/rdio/api.rb
@@ -39,3 +42,8 @@ tests:
 
 clean:
 	rm -f `find . -name "*~"` $(NAME).gemspec $(NAME)-*.gem
+
+docclean:
+	rm -rf doc
+
+allclean: docclean clean

@@ -1,5 +1,9 @@
 module Rdio
   
+  # ----------------------------------------------------------------------
+  # Provides main API functionality by translating Ruby calls to REST
+  # calls to the super class
+  # ----------------------------------------------------------------------
   class Api < BaseApi
     
     def initialize(key,secret)

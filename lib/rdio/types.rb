@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 module Rdio
 
+  # ----------------------------------------------------------------------
   # Represents an artist on Rdio, either an individual performer or a
   # group
+  # ----------------------------------------------------------------------
   class Artist < ArtistData
 
     def initialize(api)
@@ -71,8 +73,10 @@ module Rdio
   end
 
 
+  # ----------------------------------------------------------------------
   # Represents a recording on Rdio, usually an album but often a
   # single, EP or compilation
+  # ----------------------------------------------------------------------
   class Album < AlbumData
 
     def initialize(api)
@@ -144,7 +148,9 @@ module Rdio
 
   end
 
+  # ----------------------------------------------------------------------
   # Represents a song on Rdio
+  # ----------------------------------------------------------------------
   class Track < TrackData
 
     def initialize(api)
@@ -208,7 +214,9 @@ module Rdio
 
   end
 
+  # ----------------------------------------------------------------------
   # Represents a playlist on Rdio
+  # ----------------------------------------------------------------------
   class Playlist < PlaylistData
 
     def initialize(api)
@@ -268,12 +276,10 @@ module Rdio
 
   end
 
+  # ----------------------------------------------------------------------
   # Represents an Rdio user
+  # ----------------------------------------------------------------------
   class User < UserData
-
-    Rdio::symbols_to_types[self] = {
-      :albums => Album,
-    }
 
     def initialize(api)
       super api
@@ -368,8 +374,18 @@ module Rdio
     end
 
     # Add tracks or playlists to the current user's collection.
-    def add_to_collection(objs)
+    def self.add_to_collection(objs)
       return Rdio::api.addToCollection objs
+    end
+
+    # Add tracks to the current user's collection.
+    def self.add_tracks_to_collection(tracks)
+      add_to_collection tracks
+    end
+
+    # Add playlists to the current user's collection.
+    def self.add_playlists_to_collection(playlists)
+      add_to_collection playlists
     end
 
     # Find the most popular artists or albums for a user, their
@@ -412,8 +428,12 @@ module Rdio
       return Rdio::api.getTopCharts User
     end
 
+
   end
-  
+
+  # ----------------------------------------------------------------------  
+  # An activity stream.
+  # ----------------------------------------------------------------------
   class ActivityStream < ApiObj
 
     # used to walk through activity
@@ -453,22 +473,15 @@ module Rdio
 
       # Albums
       attr_accessor :albums
-      
-      Rdio::symbols_to_types[self] = {
-        :owner => User,
-        :albums => Album
-      }
+
+      # People
+      attr_accessor :people
       
       def initialize(api)
         super api
       end
 
     end
-
-    Rdio::symbols_to_types[self] = {
-      :user => User,
-      :updates => Update
-    }
 
   end
 
@@ -481,5 +494,25 @@ module Rdio
   class TODO
 
   end
+  
+  # ----------------------------------------------------------------------
+  # Set up the mapping of names of attributes to the classes with
+  # which we will construct the JSON.
+  #
+  # TODO: May want to put these in individual classes?
+  # ----------------------------------------------------------------------
+  Rdio::symbols_to_types = {
+    :user => User,
+    :owner => User,
+    :friends => User,
+    :everyone => User,
+    :people => User,
+    :users => User,
+    :artists => Artist,
+    :albums => Album,
+    :tracks => Track,
+    :playlists => Playlist,
+    :updates => ActivityStream::Update,
+  }
 
 end
