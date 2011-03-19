@@ -94,7 +94,7 @@ Represents an <a href="../Rdio.html">Rdio</a> user
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000028">activity_stream</a>&nbsp;&nbsp;
+      <a href="#M000027">activity_stream</a>&nbsp;&nbsp;
       <a href="#M000040">add_friend</a>&nbsp;&nbsp;
       <a href="#M000047">add_playlists_to_collection</a>&nbsp;&nbsp;
       <a href="#M000045">add_to_collection</a>&nbsp;&nbsp;
@@ -105,14 +105,15 @@ Represents an <a href="../Rdio.html">Rdio</a> user
       <a href="#M000032">all</a>&nbsp;&nbsp;
       <a href="#M000049">artists_heavy_rotation</a>&nbsp;&nbsp;
       <a href="#M000036">artists_in_collection</a>&nbsp;&nbsp;
-      <a href="#M000029">current</a>&nbsp;&nbsp;
-      <a href="#M000030">find_by_email</a>&nbsp;&nbsp;
-      <a href="#M000031">find_by_vanity_name</a>&nbsp;&nbsp;
+      <a href="#M000028">current</a>&nbsp;&nbsp;
+      <a href="#M000031">find</a>&nbsp;&nbsp;
+      <a href="#M000029">find_by_email</a>&nbsp;&nbsp;
+      <a href="#M000030">find_by_vanity_name</a>&nbsp;&nbsp;
       <a href="#M000051">from_short_code</a>&nbsp;&nbsp;
       <a href="#M000052">from_url</a>&nbsp;&nbsp;
       <a href="#M000033">get</a>&nbsp;&nbsp;
       <a href="#M000048">heavy_rotation</a>&nbsp;&nbsp;
-      <a href="#M000027">new</a>&nbsp;&nbsp;
+      <a href="#M000026">new</a>&nbsp;&nbsp;
       <a href="#M000053">playlists</a>&nbsp;&nbsp;
       <a href="#M000041">remove_friend</a>&nbsp;&nbsp;
       <a href="#M000042">remove_from_collection</a>&nbsp;&nbsp;
@@ -155,7 +156,7 @@ Represents an <a href="../Rdio.html">Rdio</a> user
       
         <div class="method-description">
           <p>
-Add a friend to the <a href="User.html#M000029">current</a> user.
+Add a friend to the <a href="User.html#M000028">current</a> user.
 </p>
         </div>
       </div>
@@ -173,7 +174,7 @@ Add a friend to the <a href="User.html#M000029">current</a> user.
         <div class="method-description">
           <p>
 Add <a href="User.html#M000053">playlists</a> to the <a
-href="User.html#M000029">current</a> user&#8216;s collection.
+href="User.html#M000028">current</a> user&#8216;s collection.
 </p>
         </div>
       </div>
@@ -191,7 +192,7 @@ href="User.html#M000029">current</a> user&#8216;s collection.
         <div class="method-description">
           <p>
 Add tracks or <a href="User.html#M000053">playlists</a> to the <a
-href="User.html#M000029">current</a> user&#8216;s collection.
+href="User.html#M000028">current</a> user&#8216;s collection.
 </p>
         </div>
       </div>
@@ -208,7 +209,7 @@ href="User.html#M000029">current</a> user&#8216;s collection.
       
         <div class="method-description">
           <p>
-Add tracks to the <a href="User.html#M000029">current</a> user&#8216;s
+Add tracks to the <a href="User.html#M000028">current</a> user&#8216;s
 collection.
 </p>
         </div>
@@ -232,12 +233,12 @@ href="User.html">User</a>.
         </div>
       </div>
 
-      <div id="method-M000029" class="method-detail">
-        <a name="M000029"></a>
+      <div id="method-M000028" class="method-detail">
+        <a name="M000028"></a>
 
         <div class="method-heading">
-          <a href="User.src/M000029.html" target="Code" class="method-signature"
-            onclick="popupCode('User.src/M000029.html');return false;">
+          <a href="User.src/M000028.html" target="Code" class="method-signature"
+            onclick="popupCode('User.src/M000028.html');return false;">
           <span class="method-name">current</span><span class="method-args">(extras=nil)</span>
           </a>
         </div>
@@ -249,12 +250,29 @@ Get information about the currently logged in user.
         </div>
       </div>
 
-      <div id="method-M000030" class="method-detail">
-        <a name="M000030"></a>
+      <div id="method-M000031" class="method-detail">
+        <a name="M000031"></a>
 
         <div class="method-heading">
-          <a href="User.src/M000030.html" target="Code" class="method-signature"
-            onclick="popupCode('User.src/M000030.html');return false;">
+          <a href="User.src/M000031.html" target="Code" class="method-signature"
+            onclick="popupCode('User.src/M000031.html');return false;">
+          <span class="method-name">find</span><span class="method-args">(s)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Finds the user by email or vanity name
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000029" class="method-detail">
+        <a name="M000029"></a>
+
+        <div class="method-heading">
+          <a href="User.src/M000029.html" target="Code" class="method-signature"
+            onclick="popupCode('User.src/M000029.html');return false;">
           <span class="method-name">find_by_email</span><span class="method-args">(email)</span>
           </a>
         </div>
@@ -266,12 +284,12 @@ Find a user either by email address.
         </div>
       </div>
 
-      <div id="method-M000031" class="method-detail">
-        <a name="M000031"></a>
+      <div id="method-M000030" class="method-detail">
+        <a name="M000030"></a>
 
         <div class="method-heading">
-          <a href="User.src/M000031.html" target="Code" class="method-signature"
-            onclick="popupCode('User.src/M000031.html');return false;">
+          <a href="User.src/M000030.html" target="Code" class="method-signature"
+            onclick="popupCode('User.src/M000030.html');return false;">
           <span class="method-name">find_by_vanity_name</span><span class="method-args">(name)</span>
           </a>
         </div>
@@ -339,12 +357,12 @@ href="User.html">User</a>.
         </div>
       </div>
 
-      <div id="method-M000027" class="method-detail">
-        <a name="M000027"></a>
+      <div id="method-M000026" class="method-detail">
+        <a name="M000026"></a>
 
         <div class="method-heading">
-          <a href="User.src/M000027.html" target="Code" class="method-signature"
-            onclick="popupCode('User.src/M000027.html');return false;">
+          <a href="User.src/M000026.html" target="Code" class="method-signature"
+            onclick="popupCode('User.src/M000026.html');return false;">
           <span class="method-name">new</span><span class="method-args">(api)</span>
           </a>
         </div>
@@ -365,7 +383,7 @@ href="User.html">User</a>.
       
         <div class="method-description">
           <p>
-Get the <a href="User.html#M000029">current</a> user&#8216;s <a
+Get the <a href="User.html#M000028">current</a> user&#8216;s <a
 href="User.html#M000053">playlists</a>.
 </p>
         </div>
@@ -383,7 +401,7 @@ href="User.html#M000053">playlists</a>.
       
         <div class="method-description">
           <p>
-Remove a friend from the <a href="User.html#M000029">current</a> user.
+Remove a friend from the <a href="User.html#M000028">current</a> user.
 </p>
         </div>
       </div>
@@ -401,7 +419,7 @@ Remove a friend from the <a href="User.html#M000029">current</a> user.
         <div class="method-description">
           <p>
 Remove tracks or <a href="User.html#M000053">playlists</a> from the <a
-href="User.html#M000029">current</a> user&#8216;s collection.
+href="User.html#M000028">current</a> user&#8216;s collection.
 </p>
         </div>
       </div>
@@ -418,7 +436,7 @@ href="User.html#M000029">current</a> user&#8216;s collection.
       
         <div class="method-description">
           <p>
-Remove playlistsfrom the <a href="User.html#M000029">current</a>
+Remove playlistsfrom the <a href="User.html#M000028">current</a>
 user&#8216;s collection.
 </p>
         </div>
@@ -436,7 +454,7 @@ user&#8216;s collection.
       
         <div class="method-description">
           <p>
-Remove tracks from the <a href="User.html#M000029">current</a> user&#8216;s
+Remove tracks from the <a href="User.html#M000028">current</a> user&#8216;s
 collection.
 </p>
         </div>
@@ -461,12 +479,12 @@ Return the site-wide most popular items for Users
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000028" class="method-detail">
-        <a name="M000028"></a>
+      <div id="method-M000027" class="method-detail">
+        <a name="M000027"></a>
 
         <div class="method-heading">
-          <a href="User.src/M000028.html" target="Code" class="method-signature"
-            onclick="popupCode('User.src/M000028.html');return false;">
+          <a href="User.src/M000027.html" target="Code" class="method-signature"
+            onclick="popupCode('User.src/M000027.html');return false;">
           <span class="method-name">activity_stream</span><span class="method-args">(scope='user',last_id=nil)</span>
           </a>
         </div>

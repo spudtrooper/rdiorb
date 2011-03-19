@@ -5,14 +5,14 @@
 
 <html>
 <head>
-  <title>new (Rdio::Track)</title>
+  <title>in_collection (Rdio::Track)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/rdio/types.rb, line 156</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">api</span>)
-      <span class="ruby-keyword kw">super</span> <span class="ruby-identifier">api</span>
+  <pre><span class="ruby-comment cmt"># File lib/rdio/types.rb, line 172</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">in_collection</span>(<span class="ruby-identifier">user</span>=<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">start</span>=<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">count</span>=<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">sort</span>=<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">query</span>=<span class="ruby-keyword kw">nil</span>)
+      <span class="ruby-constant">Rdio</span><span class="ruby-operator">::</span><span class="ruby-identifier">api</span>.<span class="ruby-identifier">getTracksInCollection</span> <span class="ruby-identifier">user</span>,<span class="ruby-identifier">start</span>,<span class="ruby-identifier">count</span>,<span class="ruby-identifier">sort</span>,<span class="ruby-identifier">query</span>
     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>
