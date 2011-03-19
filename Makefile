@@ -1,5 +1,5 @@
 NAME=rdio
-VERSION=0.0.1
+VERSION=0.0.2
 DATE=$(shell date +"%Y-%m-%d")
 
 .PHONY: test
@@ -25,7 +25,7 @@ lib/rdio/api.rb: gen_api
 all: $(NAME)-$(VERSION).gem
 
 push: $(NAME)-$(VERSION).gem
-	gem push 
+	gem push $<
 
 rdoc:
 	rdoc --title "Rd.io API" `find lib -name "*.rb"`
