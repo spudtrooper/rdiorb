@@ -5,17 +5,18 @@
 
 <html>
 <head>
-  <title>removeFriend (Rdio::Api)</title>
+  <title>getPlaybackToken (Rdio::Api)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/rdio/api.rb, line 283</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">removeFriend</span>(<span class="ruby-identifier">user</span>)
-      <span class="ruby-identifier">method</span> = <span class="ruby-value str">'removeFriend'</span>
-      <span class="ruby-identifier">type</span> = <span class="ruby-constant">Boolean</span>
-      <span class="ruby-identifier">args</span> = {<span class="ruby-identifier">:user=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">user</span>}
-      <span class="ruby-identifier">return_object</span> <span class="ruby-identifier">type</span>,<span class="ruby-identifier">method</span>,<span class="ruby-identifier">args</span>
+  <pre><span class="ruby-comment cmt"># File lib/rdio/api.rb, line 203</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">getPlaybackToken</span>(<span class="ruby-identifier">domain</span>=<span class="ruby-keyword kw">nil</span>)
+      <span class="ruby-identifier">method</span> = <span class="ruby-value str">'getPlaybackToken'</span>
+      <span class="ruby-identifier">type</span> = <span class="ruby-constant">String</span>
+      <span class="ruby-identifier">args</span> = {}
+      <span class="ruby-identifier">args</span>[<span class="ruby-identifier">:domain</span>] = <span class="ruby-identifier">domain</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">domain</span>
+      <span class="ruby-identifier">return_object</span> <span class="ruby-identifier">type</span>,<span class="ruby-identifier">method</span>,<span class="ruby-identifier">args</span>,<span class="ruby-keyword kw">true</span>
     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

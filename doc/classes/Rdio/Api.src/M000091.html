@@ -5,21 +5,18 @@
 
 <html>
 <head>
-  <title>search (Rdio::Api)</title>
+  <title>getTracksForAlbumInCollection (Rdio::Api)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/rdio/api.rb, line 310</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">search</span>(<span class="ruby-identifier">query</span>,<span class="ruby-identifier">types</span>=<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">never_or</span>=<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">extras</span>=<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">start</span>=<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">count</span>=<span class="ruby-keyword kw">nil</span>)
-      <span class="ruby-identifier">method</span> = <span class="ruby-value str">'search'</span>
-      <span class="ruby-identifier">type</span> = <span class="ruby-constant">TODO</span>
-      <span class="ruby-identifier">args</span> = {<span class="ruby-identifier">:query=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">query</span>}
-      <span class="ruby-identifier">args</span>[<span class="ruby-identifier">:types</span>] = <span class="ruby-identifier">types</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">types</span>
-      <span class="ruby-identifier">args</span>[<span class="ruby-identifier">:never_or</span>] = <span class="ruby-identifier">never_or</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">never_or</span>
+  <pre><span class="ruby-comment cmt"># File lib/rdio/api.rb, line 239</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">getTracksForAlbumInCollection</span>(<span class="ruby-identifier">album</span>,<span class="ruby-identifier">user</span>=<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">extras</span>=<span class="ruby-keyword kw">nil</span>)
+      <span class="ruby-identifier">method</span> = <span class="ruby-value str">'getTracksForAlbumInCollection'</span>
+      <span class="ruby-identifier">type</span> = <span class="ruby-constant">Track</span>
+      <span class="ruby-identifier">args</span> = {<span class="ruby-identifier">:album=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">album</span>}
+      <span class="ruby-identifier">args</span>[<span class="ruby-identifier">:user</span>] = <span class="ruby-identifier">user</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">user</span>
       <span class="ruby-identifier">args</span>[<span class="ruby-identifier">:extras</span>] = <span class="ruby-identifier">extras</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">extras</span>
-      <span class="ruby-identifier">args</span>[<span class="ruby-identifier">:start</span>] = <span class="ruby-identifier">start</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">start</span>
-      <span class="ruby-identifier">args</span>[<span class="ruby-identifier">:count</span>] = <span class="ruby-identifier">count</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">count</span>
       <span class="ruby-identifier">return_object</span> <span class="ruby-identifier">type</span>,<span class="ruby-identifier">method</span>,<span class="ruby-identifier">args</span>
     <span class="ruby-keyword kw">end</span></pre>
 </body>

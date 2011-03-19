@@ -5,18 +5,17 @@
 
 <html>
 <head>
-  <title>getActivityStream (Rdio::Api)</title>
+  <title>addToPlaylist (Rdio::Api)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/rdio/api.rb, line 97</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">getActivityStream</span>(<span class="ruby-identifier">user</span>,<span class="ruby-identifier">scope</span>,<span class="ruby-identifier">last_id</span>=<span class="ruby-keyword kw">nil</span>)
-      <span class="ruby-identifier">method</span> = <span class="ruby-value str">'getActivityStream'</span>
-      <span class="ruby-identifier">type</span> = <span class="ruby-constant">ActivityStream</span>
-      <span class="ruby-identifier">args</span> = {<span class="ruby-identifier">:user=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">user</span>,<span class="ruby-identifier">:scope=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">scope</span>}
-      <span class="ruby-identifier">args</span>[<span class="ruby-identifier">:last_id</span>] = <span class="ruby-identifier">last_id</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">last_id</span>
-      <span class="ruby-identifier">return_object</span> <span class="ruby-identifier">type</span>,<span class="ruby-identifier">method</span>,<span class="ruby-identifier">args</span>
+  <pre><span class="ruby-comment cmt"># File lib/rdio/api.rb, line 30</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">addToPlaylist</span>(<span class="ruby-identifier">playlist</span>,<span class="ruby-identifier">tracks</span>)
+      <span class="ruby-identifier">method</span> = <span class="ruby-value str">'addToPlaylist'</span>
+      <span class="ruby-identifier">type</span> = <span class="ruby-keyword kw">true</span>
+      <span class="ruby-identifier">args</span> = {<span class="ruby-identifier">:playlist=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">playlist</span>, <span class="ruby-identifier">:tracks=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">keys</span>(<span class="ruby-identifier">tracks</span>)}
+      <span class="ruby-identifier">return_object</span> <span class="ruby-identifier">type</span>,<span class="ruby-identifier">method</span>,<span class="ruby-identifier">args</span>,<span class="ruby-keyword kw">true</span>
     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

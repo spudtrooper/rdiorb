@@ -5,17 +5,14 @@
 
 <html>
 <head>
-  <title>findUserByEmail (Rdio::Api)</title>
+  <title>new (Rdio::Api)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/rdio/api.rb, line 68</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">findUserByEmail</span>(<span class="ruby-identifier">email</span>)
-      <span class="ruby-identifier">method</span> = <span class="ruby-value str">'findUser'</span>
-      <span class="ruby-identifier">type</span> = <span class="ruby-constant">User</span>
-      <span class="ruby-identifier">args</span> = {<span class="ruby-identifier">:email=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">email</span>}
-      <span class="ruby-identifier">return_object</span> <span class="ruby-identifier">type</span>,<span class="ruby-identifier">method</span>,<span class="ruby-identifier">args</span>
+  <pre><span class="ruby-comment cmt"># File lib/rdio/api.rb, line 9</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">key</span>,<span class="ruby-identifier">secret</span>)
+      <span class="ruby-keyword kw">super</span> <span class="ruby-identifier">key</span>,<span class="ruby-identifier">secret</span>
     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>
