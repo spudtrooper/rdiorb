@@ -29,45 +29,45 @@ module Rdio
 
     # Get all of the tracks by this artist.
     def tracks(appears_on=nil,start=nil,count=nil,extras=nil)
-      return api.getTracksForArtist self,appears_on,start,count,extras
+      api.getTracksForArtist self,appears_on,start,count,extras
     end
 
     # Which tracks from the given artist are in the user's collection.
     def tracks_in_collection(user=nil,extras=nil)
-      return api.getTracksForArtistInCollection self,user,extras
+      api.getTracksForArtistInCollection self,user,extras
     end
 
     # Fetch one or more objects from Rdio of type Artist.
     def self.all(keys)
-      return Rdio::api.get keys,Artist
+      Rdio::api.get keys,Artist
     end
 
     # Fetch one object from Rdio of type Artist.
     def self.get(key)
       arr = all [key]
-      return (arr and not arr.empty?) ? arr[0] : nil
+      (arr and not arr.empty?) ? arr[0] : nil
     end
 
     # Get all of the artist in a user's collection.
     def in_collection(user=nil,start=nil,count=nil,sort=nil,query=nil)
-      return api.getArtistsInCollection user,start,count,sort,query
+      api.getArtistsInCollection user,start,count,sort,query
     end
 
     # Return the Artist that the supplied Rdio short-code is a
     # representation of, or null if the short-code is invalid.
     def self.from_short_code(short_code)
-      return Rdio::api.getObjectFromShortCode short_code,Artist
+      Rdio::api.getObjectFromShortCode short_code,Artist
     end
 
     # Return the Artist that the supplied Rdio url is a representation
     # of, or null if the url doesn't represent an object.
     def self.from_url(url)
-      return Rdio::api.getObjectFromUrl url,Artist
+      Rdio::api.getObjectFromUrl url,Artist
     end
 
     # Return the site-wide most popular items for Artists
     def self.top_charts
-      return Rdio::api.getTopCharts Artist
+      Rdio::api.getTopCharts Artist
     end
 
   end
@@ -94,56 +94,56 @@ module Rdio
 
     # Fetch one or more objects from Rdio of type Album.
     def self.all(keys)
-      return Rdio::api.get keys,Album
+      Rdio::api.get keys,Album
     end
 
     # Fetch one object from Rdio of type Album.
     def self.get(key)
       arr = all [key]
-      return (arr and not arr.empty?) ? arr[0] : nil
+      (arr and not arr.empty?) ? arr[0] : nil
     end
 
     # Return the albums by (or featuring) an artist.
     def self.for_artist(artist,featuring=nil,extras=nil,start=nil,count=nil)
-      return Rdio::api.getAlbumsForArtist artist,featuring,extras,start,count
+      Rdio::api.getAlbumsForArtist artist,featuring,extras,start,count
     end
 
     # Get the albums in the user's collection by a particular artist.
     def self.for_artist_in_collection(artist,user=nil)
-      return Rdio::api.getAlbumsForArtistInCollection artist,user
+      Rdio::api.getAlbumsForArtistInCollection artist,user
     end
 
     # Get all of the albums in the user's collection.
     def self.in_collection(user=nil,start=nil,count=nil,
                           sort=nil,query=nil)
-      return Rdio::api.getAlbumsInCollection user,start,count,sort,query
+      Rdio::api.getAlbumsInCollection user,start,count,sort,query
     end
 
     # Return new albums released across a timeframe.
     def self.new_releases(time)
-      return Rdio::api.getNewReleases time
+      Rdio::api.getNewReleases time
     end
 
     # Return the Albums that the supplied Rdio short-code is a
     # representation of, or null if the short-code is invalid.
     def self.from_short_code(short_code)
-      return Rdio::api.getObjectFromShortCode short_code,Album
+      Rdio::api.getObjectFromShortCode short_code,Album
     end
 
     # Return the Album that the supplied Rdio url is a representation
     # of, or null if the url doesn't represent an object.
     def self.from_url(url)
-      return Rdio::api.getObjectFromUrl url,Album
+      Rdio::api.getObjectFromUrl url,Album
     end
 
     # Return the site-wide most popular items for Albums
     def self.top_charts
-      return Rdio::api.getTopCharts Album
+      Rdio::api.getTopCharts Album
     end
 
     # Which tracks on the given album are in the user's collection.
     def tracks_in_collection(user=nil,extras=nil)
-      return api.getTracksForAlbumInCollection self,user,extras
+      api.getTracksForAlbumInCollection self,user,extras
     end
 
   end
@@ -165,23 +165,23 @@ module Rdio
 
     # Get all of the tracks in the user's collection.
     def self.in_collection(user=nil,start=nil,count=nil,sort=nil,query=nil)
-      return Rdio::api.getTracksInCollection user,start,count,sort,query
+      Rdio::api.getTracksInCollection user,start,count,sort,query
     end
 
     # Get all of the tracks by this artist.
     def self.for_artist(artist,appears_on=nil,start=nil,
                             count=nil,extras=nil)
-      return Rdio::api.getTracksForArtist artist,appears_on,start,count,extras
+      Rdio::api.getTracksForArtist artist,appears_on,start,count,extras
     end
 
     # Which tracks from the given artist are in the user's collection.
     def self.for_artist_in_collection(artist,user=nil,extras=nil)
-      return Rdio::api.getTracksForArtistInCollection artist,user,extras
+      Rdio::api.getTracksForArtistInCollection artist,user,extras
     end
 
     # Fetch one or more objects from Rdio of type Track.
     def self.all(keys)
-      return Rdio::api.get keys,Track
+      Rdio::api.get keys,Track
     end
 
     # Fetch one object from Rdio of type Track.
@@ -193,23 +193,23 @@ module Rdio
     # Return the Track that the supplied Rdio short-code is a
     # representation of, or null if the short-code is invalid.
     def self.from_short_code(short_code)
-      return Rdio::api.getObjectFromShortCode short_code,Track
+      Rdio::api.getObjectFromShortCode short_code,Track
     end
 
     # Return the Track that the supplied Rdio url is a representation
     # of, or null if the url doesn't represent an object.
     def self.from_url(url)
-      return Rdio::api.getObjectFromUrl url,Track
+      Rdio::api.getObjectFromUrl url,Track
     end
 
     # Return the site-wide most popular items for Tracks
     def self.top_charts
-      return Rdio::api.getTopCharts Track
+      Rdio::api.getTopCharts Track
     end
 
     # Which tracks on the given album are in the user's collection.
     def self.for_album_in_collection(album,user=nil,extras=nil)
-      return Rdio::api.getTracksForAlbumInCollection album,user,extras
+      Rdio::api.getTracksForAlbumInCollection album,user,extras
     end
 
   end
@@ -225,30 +225,30 @@ module Rdio
 
     # Remove an item from a playlist by its position in the playlist.
     def remove(index,count,tracks)
-      return api.removeFromPlaylist self,index,count,tracks
+      api.removeFromPlaylist self,index,count,tracks
     end
 
 
     # Add a track to a playlist.
     def add_to_playlist(tracks)
-      return api.addToPlaylist self,tracks
+      api.addToPlaylist self,tracks
     end
 
    # Create a new playlist in the current user's collection.  The new
    # playlist will be returned if the creation is successful,
    # otherwise null will be returned.
     def self.create(name,description,tracks,extras=nil)
-      return Rdio::api.createPlaylist name,description,tracks,extras
+      Rdio::api.createPlaylist name,description,tracks,extras
     end
 
     # Delete a playlist.
     def delete
-      return api.deletePlaylist self
+      api.deletePlaylist self
     end
 
     # Fetch one or more objects from Rdio of type Playlist.
     def self.all(keys)
-      return Rdio::api.get keys,Playlist
+      Rdio::api.get keys,Playlist
     end
 
     # Fetch one object from Rdio of type Playlist.
@@ -260,18 +260,18 @@ module Rdio
     # Return the Playlist that the supplied Rdio short-code is a
     # representation of, or null if the short-code is invalid.
     def self.from_short_code(short_code)
-      return Rdio::api.getObjectFromShortCode short_code,Playlist
+      Rdio::api.getObjectFromShortCode short_code,Playlist
     end
 
     # Return the Playlist that the supplied Rdio url is a representation
     # of, or null if the url doesn't represent an object.
     def self.from_url(url)
-      return Rdio::api.getObjectFromUrl url,Playlist
+      Rdio::api.getObjectFromUrl url,Playlist
     end
 
     # Return the site-wide most popular items for Playlists
     def self.top_charts
-      return Rdio::api.getTopCharts Playlist
+      Rdio::api.getTopCharts Playlist
     end
 
   end
@@ -288,27 +288,27 @@ module Rdio
     # Get the activity events for a user, a user's friends, or
     # everyone on Rdio.
     def activity_stream(scope='user',last_id=nil)
-      return api.getActivityStream self,scope,last_id
+      api.getActivityStream self,scope,last_id
     end
 
     # Get information about the currently logged in user.
     def self.current(extras=nil)
-      return Rdio::api.currentUser extras
+      Rdio::api.currentUser extras
     end
 
    # Find a user either by email address.
     def self.find_by_email(email)
-      return Rdio::api.findUserByEmail email
+      Rdio::api.findUserByEmail email
     end
 
    # Find a user either by email address.
     def self.find_by_vanity_name(name)
-      return Rdio::api.findUserByVanityName name
+      Rdio::api.findUserByVanityName name
     end
 
     # Fetch one or more objects from Rdio of type User.
     def self.all(keys)
-      return Rdio::api.get keys,User
+      Rdio::api.get keys,User
     end
 
     # Fetch one object from Rdio of type User.
@@ -320,47 +320,47 @@ module Rdio
     # Get all of the albums in the user's collection.
     def albums_in_collection(start=nil,count=nil,
                                  sort=nil,query=nil)
-      return api.getAlbumsInCollection self,start,count,sort,query
+      api.getAlbumsInCollection self,start,count,sort,query
     end
 
     # Get the albums in the user's collection by a particular artist.
     def albums_for_artist_in_collection(artist)
-      return api.getAlbumsForArtistInCollection artist,self
+      api.getAlbumsForArtistInCollection artist,self
     end
 
     # Get all of the artist in a user's collection.
     def artists_in_collection(start=nil,count=nil,sort=nil,query=nil)
-      return api.getArtistsInCollection self,start,count,sort,query
+      api.getArtistsInCollection self,start,count,sort,query
     end
 
     # Which tracks from the given artist are in the user's collection.
     def tracks_for_artist_in_collection(artist,extras=nil)
-      return api.getTracksForArtistInCollection artist,self,extras
+      api.getTracksForArtistInCollection artist,self,extras
     end
 
     # Get all of the tracks in the user's collection.
     def tracks_in_collection(start=nil,count=nil,sort=nil,query=nil)
-      return api.getTracksInCollection self,start,count,sort,query
+      api.getTracksInCollection self,start,count,sort,query
     end
 
     # Which tracks on the given album are in the user's collection.
     def tracks_for_album_in_collection(album,extras=nil)
-      return api.getTracksForAlbumInCollection album,self,extras
+      api.getTracksForAlbumInCollection album,self,extras
     end
 
     # Add a friend to the current user.
     def self.add_friend(user)
-      return Rdio::api.addFriend user
+      Rdio::api.addFriend user
     end
 
     # Remove a friend from the current user.
     def self.remove_friend(user)
-      return Rdio::api.removeFriend user
+      Rdio::api.removeFriend user
     end
 
     # Remove tracks or playlists from the current user's collection.
     def self.remove_from_collection(objs)
-      return Rdio::api.removeFromCollection objs
+      Rdio::api.removeFromCollection objs
     end
 
     # Remove tracks from the current user's collection.
@@ -375,7 +375,7 @@ module Rdio
 
     # Add tracks or playlists to the current user's collection.
     def self.add_to_collection(objs)
-      return Rdio::api.addToCollection objs
+      Rdio::api.addToCollection objs
     end
 
     # Add tracks to the current user's collection.
@@ -391,41 +391,41 @@ module Rdio
     # Find the most popular artists or albums for a user, their
     # friends or the whole site.
     def heavy_rotation(friends=nil,limit=nil)
-      return api.getHeavyRotation self,nil,friends,limit
+      api.getHeavyRotation self,nil,friends,limit
     end
 
     # Find the most popular artists for a user, their friends or the
     # whole site.
     def artists_heavy_rotation(friends=nil,limit=nil)
-      return api.getHeavyRotation self,Artist,friends,limit
+      api.getHeavyRotation self,Artist,friends,limit
     end
 
     # Find the most popular albums for a user, their
     # friends or the whole site.
     def albums_heavy_rotation(friends=nil,limit=nil)
-      return api.getHeavyRotation self,Album,friends,limit
+      api.getHeavyRotation self,Album,friends,limit
     end
 
     # Return the User that the supplied Rdio short-code is a
     # representation of, or null if the short-code is invalid.
     def self.from_short_code(short_code)
-      return Rdio::api.getObjectFromShortCode short_code,User
+      Rdio::api.getObjectFromShortCode short_code,User
     end
 
     # Return the User that the supplied Rdio url is a representation
     # of, or null if the url doesn't represent an object.
     def self.from_url(url)
-      return Rdio::api.getObjectFromUrl url,User
+      Rdio::api.getObjectFromUrl url,User
     end
 
     # Get the current user's playlists.
     def self.playlists(extras=nil)
-      return Rdio::api.getPlaylists extras
+      Rdio::api.getPlaylists extras
     end
 
     # Return the site-wide most popular items for Users
     def self.top_charts
-      return Rdio::api.getTopCharts User
+      Rdio::api.getTopCharts User
     end
 
 
@@ -483,6 +483,15 @@ module Rdio
 
     end
 
+  end
+
+  # Wrapper for search
+  class Search
+    
+    def self.search(query,types=nil,never_or=nil,extras=nil,start=nil,count=nil)
+      Rdio::api.search query,types,never_or,extras,start,count
+    end
+    
   end
 
   # Dummy class so we can create booleans from strings

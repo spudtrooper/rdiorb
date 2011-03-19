@@ -8,19 +8,30 @@ module Rdio
   # Performs OAuth authentication based on a key and secret
   # ----------------------------------------------------------------------
   class RdioOAuth
+
+    SITE = 'http://api.rdio.com'
+
     def initialize(key,secret)
       @key = key
       @secret = secret
     end
 
-    def access_token
+    def access_token(requires_auth=false)
+      requires_auth ? access_token_auth : access_token_no_auth
+    end
 
-      consumer_key = @key
-      consumer_secret = @secret
+    private
+
+    def access_token_no_auth
+      consumer = OAuth::Consumer.new @key, @secret, {:site => SITE}
+      consumer.http.read_timeout = 600
+      OAuth::AccessToken.new consumer
+    end
+    
+    def access_token_auth
       consumer = 
-        OAuth::Consumer.new(consumer_key, 
-                            consumer_secret,
-                            {:site => 'http://api.rdio.com',
+        OAuth::Consumer.new(@key,@secret,
+                            {:site => SITE,
                               :request_token_path => "/oauth/request_token",
                               :authorize_path => "/oauth/authorize",
                               :access_token_path => "/oauth/access_token",
@@ -36,8 +47,7 @@ module Rdio
         print 'Enter the PIN> '
         oauth_verifier = gets.strip
       end
-      request_token.get_access_token({:oauth_verifier => 
-                                       oauth_verifier})
+      request_token.get_access_token({:oauth_verifier => oauth_verifier})
     end
   end
 

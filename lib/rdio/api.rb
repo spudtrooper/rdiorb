@@ -15,7 +15,7 @@ module Rdio
       method = 'addFriend'
       type = true
       args = {:user=>user}
-      return_object type,method,args
+      return_object type,method,args,true
     end
     
     # Add tracks or playlists to the current user's collection.
@@ -23,7 +23,7 @@ module Rdio
       method = 'addToCollection'
       type = true
       args = {:keys=>keys(objs)}
-      return_object type,method,args
+      return_object type,method,args,true
     end
     
     # Add a track to a playlist.
@@ -31,7 +31,7 @@ module Rdio
       method = 'addToPlaylist'
       type = true
       args = {:playlist=>playlist, :tracks=>keys(tracks)}
-      return_object type,method,args
+      return_object type,method,args,true
     end
     
     # Create a new playlist in the current user's collection.  The new
@@ -43,7 +43,7 @@ module Rdio
       args = {:name=>name,:description=>description,
         :tracks=>keys(tracks)}
       args[:extras] = extras if extras
-      return_object type,method,args
+      return_object type,method,args,true
     end
     
     # Get information about the currently logged in user.
@@ -52,7 +52,7 @@ module Rdio
       type = User
       args = {}
       args[:extras] = extras if extras
-      return_object type,method,args
+      return_object type,method,args,true
     end
     
     # Delete a playlist.
@@ -60,7 +60,7 @@ module Rdio
       method = 'deletePlaylist'
       type = Boolean
       args = {:playlist=>playlist}
-      return_object type,method,args
+      return_object type,method,args,true
     end
     
     # Find a user either by email address or by their username.  Exactly
@@ -89,7 +89,8 @@ module Rdio
       method = 'get'
       cls = type
       args = {:keys=>keys(objs)}
-      return_object cls,method,args,true
+      json = call method,args
+      create_object type,json,true
     end
     
     # Get the activity events for a user, a user's friends, or
@@ -185,7 +186,7 @@ module Rdio
       method = 'getObjectFromShortCode'
       type = BaseObj if not type
       args = {:short_code=>short_code}
-      return_object type,method,args
+      return_object type,method,args,true
     end
     
     # Return the object that the supplied Rdio url is a representation
@@ -194,7 +195,7 @@ module Rdio
       method = 'getObjectFromUrl'
       type = BaseObj if not type
       args = {:url=>url}
-      return_object type,method,args
+      return_object type,method,args,true
     end
     
     # Get an playback token. If you are using this for web playback you
@@ -204,7 +205,7 @@ module Rdio
       type = String
       args = {}
       args[:domain] = domain if domain
-      return_object type,method,args
+      return_object type,method,args,true
     end
       
     # Get the current user's playlists.
@@ -213,7 +214,7 @@ module Rdio
       type = Playlist
       args = {}
       args[:extras] = extras if extras
-      return_object type,method,args
+      return_object type,method,args,true
     end
     
     # Return the site-wide most popular items for a given type.
@@ -284,7 +285,7 @@ module Rdio
       method = 'removeFriend'
       type = Boolean
       args = {:user=>user}
-      return_object type,method,args
+      return_object type,method,args,true
     end
     
     # Remove tracks or playlists from the current user's collection.
@@ -299,11 +300,9 @@ module Rdio
     def removeFromPlaylist(playlist,index,count,tracks)
       method = 'removeFromPlaylist'
       type = TODO
-      args = {
-        :playlist=>playlist,:index=>index,
-        :count=>count,:tracks=>keys(tracks)
-      }
-      return_object type,method,args
+      args = {:playlist=>playlist,:index=>index,
+        :count=>count,:tracks=>keys(tracks)}
+      return_object type,method,args,truex
     end
     
     # Search for artists, albums, tracks, users or all kinds of objects.
@@ -316,7 +315,13 @@ module Rdio
       args[:extras] = extras if extras
       args[:start] = start if start
       args[:count] = count if count
-      return_object type,method,args
+      
+      json = call method,args
+      if Rdio::log_json
+        Rdio::log json
+      end
+      obj = unwrap_json json
+      return JSONObj.new obj
     end
     
     # Match the supplied prefix against artists, albums, tracks and

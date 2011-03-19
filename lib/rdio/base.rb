@@ -1,6 +1,12 @@
 require 'rubygems'
 require 'json'
 
+class Object
+  def to_k
+    return self
+  end
+end
+
 module Rdio
 
   # string -> string
@@ -8,10 +14,33 @@ module Rdio
   # Converts camel-case string to underscore-delimited one.
   #
   def camel2underscores(s)
+    return s if not s
+    return s if s == ''
+    def decapitilize(s)
+      s[0,1].downcase + s[1,s.length-1].to_s
+    end
+    s = decapitilize s 
     while s.match /([A-Z]+)/
-      s = s.gsub /#{$1}/,'_'+$1.downcase
+      s = s.gsub /#{$1}/,'_'+ decapitilize($1)
     end
     s
+  end
+
+  def convert_args(args)
+    res = {}
+    args.each do |k,v|
+      if v.is_a? Array
+        v = keys v
+      else
+        v = v.to_k
+      end
+      res[k] = v
+    end
+    return res
+  end
+  
+  def keys(objs)
+    objs.map {|x| x.to_k}
   end
 
   # object -> value
@@ -110,6 +139,34 @@ module Rdio
     end
 
   end
+
+  # ----------------------------------------------------------------------
+  # An Object that is based on json with simple types
+  # ----------------------------------------------------------------------
+  class JSONObj
+
+    attr_reader :json
+
+    def initialize(json)
+      @json = json
+    end
+
+    def method_missing(method,args={})
+      meth = method.to_s
+      res = @json[meth]
+      #
+      # Maybe this should be a number
+      #
+      if meth =~ /_count$/ or meth =~ /^num_/
+        begin
+          return res.to_i
+        rescue Exception => e
+          STDERR.puts "#{meth} (err) #{e}"
+        end
+      end
+      return res
+    end
+  end
   
   # ----------------------------------------------------------------------
   # An ApiObj with a 'key'
@@ -128,6 +185,10 @@ module Rdio
         self.key.equal?(that.key)
     end
 
+    def to_k
+      key
+    end
+
   end
 
   # ----------------------------------------------------------------------
@@ -139,44 +200,40 @@ module Rdio
 
     def initialize(key,secret)
       @oauth = RdioOAuth.new key,secret
-      @access_token = nil
+      @access_token_auth = nil
+      @access_token_no_auth = nil
     end
 
-    def call(method,args)
+    def call(method,args,requires_auth=false)
+      #
+      # Convert object with keys just to use their keys
+      #
+      args = convert_args args
       if Rdio::log_methods
-        Rdio::log "Called method: #{method}"
+        Rdio::log "Called method: #{method}(#{args}) : auth=#{requires_auth}"
       end
       new_args = {}
       new_args['method'] = method
       args.each do |k,v|
-        new_args[k] = BaseApi.key(v).to_s
+        new_args[k] = v.to_k.to_s
       end
-      url = 'http://api.rdio.com/1/'
-      resp,data = access_token.post url,new_args
+      url = '/1/'
+      if Rdio::log_posts
+        Rdio::log "Post to url=#{url} method=#{method} args=#{args}"
+      end
+      resp,data = access_token(requires_auth).post url,new_args
       return data
     end
 
-    def return_object(type,method,args,keys_to_objects=false)
-      json = call method,args
+    def return_object(type,method,args,requires_auth=false)
+      json = call method,args,requires_auth
       if Rdio::log_json
         Rdio::log json
       end
-      create_object type,json,keys_to_objects
-    end
-
-    def keys(objs)
-      objs.map {|x| BaseApi.key x}
+      create_object type,json
     end
 
     private
-
-    def self.key(v)
-      begin
-        return v.key
-      rescue
-      end
-      return v
-    end
 
     def fill_obj(type,x)
       res = type.new self
@@ -184,60 +241,72 @@ module Rdio
       return res
     end
 
-    def create_object(type,json,keys_to_objects=false)
+    def create_object(type,json_str,keys_to_objects=false)
       begin
-        _create_object(type,json,keys_to_objects)
+        _create_object(type,json_str,keys_to_objects)
       rescue Exception => e
-        STDERR.puts "create_json: #{json}"
-        STDERR.puts "create_json: #{e}"
+        STDERR.puts "create_json (err): #{e}"
+        STDERR.puts "create_json (str): #{json_str}"
         raise e
       end
     end
-    
-    def _create_object(type,json,keys_to_objects=false)
-      obj = JSON.parse json
+
+    def unwrap_json(json_str)
+      obj = JSON.parse json_str
       status = obj['status']
-      if status == 'ok'
-        result = obj['result']
-        if type == true
-          return true
-        end
-        if type == false
-          return false
-        end
-        if type == Boolean or type == String or 
-            type == Fixnum or type == Float
-          return false if not result
-          return to_o result
-        end
-        #
-        # A mild hack, but for get the result is a hash of keys to
-        # objects, in this case return an array of those objects
-        #
-        if keys_to_objects
-          result = result.values
-        end
-        #
-        # This could be an array (TODO: could not be general enough)
-        #
-        if result.is_a? Array
-          res = result.map {|x| fill_obj type,x}
-        else 
-          res = fill_obj type,result
-        end
-        return res
-      end
       if status == 'error'
         raise Exception.new obj['message']
       end
+      if status == 'ok'
+        return obj['result']
+      end
       raise Exception.new status
     end
-
-    def access_token
-      if not @access_token
-        @access_token = @oauth.access_token
+    
+    def _create_object(type,json_str,keys_to_objects=false)
+      if type == true
+        return true
       end
-      @access_token
+      if type == false
+        return false
+      end
+      result = unwrap_json(json_str)
+      if type == Boolean or type == String or 
+          type == Fixnum or type == Float
+        return false if not result
+        return to_o result
+      end
+      #
+      # A mild hack, but for get the result is a hash of keys to
+      # objects, in this case return an array of those objects
+      #
+      if keys_to_objects
+        result = result.values
+      end
+      #
+      # This could be an array (TODO: could not be general enough)
+      #
+      if result.is_a? Array
+        res = result.map {|x| fill_obj type,x}
+      else 
+        res = fill_obj type,result
+      end
+      return res
+    end
+
+    def access_token(requires_auth)
+      if requires_auth
+        if not @access_token_auth
+          @access_token_auth = @oauth.access_token requires_auth
+        end
+        res = @access_token_auth
+      else
+        if not @access_token_no_auth
+          @access_token_no_auth = @oauth.access_token requires_auth
+        end
+        res = @access_token_no_auth
+      end
+      res
     end
 
   end

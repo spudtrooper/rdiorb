@@ -1,4 +1,4 @@
-require 'test/unit'
+require File.dirname(__FILE__) + '/common'
 require File.dirname(__FILE__) + '/../lib/rdio'
 include Rdio
 
@@ -136,18 +136,10 @@ class TestUser < Test::Unit::TestCase
 
   def test_add_and_remove_friend
     that = User.find_by_email 'tim.julien@gmail.com'
-    assert_equal true,User.add_friend(that)
-    assert_equal true,User.remove_friend(that)
-    assert_equal false,User.remove_friend(that)
-    assert_equal true,User.add_friend(that)
-  end
-  
-  private
-  
-  def assert_length_at_least(num,arr,thing)
-    if arr.length < num
-      assert_fail "Not enough #{thing}s: #{arr.length} < #{num}"
-    end
+    User.add_friend that
+    User.remove_friend that
+    User.remove_friend that
+    User.add_friend that
   end
   
 end
