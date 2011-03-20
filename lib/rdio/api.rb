@@ -90,6 +90,9 @@ module Rdio
       cls = type
       args = {:keys=>keys(objs)}
       json = call method,args
+      if Rdio::log_json
+        Rdio::log "json: #{json}"
+      end
       create_object type,json,true
     end
     

@@ -20,6 +20,22 @@ class TestUser < Test::Unit::TestCase
     assert_equal 'Palm',user.last_name
   end
 
+  def test_find
+    name = 'spudtrooper'
+    user = User.find name
+    assert_not_nil user
+    assert_equal 'Jeffrey',user.first_name
+    assert_equal 'Palm',user.last_name
+  end
+
+  def test_find2
+    name = 'jeff@jeffpalm.com'
+    user = User.find name
+    assert_not_nil user
+    assert_equal 'Jeffrey',user.first_name
+    assert_equal 'Palm',user.last_name
+  end
+
   def test_current
     user = User.current
     assert_not_nil user
@@ -56,18 +72,24 @@ class TestUser < Test::Unit::TestCase
     user = User.current
     arr = user.albums_in_collection
     assert_length_at_least 100,arr,'album'
+    arr = user.albums_in_collection 0,10
+    assert_equal 10,arr.length
   end
 
   def test_artists_in_collection
     user = User.current
     arr = user.artists_in_collection
     assert_length_at_least 100,arr,'album'
+    arr = user.artists_in_collection 0,10
+    assert_equal 10,arr.length
   end
 
   def test_tracks_in_collection
     user = User.current
     arr = user.tracks_in_collection
     assert_length_at_least 100,arr,'track'
+    arr = user.tracks_in_collection 0,10
+    assert_equal 10,arr.length
   end
 
   def test_albums_for_artist_in_collection

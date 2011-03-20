@@ -27,6 +27,7 @@ module Rdio
   end
 
   def convert_args(args)
+    return nil if not args
     res = {}
     args.each do |k,v|
       if v.is_a? Array
@@ -40,7 +41,7 @@ module Rdio
   end
   
   def keys(objs)
-    objs.map {|x| x.to_k}
+    objs.map {|x| x.to_k}.join ','
   end
 
   # object -> value
@@ -49,7 +50,7 @@ module Rdio
   # can have primitives other than strings as attributes of BaseObjs.
   #
   def to_o(v)
-    if not v
+    if v == nil
       return nil
     end
     s = v.to_s
@@ -59,7 +60,7 @@ module Rdio
     if s == 'nil'
       return nil
     end
-    if s =~ /^\d+/
+    if s =~ /^\d+$/
       return s.to_i
     end
     if s =~ /^\d+\.?\d*$/

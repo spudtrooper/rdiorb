@@ -40,11 +40,21 @@ module Rdio
       request_token = consumer.get_request_token({:oauth_callback => 'oob'})
       url = 'https://www.rdio.com/oauth/authorize?oauth_token=' + 
         request_token.token.to_s
-      system 'open',url
+
+      # Try to open using launchy, then if this doesn't work us open
+      begin
+        require 'rubygems'
+        require 'launchy'
+        Launchy.open url
+      rescue Exception => e
+        Rdio::log.error e
+        Rdio::log.info 'Install the \'launchy\' gem to avoid this error'
+        system 'open',url
+      end
 
       oauth_verifier = nil
       while not oauth_verifier or oauth_verifier == ''
-        print 'Enter the PIN> '
+        print 'Enter the 4-digit PIN> '
         oauth_verifier = gets.strip
       end
       request_token.get_access_token({:oauth_verifier => oauth_verifier})

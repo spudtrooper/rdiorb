@@ -10,9 +10,9 @@
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/rdio/base.rb, line 42</span>
+  <pre><span class="ruby-comment cmt"># File lib/rdio/base.rb, line 43</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">keys</span>(<span class="ruby-identifier">objs</span>)
-    <span class="ruby-identifier">objs</span>.<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-identifier">x</span>.<span class="ruby-identifier">to_k</span>}
+    <span class="ruby-identifier">objs</span>.<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-identifier">x</span>.<span class="ruby-identifier">to_k</span>}.<span class="ruby-identifier">join</span> <span class="ruby-value str">','</span>
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

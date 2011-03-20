@@ -15,6 +15,46 @@ class TestSearch < Test::Unit::TestCase
     assert_equal 'ab_c',camel2underscores('AbC')
     assert_equal 'a_b_c',camel2underscores('ABC')
     assert_equal 'a_b_cde',camel2underscores('ABCde')
+    assert_equal 'get_tracks_for_artist_in_collection',
+      camel2underscores('getTracksForArtistInCollection')
+  end
+
+  class C
+    def to_s
+      nil
+    end
+  end
+
+  def test_to_o
+    assert_equal nil,to_o(nil)
+    assert_equal nil,to_o(C.new)
+    assert_equal nil,to_o('nil')
+    assert_equal 123,to_o(123)
+    assert_equal 123,to_o('123')
+    assert_equal 123.456,to_o(123.456)
+    assert_equal 123.456,to_o('123.456')
+    assert_equal true,to_o(true)
+    assert_equal true,to_o('true')
+    assert_equal false,to_o(false)
+    assert_equal false,to_o('false')
+    assert_equal [],to_o('[]')
+    assert_equal [1,2,3],to_o('[1,2,3]')
+  end
+
+
+  class K
+    def to_k
+      'k'
+    end
+  end
+
+  def test_convert_args
+    assert_equal nil,convert_args(nil)
+    assert_equal ({}),convert_args({})
+    assert_equal ({:one=>1}),convert_args({:one=>1})
+    assert_equal ({:one=>'k'}),convert_args({:one=>K.new})
+    assert_equal ({:one=>'k'}),convert_args({:one=>[K.new]})
+    assert_equal ({:one=>'k,k'}),convert_args({:one=>[K.new,K.new]})
   end
 
 end

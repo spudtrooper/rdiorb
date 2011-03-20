@@ -31,6 +31,11 @@ module Rdio
     def tracks(appears_on=nil,start=nil,count=nil,extras=nil)
       api.getTracksForArtist self,appears_on,start,count,extras
     end
+    
+    # Get all the albums by this artist
+    def albums(featuring=nil,extras=nil,start=nil,count=nil)
+      api.getAlbumsForArtist self,featuring,extras,start,count
+    end
 
     # Which tracks from the given artist are in the user's collection.
     def tracks_in_collection(user=nil,extras=nil)
@@ -306,6 +311,11 @@ module Rdio
       Rdio::api.findUserByVanityName name
     end
 
+    # Finds the user by email or vanity name
+    def self.find(s)
+      s =~ /@/ ? find_by_email(s) : find_by_vanity_name(s)
+    end
+
     # Fetch one or more objects from Rdio of type User.
     def self.all(keys)
       Rdio::api.get keys,User
@@ -318,8 +328,7 @@ module Rdio
     end
 
     # Get all of the albums in the user's collection.
-    def albums_in_collection(start=nil,count=nil,
-                                 sort=nil,query=nil)
+    def albums_in_collection(start=nil,count=nil,sort=nil,query=nil)
       api.getAlbumsInCollection self,start,count,sort,query
     end
 
