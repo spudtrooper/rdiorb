@@ -5,14 +5,15 @@
 
 <html>
 <head>
-  <title>access_token (Rdio::RdioOAuth)</title>
+  <title>new (Rdio::RdioOAuth)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/rdio/oauth.rb, line 19</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">access_token</span>(<span class="ruby-identifier">requires_auth</span>=<span class="ruby-keyword kw">false</span>)
-      <span class="ruby-identifier">requires_auth</span> <span class="ruby-value">? </span><span class="ruby-identifier">access_token_auth</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">access_token_no_auth</span>
+  <pre><span class="ruby-comment cmt"># File lib/rdio/oauth.rb, line 14</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">key</span>,<span class="ruby-identifier">secret</span>)
+      <span class="ruby-ivar">@key</span> = <span class="ruby-identifier">key</span>
+      <span class="ruby-ivar">@secret</span> = <span class="ruby-identifier">secret</span>
     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

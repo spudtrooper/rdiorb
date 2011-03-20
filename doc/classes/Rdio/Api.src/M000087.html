@@ -5,16 +5,16 @@
 
 <html>
 <head>
-  <title>getObjectFromUrl (Rdio::Api)</title>
+  <title>getObjectFromShortCode (Rdio::Api)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/rdio/api.rb, line 194</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">getObjectFromUrl</span>(<span class="ruby-identifier">url</span>,<span class="ruby-identifier">type</span>=<span class="ruby-keyword kw">nil</span>)
-      <span class="ruby-identifier">method</span> = <span class="ruby-value str">'getObjectFromUrl'</span>
+  <pre><span class="ruby-comment cmt"># File lib/rdio/api.rb, line 185</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">getObjectFromShortCode</span>(<span class="ruby-identifier">short_code</span>,<span class="ruby-identifier">type</span>=<span class="ruby-keyword kw">nil</span>)
+      <span class="ruby-identifier">method</span> = <span class="ruby-value str">'getObjectFromShortCode'</span>
       <span class="ruby-identifier">type</span> = <span class="ruby-constant">BaseObj</span> <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">not</span> <span class="ruby-identifier">type</span>
-      <span class="ruby-identifier">args</span> = {<span class="ruby-identifier">:url=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">url</span>}
+      <span class="ruby-identifier">args</span> = {<span class="ruby-identifier">:short_code=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">short_code</span>}
       <span class="ruby-identifier">return_object</span> <span class="ruby-identifier">type</span>,<span class="ruby-identifier">method</span>,<span class="ruby-identifier">args</span>,<span class="ruby-keyword kw">true</span>
     <span class="ruby-keyword kw">end</span></pre>
 </body>
