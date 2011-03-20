@@ -26,6 +26,7 @@ module Rdio
     attr_accessor :log_json
     attr_accessor :log_methods
     attr_accessor :log_symbols
+    attr_accessor :log_posts
     def log(str)
       logger.debug { str }
     end
@@ -34,6 +35,7 @@ module Rdio
   self.log_json = false
   self.log_methods = false
   self.log_symbols = false
+  self.log_posts = false
 
   @logger ||= ::Logger.new(STDERR)
   @api = nil
@@ -46,6 +48,11 @@ module Rdio
   # existing one.
   def self.init(key,secret)
     @api = Api.new key,secret
+  end
+
+  # Resets shared API to nil
+  def reset
+    @api = nil
   end
 
   # Returns the shared Rdio::Api instance.  If it hasn't been set, we
