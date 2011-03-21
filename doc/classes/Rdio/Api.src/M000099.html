@@ -5,16 +5,16 @@
 
 <html>
 <head>
-  <title>getTracksForArtistInCollection (Rdio::Api)</title>
+  <title>getTracksForAlbumInCollection (Rdio::Api)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/rdio/api.rb, line 264</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">getTracksForArtistInCollection</span>(<span class="ruby-identifier">artist</span>,<span class="ruby-identifier">user</span>=<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">extras</span>=<span class="ruby-keyword kw">nil</span>)
-      <span class="ruby-identifier">method</span> = <span class="ruby-value str">'getTracksForArtistInCollection'</span>
+  <pre><span class="ruby-comment cmt"># File lib/rdio/api.rb, line 242</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">getTracksForAlbumInCollection</span>(<span class="ruby-identifier">album</span>,<span class="ruby-identifier">user</span>=<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">extras</span>=<span class="ruby-keyword kw">nil</span>)
+      <span class="ruby-identifier">method</span> = <span class="ruby-value str">'getTracksForAlbumInCollection'</span>
       <span class="ruby-identifier">type</span> = <span class="ruby-constant">Track</span>
-      <span class="ruby-identifier">args</span> = {<span class="ruby-identifier">:artist=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">artist</span>}
+      <span class="ruby-identifier">args</span> = {<span class="ruby-identifier">:album=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">album</span>}
       <span class="ruby-identifier">args</span>[<span class="ruby-identifier">:user</span>] = <span class="ruby-identifier">user</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">user</span>
       <span class="ruby-identifier">args</span>[<span class="ruby-identifier">:extras</span>] = <span class="ruby-identifier">extras</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">extras</span>
       <span class="ruby-identifier">return_object</span> <span class="ruby-identifier">type</span>,<span class="ruby-identifier">method</span>,<span class="ruby-identifier">args</span>

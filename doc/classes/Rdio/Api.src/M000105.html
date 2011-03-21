@@ -5,18 +5,18 @@
 
 <html>
 <head>
-  <title>searchSuggestions (Rdio::Api)</title>
+  <title>removeFromPlaylist (Rdio::Api)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/rdio/api.rb, line 332</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">searchSuggestions</span>(<span class="ruby-identifier">query</span>,<span class="ruby-identifier">extras</span>)
-      <span class="ruby-identifier">method</span> = <span class="ruby-value str">'searchSuggestions'</span>
+  <pre><span class="ruby-comment cmt"># File lib/rdio/api.rb, line 303</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">removeFromPlaylist</span>(<span class="ruby-identifier">playlist</span>,<span class="ruby-identifier">index</span>,<span class="ruby-identifier">count</span>,<span class="ruby-identifier">tracks</span>)
+      <span class="ruby-identifier">method</span> = <span class="ruby-value str">'removeFromPlaylist'</span>
       <span class="ruby-identifier">type</span> = <span class="ruby-constant">TODO</span>
-      <span class="ruby-identifier">args</span> = {<span class="ruby-identifier">:query=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">query</span>}
-      <span class="ruby-identifier">args</span>[<span class="ruby-identifier">:extras</span>] = <span class="ruby-identifier">extras</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">extras</span>
-      <span class="ruby-identifier">return_object</span> <span class="ruby-identifier">type</span>,<span class="ruby-identifier">method</span>,<span class="ruby-identifier">args</span>
+      <span class="ruby-identifier">args</span> = {<span class="ruby-identifier">:playlist=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">playlist</span>,<span class="ruby-identifier">:index=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">index</span>,
+        <span class="ruby-identifier">:count=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">count</span>,<span class="ruby-identifier">:tracks=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">keys</span>(<span class="ruby-identifier">tracks</span>)}
+      <span class="ruby-identifier">return_object</span> <span class="ruby-identifier">type</span>,<span class="ruby-identifier">method</span>,<span class="ruby-identifier">args</span>,<span class="ruby-identifier">truex</span>
     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

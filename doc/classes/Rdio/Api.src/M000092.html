@@ -5,17 +5,26 @@
 
 <html>
 <head>
-  <title>getObjectFromShortCode (Rdio::Api)</title>
+  <title>getHeavyRotation (Rdio::Api)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/rdio/api.rb, line 188</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">getObjectFromShortCode</span>(<span class="ruby-identifier">short_code</span>,<span class="ruby-identifier">type</span>=<span class="ruby-keyword kw">nil</span>)
-      <span class="ruby-identifier">method</span> = <span class="ruby-value str">'getObjectFromShortCode'</span>
-      <span class="ruby-identifier">type</span> = <span class="ruby-constant">BaseObj</span> <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">not</span> <span class="ruby-identifier">type</span>
-      <span class="ruby-identifier">args</span> = {<span class="ruby-identifier">:short_code=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">short_code</span>}
-      <span class="ruby-identifier">return_object</span> <span class="ruby-identifier">type</span>,<span class="ruby-identifier">method</span>,<span class="ruby-identifier">args</span>,<span class="ruby-keyword kw">true</span>
+  <pre><span class="ruby-comment cmt"># File lib/rdio/api.rb, line 158</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">getHeavyRotation</span>(<span class="ruby-identifier">user</span>=<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">type</span>=<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">friends</span>=<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">limit</span>=<span class="ruby-keyword kw">nil</span>)
+      <span class="ruby-identifier">method</span> = <span class="ruby-value str">'getHeavyRotation'</span>
+      <span class="ruby-identifier">cls</span> = <span class="ruby-constant">TODO</span>
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">type</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'artist'</span>
+        <span class="ruby-identifier">cls</span> = <span class="ruby-constant">Artist</span>
+      <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">type</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'album'</span>
+        <span class="ruby-identifier">cls</span> = <span class="ruby-constant">Album</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-identifier">args</span> = {}
+      <span class="ruby-identifier">args</span>[<span class="ruby-identifier">:user</span>] = <span class="ruby-identifier">user</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">user</span>
+      <span class="ruby-identifier">args</span>[<span class="ruby-identifier">:type</span>] = <span class="ruby-identifier">type</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">type</span>
+      <span class="ruby-identifier">args</span>[<span class="ruby-identifier">:friends</span>] = <span class="ruby-identifier">friends</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">friends</span>
+      <span class="ruby-identifier">args</span>[<span class="ruby-identifier">:limit</span>] = <span class="ruby-identifier">limit</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">limit</span>
+      <span class="ruby-identifier">return_object</span> <span class="ruby-identifier">cls</span>,<span class="ruby-identifier">method</span>,<span class="ruby-identifier">args</span>
     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

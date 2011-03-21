@@ -5,18 +5,14 @@
 
 <html>
 <head>
-  <title>return_object (Rdio::BaseApi)</title>
+  <title>get_pin (Rdio::BaseApi)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/rdio/base.rb, line 252</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">return_object</span>(<span class="ruby-identifier">type</span>,<span class="ruby-identifier">method</span>,<span class="ruby-identifier">args</span>,<span class="ruby-identifier">requires_auth</span>=<span class="ruby-keyword kw">false</span>)
-      <span class="ruby-identifier">json</span> = <span class="ruby-identifier">call</span> <span class="ruby-identifier">method</span>,<span class="ruby-identifier">args</span>,<span class="ruby-identifier">requires_auth</span>
-      <span class="ruby-keyword kw">if</span> <span class="ruby-constant">Rdio</span><span class="ruby-operator">::</span><span class="ruby-identifier">log_json</span>
-        <span class="ruby-constant">Rdio</span><span class="ruby-operator">::</span><span class="ruby-identifier">log</span> <span class="ruby-identifier">json</span>
-      <span class="ruby-keyword kw">end</span>
-      <span class="ruby-identifier">create_object</span> <span class="ruby-identifier">type</span>,<span class="ruby-identifier">json</span>
+  <pre><span class="ruby-comment cmt"># File lib/rdio/base.rb, line 242</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_pin</span>
+      <span class="ruby-ivar">@oauth</span>.<span class="ruby-identifier">get_pin</span>
     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>
