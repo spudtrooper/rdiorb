@@ -12,4 +12,36 @@ class TestSearch < Test::Unit::TestCase
     assert_at_least 10,res.playlist_count,'playlist_count'
   end
 
+  def test_search_artist
+    res = Artist.search 'Kanye West'
+    assert_at_least 10,res.length,'length'
+    res.each do |o|
+      assert_equal Artist,o.class
+    end
+  end
+
+  def test_search_album
+    res = Album.search 'The'
+    assert_at_least 10,res.length,'length'
+    res.each do |o|
+      assert_equal Album,o.class
+    end
+  end
+
+  def test_search_track
+    res = Track.search 'The'
+    assert_at_least 10,res.length,'length'
+    res.each do |o|
+      assert_equal Track,o.class
+    end
+  end
+
+  def test_search_user
+    res = User.search 'The'
+    assert_at_least 10,res.length,'length'
+    res.each do |o|
+      assert_equal User,o.class
+    end
+  end
+
 end

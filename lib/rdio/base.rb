@@ -137,6 +137,7 @@ module Rdio
             "#{sym} => #{o} for type: #{self.class}"
         end
       end
+      self
     end
 
   end
@@ -185,6 +186,8 @@ module Rdio
       self.class.equal?(that.class) and 
         self.key.equal?(that.key)
     end
+
+    private
 
     def to_k
       key

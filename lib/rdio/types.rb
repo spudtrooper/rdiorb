@@ -27,6 +27,11 @@ module Rdio
 
     attr_accessor :tracks
 
+    # Returns an array of Album for the query and other params
+    def self.search(query,never_or=nil,extras=nil,start=nil,count=nil)
+      Search.search_for query,Artist,never_or,extras,start,count
+    end
+
     # Get all of the tracks by this artist.
     def tracks(appears_on=nil,start=nil,count=nil,extras=nil)
       api.getTracksForArtist self,appears_on,start,count,extras
@@ -96,6 +101,11 @@ module Rdio
 
     # the tracks
     attr_accessor :tracks
+
+    # Returns an array of Album for the query and other params
+    def self.search(query,never_or=nil,extras=nil,start=nil,count=nil)
+      Search.search_for query,Album,never_or,extras,start,count
+    end
 
     # Fetch one or more objects from Rdio of type Album.
     def self.all(keys)
@@ -168,6 +178,11 @@ module Rdio
     # the secondary id
     attr_accessor :secondary_id
 
+    # Returns an array of Track for the query and other params
+    def self.search(query,never_or=nil,extras=nil,start=nil,count=nil)
+      Search.search_for query,Track,never_or,extras,start,count
+    end
+
     # Get all of the tracks in the user's collection.
     def self.in_collection(user=nil,start=nil,count=nil,sort=nil,query=nil)
       Rdio::api.getTracksInCollection user,start,count,sort,query
@@ -233,6 +248,10 @@ module Rdio
       api.removeFromPlaylist self,index,count,tracks
     end
 
+    # Returns an array of Playlist for the query and other params
+    def self.search(query,never_or=nil,extras=nil,start=nil,count=nil)
+      Search.search_for query,Playlist,never_or,extras,start,count
+    end
 
     # Add a track to a playlist.
     def add_to_playlist(tracks)
@@ -294,6 +313,11 @@ module Rdio
     # everyone on Rdio.
     def activity_stream(scope='user',last_id=nil)
       api.getActivityStream self,scope,last_id
+    end
+
+    # Returns an array of User for the query and other params
+    def self.search(query,never_or=nil,extras=nil,start=nil,count=nil)
+      Search.search_for query,User,never_or,extras,start,count
     end
 
     # Get information about the currently logged in user.
@@ -497,8 +521,20 @@ module Rdio
   # Wrapper for search
   class Search
     
+    # Search for 'query' and other parameters
     def self.search(query,types=nil,never_or=nil,extras=nil,start=nil,count=nil)
       Rdio::api.search query,types,never_or,extras,start,count
+    end
+
+    # Searches for objects with type 'type' and 'query' and other
+    # parameters
+    def self.search_for(query,type,never_or=nil,extras=nil,start=nil,count=nil)
+      type_name = type.name.gsub /.*\:\:/,''
+      result = Search.search query,[type_name],never_or,extras,start,count
+      return result if not result
+      results = result.results || []
+      api = @api
+      results.map {|o| type.new(api).fill o}
     end
     
   end
