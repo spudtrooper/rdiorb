@@ -1,9 +1,20 @@
 require 'rubygems'
 require 'json'
 
+# Make sure objects return 'self' by default to 'to_k', then we can
+# override this for subsequent types -- like Artist, Track, etc --
+# that need to use their key for this value
 class Object
   def to_k
     return self
+  end
+end
+
+# When putting classes into arguments to BaseApi.call we want to use a
+# classes simple name for the argument value
+class Class
+  def to_k
+    name.gsub /.*\:\:/,''
   end
 end
 
@@ -26,6 +37,13 @@ module Rdio
     s
   end
 
+  # hash -> hash
+  #
+  # Uses the value of 'to_k' for all the iput hash values in the
+  # result hash. This is used to make sure that the arguments passed
+  # to create urls use keys for the values of objects like Artist,
+  # Track, etc.  Also, we use the simple name of classes.
+  #
   def convert_args(args)
     return nil if not args
     res = {}
@@ -40,8 +58,13 @@ module Rdio
     return res
   end
   
+  # array -> string
+  #
+  # Creates a ','-separated string of the value of 'to_k' from all the
+  # values in 'objs'.  We also remove the nils from the input array.
+  #
   def keys(objs)
-    objs.map {|x| x.to_k}.join ','
+    (not objs) ? '' : objs.compact.map {|x| x.to_k}.join(',')
   end
 
   # object -> value
@@ -80,9 +103,11 @@ module Rdio
     return s
   end
 
-  # Override this to declare how certain attributes are constructed.
-  # This is done at the end of types.rb.
   class << self
+    #
+    # Override this to declare how certain attributes are constructed.
+    # This is done at the end of types.rb.
+    #
     attr_accessor :symbols_to_types
   end
   self.symbols_to_types = {}
@@ -117,11 +142,7 @@ module Rdio
           # Allow simple types that are used for arrays
           #
           if v.is_a? Array
-            o = v.map do |x|
-              obj = type.new api
-              obj.fill x
-              obj
-            end
+            o = v.map {|x| type.new(api).fill x}
           else
             o = type.new api
             o.fill v
@@ -183,11 +204,8 @@ module Rdio
 
     # Compares only by key
     def eql?(that)  
-      self.class.equal?(that.class) and 
-        self.key.equal?(that.key)
+      self.class.equal? that.class and self.key.equal? that.key
     end
-
-    private
 
     def to_k
       key
@@ -201,6 +219,8 @@ module Rdio
   # 'return_object', and 'create_object'
   # ----------------------------------------------------------------------
   class BaseApi
+
+    PATH = '/1/'
 
     def initialize(key,secret)
       @oauth = RdioOAuth.new key,secret
@@ -221,7 +241,7 @@ module Rdio
       args.each do |k,v|
         new_args[k] = v.to_k.to_s
       end
-      url = '/1/'
+      url = PATH
       if Rdio::log_posts
         Rdio::log "Post to url=#{url} method=#{method} args=#{args}"
       end

@@ -5,14 +5,14 @@
 
 <html>
 <head>
-  <title>add_friend (Rdio::User)</title>
+  <title>tracks_for_album_in_collection (Rdio::User)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/rdio/types.rb, line 385</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">add_friend</span>(<span class="ruby-identifier">user</span>)
-      <span class="ruby-constant">Rdio</span><span class="ruby-operator">::</span><span class="ruby-identifier">api</span>.<span class="ruby-identifier">addFriend</span> <span class="ruby-identifier">user</span>
+  <pre><span class="ruby-comment cmt"># File lib/rdio/types.rb, line 380</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tracks_for_album_in_collection</span>(<span class="ruby-identifier">album</span>,<span class="ruby-identifier">extras</span>=<span class="ruby-keyword kw">nil</span>)
+      <span class="ruby-identifier">api</span>.<span class="ruby-identifier">getTracksForAlbumInCollection</span> <span class="ruby-identifier">album</span>,<span class="ruby-keyword kw">self</span>,<span class="ruby-identifier">extras</span>
     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

@@ -5,14 +5,14 @@
 
 <html>
 <head>
-  <title>find (Rdio::User)</title>
+  <title>find_by_vanity_name (Rdio::User)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/rdio/types.rb, line 339</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">s</span>)
-      <span class="ruby-identifier">s</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/@/</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">find_by_email</span>(<span class="ruby-identifier">s</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">find_by_vanity_name</span>(<span class="ruby-identifier">s</span>)
+  <pre><span class="ruby-comment cmt"># File lib/rdio/types.rb, line 334</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">find_by_vanity_name</span>(<span class="ruby-identifier">name</span>)
+      <span class="ruby-constant">Rdio</span><span class="ruby-operator">::</span><span class="ruby-identifier">api</span>.<span class="ruby-identifier">findUserByVanityName</span> <span class="ruby-identifier">name</span>
     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

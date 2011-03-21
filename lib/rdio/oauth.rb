@@ -1,6 +1,5 @@
 require 'rubygems'
 require 'oauth'
-require 'open-uri'
 
 module Rdio
 
@@ -10,10 +9,38 @@ module Rdio
   class RdioOAuth
 
     SITE = 'http://api.rdio.com'
+    
+    # string[url] -> string
+    #
+    # Set this to allow a different way to enter the pin found for
+    # authorization.  By default it will open a browser and repeatedly
+    # ask the user for input from the console.
+    #
+    attr_writer :get_pin
 
     def initialize(key,secret)
       @key = key
       @secret = secret
+      @get_pin = lambda do |url|
+
+        # Try to open using launchy, then if this doesn't work us open
+        begin
+          require 'rubygems'
+          require 'launchy'
+          Launchy.open url
+        rescue Exception => e
+          Rdio::log.error e
+          Rdio::log.info 'Install the \'launchy\' gem to avoid this error'
+          system 'open',url
+        end
+        
+        oauth_verifier = nil
+        while not oauth_verifier or oauth_verifier == ''
+          print 'Enter the 4-digit PIN> '
+          oauth_verifier = gets.strip
+        end
+        return oauth_verifier
+      end
     end
 
     def access_token(requires_auth=false)
@@ -39,24 +66,8 @@ module Rdio
 
       request_token = consumer.get_request_token({:oauth_callback => 'oob'})
       url = 'https://www.rdio.com/oauth/authorize?oauth_token=' + 
-        request_token.token.to_s
-
-      # Try to open using launchy, then if this doesn't work us open
-      begin
-        require 'rubygems'
-        require 'launchy'
-        Launchy.open url
-      rescue Exception => e
-        Rdio::log.error e
-        Rdio::log.info 'Install the \'launchy\' gem to avoid this error'
-        system 'open',url
-      end
-
-      oauth_verifier = nil
-      while not oauth_verifier or oauth_verifier == ''
-        print 'Enter the 4-digit PIN> '
-        oauth_verifier = gets.strip
-      end
+        request_token.token.to_s      
+      oauth_verifier = @get_pin.call url
       request_token.get_access_token({:oauth_verifier => oauth_verifier})
     end
   end

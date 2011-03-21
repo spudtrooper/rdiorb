@@ -529,8 +529,7 @@ module Rdio
     # Searches for objects with type 'type' and 'query' and other
     # parameters
     def self.search_for(query,type,never_or=nil,extras=nil,start=nil,count=nil)
-      type_name = type.name.gsub /.*\:\:/,''
-      result = Search.search query,[type_name],never_or,extras,start,count
+      result = search query,[type],never_or,extras,start,count
       return result if not result
       results = result.results || []
       api = @api

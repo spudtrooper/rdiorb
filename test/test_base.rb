@@ -41,11 +41,30 @@ class TestSearch < Test::Unit::TestCase
     assert_equal [1,2,3],to_o('[1,2,3]')
   end
 
-
   class K
     def to_k
       'k'
     end
+  end
+
+  def test_to_k
+    assert_equal nil,nil.to_k
+    assert_equal 's','s'.to_k
+    assert_equal 'k',K.new.to_k
+    assert_equal 'K',K.to_k
+  end
+
+  def test_keys
+    assert_equal '',keys(nil)
+    assert_equal '',keys([])
+    assert_equal '1',keys([1])
+    assert_equal '1,2',keys([1,2])
+    assert_equal 'k',keys([K.new])
+    assert_equal 'k,k',keys([K.new,K.new])
+    assert_equal 'K',keys([K])
+    assert_equal 'K,K',keys([K,K])
+    assert_equal '',keys([nil])
+    assert_equal '',keys([nil,nil])
   end
 
   def test_convert_args
