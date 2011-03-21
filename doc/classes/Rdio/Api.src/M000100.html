@@ -5,18 +5,17 @@
 
 <html>
 <head>
-  <title>searchSuggestions (Rdio::Api)</title>
+  <title>removeFriend (Rdio::Api)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/rdio/api.rb, line 332</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">searchSuggestions</span>(<span class="ruby-identifier">query</span>,<span class="ruby-identifier">extras</span>)
-      <span class="ruby-identifier">method</span> = <span class="ruby-value str">'searchSuggestions'</span>
-      <span class="ruby-identifier">type</span> = <span class="ruby-constant">TODO</span>
-      <span class="ruby-identifier">args</span> = {<span class="ruby-identifier">:query=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">query</span>}
-      <span class="ruby-identifier">args</span>[<span class="ruby-identifier">:extras</span>] = <span class="ruby-identifier">extras</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">extras</span>
-      <span class="ruby-identifier">return_object</span> <span class="ruby-identifier">type</span>,<span class="ruby-identifier">method</span>,<span class="ruby-identifier">args</span>
+  <pre><span class="ruby-comment cmt"># File lib/rdio/api.rb, line 287</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">removeFriend</span>(<span class="ruby-identifier">user</span>)
+      <span class="ruby-identifier">method</span> = <span class="ruby-value str">'removeFriend'</span>
+      <span class="ruby-identifier">type</span> = <span class="ruby-constant">Boolean</span>
+      <span class="ruby-identifier">args</span> = {<span class="ruby-identifier">:user=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">user</span>}
+      <span class="ruby-identifier">return_object</span> <span class="ruby-identifier">type</span>,<span class="ruby-identifier">method</span>,<span class="ruby-identifier">args</span>,<span class="ruby-keyword kw">true</span>
     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

@@ -5,28 +5,22 @@
 
 <html>
 <head>
-  <title>search (Rdio::Api)</title>
+  <title>getTracksInCollection (Rdio::Api)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/rdio/api.rb, line 312</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">search</span>(<span class="ruby-identifier">query</span>,<span class="ruby-identifier">types</span>=<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">never_or</span>=<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">extras</span>=<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">start</span>=<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">count</span>=<span class="ruby-keyword kw">nil</span>)
-      <span class="ruby-identifier">method</span> = <span class="ruby-value str">'search'</span>
-      <span class="ruby-identifier">type</span> = <span class="ruby-constant">TODO</span>
-      <span class="ruby-identifier">args</span> = {<span class="ruby-identifier">:query=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">query</span>}
-      <span class="ruby-identifier">args</span>[<span class="ruby-identifier">:types</span>] = <span class="ruby-identifier">types</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">types</span>
-      <span class="ruby-identifier">args</span>[<span class="ruby-identifier">:never_or</span>] = <span class="ruby-identifier">never_or</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">never_or</span>
-      <span class="ruby-identifier">args</span>[<span class="ruby-identifier">:extras</span>] = <span class="ruby-identifier">extras</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">extras</span>
+  <pre><span class="ruby-comment cmt"># File lib/rdio/api.rb, line 274</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">getTracksInCollection</span>(<span class="ruby-identifier">user</span>=<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">start</span>=<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">count</span>=<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">sort</span>=<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">query</span>=<span class="ruby-keyword kw">nil</span>)
+      <span class="ruby-identifier">method</span> = <span class="ruby-value str">'getTracksInCollection'</span>
+      <span class="ruby-identifier">type</span> = <span class="ruby-constant">Track</span>
+      <span class="ruby-identifier">args</span> = {}
+      <span class="ruby-identifier">args</span>[<span class="ruby-identifier">:user</span>] = <span class="ruby-identifier">user</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">user</span>
       <span class="ruby-identifier">args</span>[<span class="ruby-identifier">:start</span>] = <span class="ruby-identifier">start</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">start</span>
       <span class="ruby-identifier">args</span>[<span class="ruby-identifier">:count</span>] = <span class="ruby-identifier">count</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">count</span>
-      
-      <span class="ruby-identifier">json</span> = <span class="ruby-identifier">call</span> <span class="ruby-identifier">method</span>,<span class="ruby-identifier">args</span>
-      <span class="ruby-keyword kw">if</span> <span class="ruby-constant">Rdio</span><span class="ruby-operator">::</span><span class="ruby-identifier">log_json</span>
-        <span class="ruby-constant">Rdio</span><span class="ruby-operator">::</span><span class="ruby-identifier">log</span> <span class="ruby-identifier">json</span>
-      <span class="ruby-keyword kw">end</span>
-      <span class="ruby-identifier">obj</span> = <span class="ruby-identifier">unwrap_json</span> <span class="ruby-identifier">json</span>
-      <span class="ruby-keyword kw">return</span> <span class="ruby-constant">JSONObj</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">obj</span>
+      <span class="ruby-identifier">args</span>[<span class="ruby-identifier">:sort</span>] = <span class="ruby-identifier">sort</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">sort</span>
+      <span class="ruby-identifier">args</span>[<span class="ruby-identifier">:query</span>] = <span class="ruby-identifier">query</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">query</span>
+      <span class="ruby-identifier">return_object</span> <span class="ruby-identifier">type</span>,<span class="ruby-identifier">method</span>,<span class="ruby-identifier">args</span>
     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

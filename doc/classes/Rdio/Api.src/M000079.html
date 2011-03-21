@@ -5,24 +5,18 @@
 
 <html>
 <head>
-  <title>get (Rdio::Api)</title>
+  <title>currentUser (Rdio::Api)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/rdio/api.rb, line 85</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get</span>(<span class="ruby-identifier">objs</span>,<span class="ruby-identifier">type</span>=<span class="ruby-keyword kw">nil</span>)
-      <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">not</span> <span class="ruby-identifier">objs</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">Array</span>
-        <span class="ruby-identifier">objs</span> = [<span class="ruby-identifier">objs</span>]
-      <span class="ruby-keyword kw">end</span>
-      <span class="ruby-identifier">method</span> = <span class="ruby-value str">'get'</span>
-      <span class="ruby-identifier">cls</span> = <span class="ruby-identifier">type</span>
-      <span class="ruby-identifier">args</span> = {<span class="ruby-identifier">:keys=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">keys</span>(<span class="ruby-identifier">objs</span>)}
-      <span class="ruby-identifier">json</span> = <span class="ruby-identifier">call</span> <span class="ruby-identifier">method</span>,<span class="ruby-identifier">args</span>
-      <span class="ruby-keyword kw">if</span> <span class="ruby-constant">Rdio</span><span class="ruby-operator">::</span><span class="ruby-identifier">log_json</span>
-        <span class="ruby-constant">Rdio</span><span class="ruby-operator">::</span><span class="ruby-identifier">log</span> <span class="ruby-node">&quot;json: #{json}&quot;</span>
-      <span class="ruby-keyword kw">end</span>
-      <span class="ruby-identifier">create_object</span> <span class="ruby-identifier">type</span>,<span class="ruby-identifier">json</span>,<span class="ruby-keyword kw">true</span>
+  <pre><span class="ruby-comment cmt"># File lib/rdio/api.rb, line 50</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">currentUser</span>(<span class="ruby-identifier">extras</span>=<span class="ruby-keyword kw">nil</span>)
+      <span class="ruby-identifier">method</span> = <span class="ruby-value str">'currentUser'</span>
+      <span class="ruby-identifier">type</span> = <span class="ruby-constant">User</span>
+      <span class="ruby-identifier">args</span> = {}
+      <span class="ruby-identifier">args</span>[<span class="ruby-identifier">:extras</span>] = <span class="ruby-identifier">extras</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">extras</span>
+      <span class="ruby-identifier">return_object</span> <span class="ruby-identifier">type</span>,<span class="ruby-identifier">method</span>,<span class="ruby-identifier">args</span>,<span class="ruby-keyword kw">true</span>
     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

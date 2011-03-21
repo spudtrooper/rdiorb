@@ -5,15 +5,14 @@
 
 <html>
 <head>
-  <title>for_artist (Rdio::Track)</title>
+  <title>in_collection (Rdio::Track)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/rdio/types.rb, line 177</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">for_artist</span>(<span class="ruby-identifier">artist</span>,<span class="ruby-identifier">appears_on</span>=<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">start</span>=<span class="ruby-keyword kw">nil</span>,
-                            <span class="ruby-identifier">count</span>=<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">extras</span>=<span class="ruby-keyword kw">nil</span>)
-      <span class="ruby-constant">Rdio</span><span class="ruby-operator">::</span><span class="ruby-identifier">api</span>.<span class="ruby-identifier">getTracksForArtist</span> <span class="ruby-identifier">artist</span>,<span class="ruby-identifier">appears_on</span>,<span class="ruby-identifier">start</span>,<span class="ruby-identifier">count</span>,<span class="ruby-identifier">extras</span>
+  <pre><span class="ruby-comment cmt"># File lib/rdio/types.rb, line 187</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">in_collection</span>(<span class="ruby-identifier">user</span>=<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">start</span>=<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">count</span>=<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">sort</span>=<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">query</span>=<span class="ruby-keyword kw">nil</span>)
+      <span class="ruby-constant">Rdio</span><span class="ruby-operator">::</span><span class="ruby-identifier">api</span>.<span class="ruby-identifier">getTracksInCollection</span> <span class="ruby-identifier">user</span>,<span class="ruby-identifier">start</span>,<span class="ruby-identifier">count</span>,<span class="ruby-identifier">sort</span>,<span class="ruby-identifier">query</span>
     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

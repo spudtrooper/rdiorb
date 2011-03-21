@@ -5,27 +5,17 @@
 
 <html>
 <head>
-  <title>getTopCharts (Rdio::Api)</title>
+  <title>getObjectFromShortCode (Rdio::Api)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/rdio/api.rb, line 224</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">getTopCharts</span>(<span class="ruby-identifier">type</span>,<span class="ruby-identifier">start</span>=<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">count</span>=<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">extras</span>=<span class="ruby-keyword kw">nil</span>)
-      <span class="ruby-identifier">method</span> = <span class="ruby-value str">'getTopCharts'</span>
-      <span class="ruby-identifier">cls</span> = <span class="ruby-constant">TODO</span>
-      <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">type</span>
-      <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'Artist'</span><span class="ruby-operator">:</span>
-          <span class="ruby-identifier">cls</span> = <span class="ruby-constant">Artist</span>
-      <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'Album'</span><span class="ruby-operator">:</span>
-          <span class="ruby-identifier">cls</span> = <span class="ruby-constant">Album</span>
-      <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'Track'</span><span class="ruby-operator">:</span>
-          <span class="ruby-identifier">cls</span> = <span class="ruby-constant">Track</span>
-      <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'Playlist'</span><span class="ruby-operator">:</span>
-          <span class="ruby-identifier">cls</span> = <span class="ruby-constant">Playlist</span>
-      <span class="ruby-keyword kw">end</span>
-      <span class="ruby-identifier">args</span> = {<span class="ruby-identifier">:type=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">type</span>}
-      <span class="ruby-identifier">return_object</span> <span class="ruby-identifier">cls</span>,<span class="ruby-identifier">method</span>,<span class="ruby-identifier">args</span>
+  <pre><span class="ruby-comment cmt"># File lib/rdio/api.rb, line 188</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">getObjectFromShortCode</span>(<span class="ruby-identifier">short_code</span>,<span class="ruby-identifier">type</span>=<span class="ruby-keyword kw">nil</span>)
+      <span class="ruby-identifier">method</span> = <span class="ruby-value str">'getObjectFromShortCode'</span>
+      <span class="ruby-identifier">type</span> = <span class="ruby-constant">BaseObj</span> <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">not</span> <span class="ruby-identifier">type</span>
+      <span class="ruby-identifier">args</span> = {<span class="ruby-identifier">:short_code=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">short_code</span>}
+      <span class="ruby-identifier">return_object</span> <span class="ruby-identifier">type</span>,<span class="ruby-identifier">method</span>,<span class="ruby-identifier">args</span>,<span class="ruby-keyword kw">true</span>
     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

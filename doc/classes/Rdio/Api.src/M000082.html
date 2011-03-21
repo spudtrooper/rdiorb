@@ -5,17 +5,16 @@
 
 <html>
 <head>
-  <title>getAlbumsForArtistInCollection (Rdio::Api)</title>
+  <title>findUserByVanityName (Rdio::Api)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/rdio/api.rb, line 122</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">getAlbumsForArtistInCollection</span>(<span class="ruby-identifier">artist</span>,<span class="ruby-identifier">user</span>=<span class="ruby-keyword kw">nil</span>)
-      <span class="ruby-identifier">method</span> = <span class="ruby-value str">'getAlbumsForArtistInCollection'</span>
-      <span class="ruby-identifier">type</span> = <span class="ruby-constant">Album</span>
-      <span class="ruby-identifier">args</span> = {<span class="ruby-identifier">:artist=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">artist</span>}
-      <span class="ruby-identifier">args</span>[<span class="ruby-identifier">:user</span>] = <span class="ruby-identifier">user</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">user</span>
+  <pre><span class="ruby-comment cmt"># File lib/rdio/api.rb, line 77</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">findUserByVanityName</span>(<span class="ruby-identifier">name</span>)
+      <span class="ruby-identifier">method</span> = <span class="ruby-value str">'findUser'</span>
+      <span class="ruby-identifier">type</span> = <span class="ruby-constant">User</span>
+      <span class="ruby-identifier">args</span> = {<span class="ruby-identifier">:vanityName=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">name</span>}
       <span class="ruby-identifier">return_object</span> <span class="ruby-identifier">type</span>,<span class="ruby-identifier">method</span>,<span class="ruby-identifier">args</span>
     <span class="ruby-keyword kw">end</span></pre>
 </body>
