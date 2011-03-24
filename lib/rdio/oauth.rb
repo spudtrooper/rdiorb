@@ -16,7 +16,7 @@ module Rdio
     # authorization.  By default it will open a browser and repeatedly
     # ask the user for input from the console.
     #
-    attr_writer :get_pin
+    attr_accessor :get_pin
 
     def initialize(key,secret)
       @key = key
@@ -37,6 +37,7 @@ module Rdio
         oauth_verifier = nil
         while not oauth_verifier or oauth_verifier == ''
           print 'Enter the 4-digit PIN> '
+          STDOUT.flush
           oauth_verifier = gets.strip
         end
         return oauth_verifier
@@ -63,7 +64,7 @@ module Rdio
                               :authorize_path => "/oauth/authorize",
                               :access_token_path => "/oauth/access_token",
                               :http_method => :post})
-
+      consumer.http.read_timeout = 600
       request_token = consumer.get_request_token({:oauth_callback => 'oob'})
       url = 'https://www.rdio.com/oauth/authorize?oauth_token=' + 
         request_token.token.to_s      

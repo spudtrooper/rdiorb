@@ -27,9 +27,12 @@ module Rdio
 
     attr_accessor :tracks
 
+    attr_accessor :album_keys
+
     # Returns an array of Album for the query and other params
     def self.search(query,never_or=nil,extras=nil,start=nil,count=nil)
-      Search.search_for query,Artist,never_or,extras,start,count
+      extras = add_to_array extras,'artists'
+      Search.search query,Artist,never_or,extras,start,count
     end
 
     # Get all of the tracks by this artist.
@@ -48,13 +51,13 @@ module Rdio
     end
 
     # Fetch one or more objects from Rdio of type Artist.
-    def self.all(keys)
-      Rdio::api.get keys,Artist
+    def self.all(keys,extras=nil)
+      Rdio::api.get keys,Artist,extras
     end
 
     # Fetch one object from Rdio of type Artist.
-    def self.get(key)
-      arr = all [key]
+    def self.get(key,extras=nil)
+      arr = all [key],extras
       (arr and not arr.empty?) ? arr[0] : nil
     end
 
@@ -102,19 +105,45 @@ module Rdio
     # the tracks
     attr_accessor :tracks
 
+    # is the album explicit?
+    def explicit?
+      is_explicit
+    end
+
+    # is the album clean
+    def clean?
+      is_clean
+    end
+    
+    # Returns the Artist
+    def artist
+      Artist.get artist_key
+    end
+
+    # Returns the String artist name
+    def artist_name
+      @artist
+    end
+
+    # Return an array of Track
+    def tracks(extras=nil)
+      Track.all @tracks,extras
+    end
+
     # Returns an array of Album for the query and other params
     def self.search(query,never_or=nil,extras=nil,start=nil,count=nil)
-      Search.search_for query,Album,never_or,extras,start,count
+      extras = add_to_array extras,'albums'
+      Search.search query,Album,never_or,extras,start,count
     end
 
     # Fetch one or more objects from Rdio of type Album.
-    def self.all(keys)
-      Rdio::api.get keys,Album
+    def self.all(keys,extras=nil)
+      Rdio::api.get keys,Album,extras
     end
 
     # Fetch one object from Rdio of type Album.
-    def self.get(key)
-      arr = all [key]
+    def self.get(key,extras=nil)
+      arr = all [key],extras
       (arr and not arr.empty?) ? arr[0] : nil
     end
 
@@ -178,9 +207,40 @@ module Rdio
     # the secondary id
     attr_accessor :secondary_id
 
+    # Returns the Album
+    def album(extras=nil)
+      Album.get @album_key,extras
+    end
+
+    # Returns the Artist
+    def artist(extras=nil)
+      Artist.get @artist_key,extras
+    end
+
+    # Returns the album Artist
+    def album_artist(extras=nil)
+      Artist.get @album_artist_key,extras
+    end
+
+    # Returns the String album name
+    def album_name
+      @album
+    end
+
+    # Returns the string artist name
+    def artist_name
+      @artist
+    end
+
+    # Returns the string album artist name
+    def album_artist_name
+      @album_artist
+    end
+
     # Returns an array of Track for the query and other params
     def self.search(query,never_or=nil,extras=nil,start=nil,count=nil)
-      Search.search_for query,Track,never_or,extras,start,count
+      extras = add_to_array extras,'tracks'
+      Search.search query,Track,never_or,extras,start,count
     end
 
     # Get all of the tracks in the user's collection.
@@ -200,13 +260,13 @@ module Rdio
     end
 
     # Fetch one or more objects from Rdio of type Track.
-    def self.all(keys)
-      Rdio::api.get keys,Track
+    def self.all(keys,extras=nil)
+      Rdio::api.get keys,Track,extras
     end
 
     # Fetch one object from Rdio of type Track.
-    def self.get(key)
-      arr = all [key]
+    def self.get(key,extras=nil)
+      arr = all [key],extras
       return (arr and not arr.empty?) ? arr[0] : nil
     end
 
@@ -250,7 +310,8 @@ module Rdio
 
     # Returns an array of Playlist for the query and other params
     def self.search(query,never_or=nil,extras=nil,start=nil,count=nil)
-      Search.search_for query,Playlist,never_or,extras,start,count
+      extras = add_to_array extras,'playlists'
+      Search.search query,Playlist,never_or,extras,start,count
     end
 
     # Add a track to a playlist.
@@ -271,13 +332,13 @@ module Rdio
     end
 
     # Fetch one or more objects from Rdio of type Playlist.
-    def self.all(keys)
-      Rdio::api.get keys,Playlist
+    def self.all(keys,extras=nil)
+      Rdio::api.get keys,Playlist,extras
     end
 
     # Fetch one object from Rdio of type Playlist.
-    def self.get(key)
-      arr = all [key]
+    def self.get(key,extras=nil)
+      arr = all [key],extras
       return (arr and not arr.empty?) ? arr[0] : nil
     end
 
@@ -317,7 +378,8 @@ module Rdio
 
     # Returns an array of User for the query and other params
     def self.search(query,never_or=nil,extras=nil,start=nil,count=nil)
-      Search.search_for query,User,never_or,extras,start,count
+      extras = add_to_array extras,'users'
+      Search.search query,User,never_or,extras,start,count
     end
 
     # Get information about the currently logged in user.
@@ -341,13 +403,13 @@ module Rdio
     end
 
     # Fetch one or more objects from Rdio of type User.
-    def self.all(keys)
-      Rdio::api.get keys,User
+    def self.all(keys,extras=nil)
+      Rdio::api.get keys,User,extras
     end
 
     # Fetch one object from Rdio of type User.
-    def self.get(key)
-      arr = all [key]
+    def self.get(key,extras=nil)
+      arr = all [key],extras
       return (arr and not arr.empty?) ? arr[0] : nil
     end
 
@@ -522,18 +584,14 @@ module Rdio
   class Search
     
     # Search for 'query' and other parameters
-    def self.search(query,types=nil,never_or=nil,extras=nil,start=nil,count=nil)
-      Rdio::api.search query,types,never_or,extras,start,count
+    def self.counts(query,types=nil,never_or=nil,extras=nil,start=nil,count=nil)
+      Rdio::api.counts query,types,never_or,extras,start,count
     end
 
     # Searches for objects with type 'type' and 'query' and other
     # parameters
-    def self.search_for(query,type,never_or=nil,extras=nil,start=nil,count=nil)
-      result = search query,[type],never_or,extras,start,count
-      return result if not result
-      results = result.results || []
-      api = @api
-      results.map {|o| type.new(api).fill o}
+    def self.search(query,types=nil,never_or=nil,extras=nil,start=nil,count=nil)
+      Rdio::api.search query,types,never_or,extras,start,count
     end
     
   end

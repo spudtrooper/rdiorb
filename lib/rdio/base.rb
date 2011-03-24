@@ -20,6 +20,20 @@ end
 
 module Rdio
 
+  # Adds 'str' to the array or string 'arr'
+  def add_to_array(arr,str)
+    if arr == nil
+      return [str.to_s]
+    end
+    if arr == ''
+      return [str.to_s]
+    end
+    if arr.is_a? Array
+      return arr + [str.to_s]
+    end
+    return arr.to_s + ',' + str.to_s
+  end
+
   # string -> string
   #
   # Converts camel-case string to underscore-delimited one.
@@ -154,7 +168,7 @@ module Rdio
           sym_eq = (camel2underscores(k)+'=').to_sym
           self.send sym_eq,o
         rescue Exception => e
-          STDERR.puts "Couldn't find symbol: " +
+          Rdio::logger.warn "Couldn't find symbol: " +
             "#{sym} => #{o} for type: #{self.class}"
         end
       end
@@ -222,10 +236,25 @@ module Rdio
 
     PATH = '/1/'
 
+    attr_reader :oauth
+
     def initialize(key,secret)
       @oauth = RdioOAuth.new key,secret
       @access_token_auth = nil
       @access_token_no_auth = nil
+    end
+
+    # (string -> string) -> (string -> string)
+    #
+    # Sets the function that will return a pin given an authorization
+    # url for the contained RdioOAuth instance
+    #
+    def get_pin=(get_pin)
+        @oauth.get_pin = get_pin
+    end
+
+    def get_pin
+      @oauth.get_pin
     end
 
     def call(method,args,requires_auth=false)

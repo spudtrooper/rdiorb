@@ -15,11 +15,18 @@ Gem::Specification.new do |s|
 
   s.authors  = ["Jeffrey Palm"]
   s.email    = 'jeff@jeffpalm.com'
-  s.homepage = 'http://github.com/spudtrooper/rdio'
+  s.homepage = 'http://github.com/spudtrooper/rdiorb'
 
   s.require_paths = %w[lib]
 
+  # Dependencies
+  s.add_dependency('oauth', '>= 0.3.0')
+
+  # Requirements
+  s.requirements << 'launchy gem to use authorized calls'
+
   s.rdoc_options = ["--charset=UTF-8"]
+  s.has_rdoc = false
   s.extra_rdoc_files = %w[README LICENSE doc]
 
   # = MANIFEST =

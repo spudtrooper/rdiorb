@@ -82,13 +82,14 @@ module Rdio
     end
     
     # Fetch one or more objects from Rdio.
-    def get(objs,type=nil)
+    def get(objs,type=nil,extras=nil)
       if not objs.is_a? Array
         objs = [objs]
       end
       method = 'get'
       cls = type
       args = {:keys=>keys(objs)}
+      args[:extras] = extras if extras
       json = call method,args
       if Rdio::log_json
         Rdio::log "json: #{json}"
@@ -103,7 +104,8 @@ module Rdio
       type = ActivityStream
       args = {:user=>user,:scope=>scope}
       args[:last_id] = last_id if last_id
-      return_object type,method,args
+      auth = user
+      return_object type,method,args,auth
     end
     
     # Return the albums by (or featuring) an artist.
@@ -124,7 +126,8 @@ module Rdio
       type = Album
       args = {:artist=>artist}
       args[:user] = user if user
-      return_object type,method,args
+      auth = !!user
+      return_object type,method,args,auth
     end
     
     # Get all of the albums in the user's collection.
@@ -137,7 +140,8 @@ module Rdio
       args[:count] = count if count
       args[:sort] = sort if sort
       args[:query] = query if query
-      return_object type,method,args
+      auth = !!user
+      return_object type,method,args,auth
     end
     
     # Get all of the artist in a user's collection.
@@ -150,7 +154,8 @@ module Rdio
       args[:count] = count if count
       args[:sort] = sort if sort
       args[:query] = query if query
-      return_object type,method,args
+      auth = !!user
+      return_object type,method,args,auth
     end
     
     # Find the most popular artists or albums for a user, their friends
@@ -310,20 +315,29 @@ module Rdio
     
     # Search for artists, albums, tracks, users or all kinds of objects.
     def search(query,types=nil,never_or=nil,extras=nil,start=nil,count=nil)
-      method = 'search'
-      type = TODO
-      args = {:query=>query}
-      args[:types] = types if types
-      args[:never_or] = never_or if never_or
-      args[:extras] = extras if extras
-      args[:start] = start if start
-      args[:count] = count if count
-      
-      json = call method,args
-      if Rdio::log_json
-        Rdio::log json
+      result = search_json query,types,never_or,extras,start,count
+      return result if not result
+      results = result['results'] || []
+      api = self
+      #
+      # This start out nil, because we need to reference classes in
+      # types.rb and this gets loaded after this file.  There's
+      # probably a better way to do this.
+      #
+      if not @@types2classes
+        @@types2classes = {
+          'r' => Artist,
+          'a' => Album,
+          's' => User,
+          't' => Track,
+          'p' => Playlist
+        }
       end
-      obj = unwrap_json json
+      results.map {|o| @@types2classes[o['type']].new(api).fill o}
+    end
+
+    def counts(query,types=nil,never_or=nil,extras=nil,start=nil,count=nil)
+      obj = search_json query,types,never_or,extras,start,count
       return JSONObj.new obj
     end
     
@@ -335,6 +349,32 @@ module Rdio
       args = {:query=>query}
       args[:extras] = extras if extras
       return_object type,method,args
+    end
+
+    private
+
+    # Initialize this after types.rb has been loaded (this stinks!)
+    @@types2classes = nil
+
+    # Search for artists, albums, tracks, users or all kinds of objects.
+    def search_json(query,types=nil,never_or=nil,extras=nil,start=nil,count=nil)
+      method = 'search'
+      type = TODO
+      if not types
+        types = 'Artist,Album,Track,Playlist,User'
+      end
+      args = {:query=>query}
+      args[:types] = types if types
+      args[:never_or] = never_or if never_or
+      args[:extras] = extras if extras
+      args[:start] = start if start
+      args[:count] = count if count
+      
+      json = call method,args
+      if Rdio::log_json
+        Rdio::log json
+      end
+      return unwrap_json json
     end
     
   end

@@ -4,6 +4,19 @@ include Rdio
 
 class TestSearch < Test::Unit::TestCase
 
+  def test_add_to_array
+    assert_equal ['1'],add_to_array(nil,'1')
+    assert_equal ['1'],add_to_array('','1')
+    assert_equal '2,1',add_to_array('2','1')
+    assert_equal ['1'],add_to_array([],'1')
+    assert_equal ['2','1'],add_to_array(['2'],'1')
+    assert_equal ['1'],add_to_array(nil,1)
+    assert_equal ['1'],add_to_array('',1)
+    assert_equal '2,1',add_to_array('2',1)
+    assert_equal ['1'],add_to_array([],1)
+    assert_equal ['2','1'],add_to_array(['2'],1)
+  end
+
   def test_camel2underscores
     assert_equal nil,camel2underscores(nil)
     assert_equal '',camel2underscores('')

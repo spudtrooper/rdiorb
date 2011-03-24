@@ -1,5 +1,5 @@
 NAME=rdio
-VERSION=0.0.2
+VERSION=0.0.6
 DATE=$(shell date +"%Y-%m-%d")
 
 .PHONY: test
@@ -27,11 +27,20 @@ all: $(NAME)-$(VERSION).gem
 push: $(NAME)-$(VERSION).gem
 	gem push $<
 
+install: $(NAME)-$(VERSION).gem
+	sudo gem install $<
+
 rdoc:
 	rdoc --title "Rd.io API" `find lib -name "*.rb"`
 
 test:
 	ruby test/suite.rb
+
+runtest: test/test_*.rb
+	@for f in $^; do\
+		echo --- $$f ---;\
+		ruby $$f;\
+	done
 
 api: lib/rdio/api.rb
 datatypes: lib/rdio/datatypes.rb

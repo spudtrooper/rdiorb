@@ -1,5 +1,6 @@
 require 'test/unit'
 require File.dirname(__FILE__) + '/../lib/rdio'
+include Rdio
 
 class TestUser < Test::Unit::TestCase
 
@@ -18,5 +19,26 @@ class TestUser < Test::Unit::TestCase
     assert_equal 'Jeffrey',user.first_name
     assert_equal 'Palm',user.last_name
   end
+
+  def test_get_string
+    albums = Rdio::api.get 'a446068',Album,'tracks'
+    album = albums[0]
+    tracks = album.tracks
+    assert_equal 10,tracks.length
+    tracks.each do |t|
+      assert_equal Track,t.class
+    end
+  end
+
+  def test_get_string_array
+    albums = Rdio::api.get 'a446068',Album,['tracks']
+    album = albums[0]
+    tracks = album.tracks
+    assert_equal 10,tracks.length
+    tracks.each do |t|
+      assert_equal Track,t.class
+    end
+  end
+
   
 end
