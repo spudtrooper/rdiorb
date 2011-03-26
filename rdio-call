@@ -12,6 +12,21 @@ rescue
   require 'rdio'
 end
 
+def print_help
+  STDERR.puts <<HERE
+Usage: #{File.basename $0} options? method [key=val]?
+where options include
+  --consumer-key str       Use the key for authentication
+  --consumer-secret str    Use the secret for authentication
+  --authentication         Use two-legged authentication
+  --indent || -i           Indent the output
+  --help || -h             Print this message
+and
+ - method is the name of the REST method to call
+ - key=value are argument pairs to pass
+HERE
+end
+
 def main(argv)
 
   # Check the command line for the key,secret,etc...
@@ -26,6 +41,9 @@ def main(argv)
     case arg
     when '--consumer-key'
       key = argv.shift
+    when '-h','--help'
+      print_help
+      return 0
     when '--consumer-secret'
       secret = argv.shift
     when '--authenticate'
