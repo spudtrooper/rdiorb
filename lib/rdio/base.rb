@@ -50,27 +50,6 @@ module Rdio
     end
     s
   end
-
-  # hash -> hash
-  #
-  # Uses the value of 'to_k' for all the iput hash values in the
-  # result hash. This is used to make sure that the arguments passed
-  # to create urls use keys for the values of objects like Artist,
-  # Track, etc.  Also, we use the simple name of classes.
-  #
-  def convert_args(args)
-    return nil if not args
-    res = {}
-    args.each do |k,v|
-      if v.is_a? Array
-        v = keys v
-      else
-        v = v.to_k
-      end
-      res[k] = v
-    end
-    return res
-  end
   
   # array -> string
   #
@@ -257,11 +236,32 @@ module Rdio
       @oauth.get_pin
     end
 
+    # hash -> hash
+    #
+    # Uses the value of 'to_k' for all the iput hash values in the
+    # result hash. This is used to make sure that the arguments passed
+    # to create urls use keys for the values of objects like Artist,
+    # Track, etc.  Also, we use the simple name of classes.
+    #
+    def self.convert_args(args)
+      return nil if not args
+      res = {}
+      args.each do |k,v|
+        if v.is_a? Array
+          v = keys v
+        else
+          v = v.to_k
+        end
+        res[k] = v
+      end
+      return res
+    end
+
     def call(method,args,requires_auth=false)
       #
       # Convert object with keys just to use their keys
       #
-      args = convert_args args
+      args = BaseApi.convert_args args
       if Rdio::log_methods
         Rdio::log "Called method: #{method}(#{args}) : auth=#{requires_auth}"
       end

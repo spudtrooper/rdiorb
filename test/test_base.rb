@@ -81,12 +81,12 @@ class TestSearch < Test::Unit::TestCase
   end
 
   def test_convert_args
-    assert_equal nil,convert_args(nil)
-    assert_equal ({}),convert_args({})
-    assert_equal ({:one=>1}),convert_args({:one=>1})
-    assert_equal ({:one=>'k'}),convert_args({:one=>K.new})
-    assert_equal ({:one=>'k'}),convert_args({:one=>[K.new]})
-    assert_equal ({:one=>'k,k'}),convert_args({:one=>[K.new,K.new]})
+    assert_equal nil,BaseApi.convert_args(nil)
+    assert_equal ({}),BaseApi.convert_args({})
+    assert_equal ({:one=>1}),BaseApi.convert_args({:one=>1})
+    assert_equal ({:one=>'k'}),BaseApi.convert_args({:one=>K.new})
+    assert_equal ({:one=>'k'}),BaseApi.convert_args({:one=>[K.new]})
+    assert_equal ({:one=>'k,k'}),BaseApi.convert_args({:one=>[K.new,K.new]})
   end
 
 end

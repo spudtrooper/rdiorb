@@ -1,0 +1,90 @@
+#!/usr/bin/env ruby
+#
+# Ruby equivalent of:
+#
+#  https://github.com/rdio/rdio-python/blob/master/rdio-call
+#
+
+begin
+  require 'lib/rdio'
+rescue
+  require 'rubygems'
+  require 'rdio'
+end
+
+def main(argv)
+
+  # Check the command line for the key,secret,etc...
+  key = nil
+  secret = nil
+  authenticate = false
+  indent = false
+  args = []
+  while true
+    arg = argv.shift
+    break if not arg
+    case arg
+    when '--consumer-key'
+      key = argv.shift
+    when '--consumer-secret'
+      secret = argv.shift
+    when '--authenticate'
+      authenticate = true
+    when '-i','--indent'
+      indent = true
+    else
+      args << arg
+    end
+  end
+
+  # Look in the environment if not key or consumer token were given on
+  # the command line
+  key = ENV['RDIO_KEY'] if not key
+  secret = ENV['RDIO_SECRET'] if not secret
+
+  if not key
+    STDERR.puts 'consumer key required'
+    return 1
+  end
+
+  if not secret
+    STDERR.puts 'consumer secret required'
+    return 1
+  end
+
+  if args.length < 1
+    STDERR.puts 'method name required'
+    return 1
+  end
+
+  base = Rdio::BaseApi.new key,secret
+  method = args.shift
+  rdio_args = {}
+  args.each do |str|
+    parts = str.split /\=/
+    key = parts[0]
+    val = parts.length == 1 ? true : parts[1]
+    rdio_args[key] = val
+  end
+
+  res = base.call method,rdio_args,authenticate
+  if indent
+    begin
+      require 'rubygems'
+      require 'json'
+      json = JSON.parse res
+      puts JSON.pretty_generate json
+    rescue Exception => e
+      STDERR.puts e
+      STDERR.puts 'You must install the json gem to use the indent \'feature\''
+      puts res
+    end
+  else
+    puts res
+  end
+
+  return 0
+    
+end
+
+exit main ARGV

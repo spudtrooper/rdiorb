@@ -9,16 +9,22 @@ This is a ruby implementation of the rd.io API here:
 
 * USAGE
 
-To use it you have to get an api key and secret here:
+See the exmples for usage.  You first must obtain a consumer
+key/secret pair described here:
 
-And then, currently, you can do something like the following:
+  http:/developer.rdio.com
 
-  key = <RDIO_KEY>
-  secret = <RDIO_SECRET>
-  Rdio::init key,sec
-  user = Rdio::User.find_by_email 'jeff@jeffpalm.com'
-  'Jeffrey' == user.first_name
-  'Palm' == user.last_name
+You can user the 'rdio-call' script (strikingly similar to rdio's
+python one) for exploring the api.  Pass '-h' argument to rdio-call to
+see the options.  Here's an example:
+
+  % ./rdio-call get keys=t7609753 -i
+  {
+    "result": {
+      "t7609753": {
+        "artist": "Mogwai",
+        "name": "White Noise",
+  ....
 
 
 * TODO
