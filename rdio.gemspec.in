@@ -39,6 +39,7 @@ Gem::Specification.new do |s|
     lib/rdio/base.rb
     lib/rdio/datatypes.rb
     lib/rdio/types.rb
+    lib/rdio/call.rb
   ]
   # = MANIFEST =
 

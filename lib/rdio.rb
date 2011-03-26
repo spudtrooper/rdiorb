@@ -13,6 +13,7 @@ require 'rdio/api'
 require 'rdio/oauth'
 require 'rdio/datatypes'
 require 'rdio/types'
+require 'rdio/call' #TODO
 
 module Rdio
   VERSION = '0.0.1'
