@@ -230,14 +230,14 @@ module Rdio
       method = 'getTopCharts'
       cls = TODO
       case type
-      when 'Artist':
-          cls = Artist
-      when 'Album':
-          cls = Album
-      when 'Track':
-          cls = Track
-      when 'Playlist':
-          cls = Playlist
+      when 'Artist'
+        cls = Artist
+      when 'Album'
+        cls = Album
+      when 'Track'
+        cls = Track
+      when 'Playlist'
+        cls = Playlist
       end
       args = {:type=>type}
       return_object cls,method,args
