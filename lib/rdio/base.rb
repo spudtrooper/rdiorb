@@ -19,21 +19,6 @@ class Class
 end
 
 module Rdio
-
-  # Adds 'str' to the array or string 'arr'
-  def add_to_array(arr,str)
-    if arr == nil
-      return [str.to_s]
-    end
-    if arr == ''
-      return [str.to_s]
-    end
-    if arr.is_a? Array
-      return arr + [str.to_s]
-    end
-    return arr.to_s + ',' + str.to_s
-  end
-
   # string -> string
   #
   # Converts camel-case string to underscore-delimited one.
@@ -49,6 +34,20 @@ module Rdio
       s = s.gsub /#{$1}/,'_'+ decapitilize($1)
     end
     s
+  end
+
+  # Adds 'str' to the array or string 'arr'
+  def add_to_array(arr,str)
+    if arr == nil
+      return [str.to_s]
+    end
+    if arr == ''
+      return [str.to_s]
+    end
+    if arr.is_a? Array
+      return arr + [str.to_s]
+    end
+    return arr.to_s + ',' + str.to_s
   end
   
   # array -> string
@@ -102,6 +101,7 @@ module Rdio
     # This is done at the end of types.rb.
     #
     attr_accessor :symbols_to_types
+
   end
   self.symbols_to_types = {}
 
@@ -120,7 +120,7 @@ module Rdio
     def fill(x)
       syms_to_types = Rdio::symbols_to_types || {}
       x.each do |k,v|
-        sym = camel2underscores(k).to_sym
+        sym = Rdio::camel2underscores(k).to_sym
         #
         # If we have an actual type for this symbol, then use that
         # type to construct this value.  Otherwise, it's just a
@@ -144,7 +144,7 @@ module Rdio
           o = to_o v
         end
         begin
-          sym_eq = (camel2underscores(k)+'=').to_sym
+          sym_eq = (Rdio::camel2underscores(k)+'=').to_sym
           self.send sym_eq,o
         rescue Exception => e
           Rdio::logger.warn "Couldn't find symbol: " +
@@ -229,7 +229,7 @@ module Rdio
     # url for the contained RdioOAuth instance
     #
     def get_pin=(get_pin)
-        @oauth.get_pin = get_pin
+      @oauth.get_pin = get_pin
     end
 
     def get_pin
