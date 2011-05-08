@@ -43,4 +43,25 @@ class TestAlbum < Test::Unit::TestCase
     assert_equal false,res
   end
 
+  def test_compilation_false
+    album = Album.get 'a446068','isCompilation'
+    res = album.compilation?
+    assert_equal false,res
+    res = album.is_compilation
+    assert_equal false,res
+  end
+
+  def test_compilation_true
+    album = Album.get 'a244657','isCompilation'
+    res = album.compilation?
+    assert_equal true,res
+    res = album.is_compilation
+    assert_equal true,res
+  end
+
+  def test_big_icon
+    album = Album.get 't2979981','bigIcon'
+    assert_equal 'http://media.rd.io/album/1/b/b/000000000003bbb1/square-600.jpg', album.big_icon
+  end
+
 end

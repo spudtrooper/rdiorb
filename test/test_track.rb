@@ -47,4 +47,25 @@ class TestTrack < Test::Unit::TestCase
     assert_equal 'Built To Spill',artist
   end
 
+  def test_on_compilation_false
+    track = Track.get 't5483214','isOnCompilation'
+    res = track.on_compilation?
+    assert_equal false,res
+    res = track.is_on_compilation
+    assert_equal false,res
+  end
+
+  def test_on_compilation_true
+    track = Track.get 't2979981','isOnCompilation'
+    res = track.on_compilation?
+    assert_equal true,res
+    res = track.is_on_compilation
+    assert_equal true,res
+  end
+
+  def test_big_icon
+    track = Track.get 't2979981','bigIcon'
+    assert_equal 'http://media.rd.io/album/1/b/b/000000000003bbb1/square-600.jpg', track.big_icon
+  end
+
 end

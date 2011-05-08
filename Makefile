@@ -1,5 +1,5 @@
 NAME=rdio
-VERSION=0.0.9
+VERSION=0.0.91
 DATE=$(shell date +"%Y-%m-%d")
 
 .PHONY: test

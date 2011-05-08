@@ -99,6 +99,9 @@ module Rdio
       super api
     end
 
+    # big icon
+    attr_accessor :big_icon
+
     # the track ids
     attr_accessor :track_ids
 
@@ -107,6 +110,14 @@ module Rdio
 
     # the tracks
     attr_accessor :tracks
+
+    # indicates if the album is a compilation
+    attr_accessor :is_compilation
+
+    # indicates if the album is a compilation
+    def compilation?
+      is_compilation
+    end
 
     # is the album explicit?
     def explicit?
@@ -210,6 +221,17 @@ module Rdio
     # the secondary id
     attr_accessor :secondary_id
 
+    # indicates if the track is on a compilation
+    attr_accessor :is_on_compilation
+
+    # big icon
+    attr_accessor :big_icon
+
+    # indicates if the track is on a compilation
+    def on_compilation?
+      is_on_compilation
+    end
+
     # Returns the Album
     def album(extras=nil)
       Album.get @album_key,extras
@@ -306,6 +328,12 @@ module Rdio
       super api
     end
 
+    # big icon
+    attr_accessor :big_icon
+    
+    # track keys
+    attr_accessor :track_keys
+
     # Remove an item from a playlist by its position in the playlist.
     def remove(index,count,tracks)
       api.removeFromPlaylist self,index,count,tracks
@@ -371,6 +399,30 @@ module Rdio
 
     def initialize(api)
       super api
+    end
+
+    # isTrial
+    attr_accessor :is_trial
+
+    # isSubscriber
+    attr_accessor :is_subscriber
+    
+    # isUnlimited
+    attr_accessor :is_unlimited
+
+    # isTrial
+    def trial?
+      is_trial
+    end
+
+    # isSubscriber
+    def subscriber?
+      is_subscriber
+    end
+    
+    # isUnlimited
+    def unlimited?
+      is_unlimited
     end
 
     # Get the activity events for a user, a user's friends, or
