@@ -32,7 +32,7 @@ module Rdio
 
     # Returns an array of Album for the query and other params
     def self.search(query,never_or=nil,extras=nil,start=nil,count=nil)
-      extras = add_to_array extras,'artists'
+      extras = Rdio::add_to_array extras,'artists'
       Search.search query,Artist,never_or,extras,start,count
     end
 
@@ -144,7 +144,7 @@ module Rdio
 
     # Returns an array of Album for the query and other params
     def self.search(query,never_or=nil,extras=nil,start=nil,count=nil)
-      extras = add_to_array extras,'albums'
+      extras = Rdio::add_to_array extras,'albums'
       Search.search query,Album,never_or,extras,start,count
     end
 
@@ -262,7 +262,7 @@ module Rdio
 
     # Returns an array of Track for the query and other params
     def self.search(query,never_or=nil,extras=nil,start=nil,count=nil)
-      extras = add_to_array extras,'tracks'
+      extras = Rdio::add_to_array extras,'tracks'
       Search.search query,Track,never_or,extras,start,count
     end
 
@@ -339,7 +339,7 @@ module Rdio
 
     # Returns an array of Playlist for the query and other params
     def self.search(query,never_or=nil,extras=nil,start=nil,count=nil)
-      extras = add_to_array extras,'playlists'
+      extras = Rdio::add_to_array extras,'playlists'
       Search.search query,Playlist,never_or,extras,start,count
     end
 
@@ -431,7 +431,7 @@ module Rdio
 
     # Returns an array of User for the query and other params
     def self.search(query,never_or=nil,extras=nil,start=nil,count=nil)
-      extras = add_to_array extras,'users'
+      extras = Rdio::add_to_array extras,'users'
       Search.search query,User,never_or,extras,start,count
     end
 

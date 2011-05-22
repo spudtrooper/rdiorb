@@ -22,7 +22,7 @@ module Rdio
     def addToCollection(objs)
       method = 'addToCollection'
       type = true
-      args = {:keys=>keys(objs)}
+      args = {:keys=>Rdio::keys(objs)}
       return_object type,method,args,true
     end
     
@@ -30,7 +30,7 @@ module Rdio
     def addToPlaylist(playlist,tracks)
       method = 'addToPlaylist'
       type = true
-      args = {:playlist=>playlist, :tracks=>keys(tracks)}
+      args = {:playlist=>playlist, :tracks=>Rdio::keys(tracks)}
       return_object type,method,args,true
     end
     
@@ -41,7 +41,7 @@ module Rdio
       method = 'createPlaylist'
       type = Playlist
       args = {:name=>name,:description=>description,
-        :tracks=>keys(tracks)}
+        :tracks=>Rdio::keys(tracks)}
       args[:extras] = extras if extras
       return_object type,method,args,true
     end
@@ -88,7 +88,7 @@ module Rdio
       end
       method = 'get'
       cls = type
-      args = {:keys=>keys(objs)}
+      args = {:keys=>Rdio::keys(objs)}
       args[:extras] = extras if extras
       json = call method,args
       if Rdio::log_json
@@ -300,7 +300,7 @@ module Rdio
     def removeFromCollection(objs)
       method = 'removeFromCollection'
       type = Boolean
-      args = {:keys=>keys(objs)}
+      args = {:keys=>Rdio::keys(objs)}
       return_object type,method,args
     end
     
@@ -309,7 +309,7 @@ module Rdio
       method = 'removeFromPlaylist'
       type = TODO
       args = {:playlist=>playlist,:index=>index,
-        :count=>count,:tracks=>keys(tracks)}
+        :count=>count,:tracks=>Rdio::keys(tracks)}
       return_object type,method,args,truex
     end
     

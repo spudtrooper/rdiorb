@@ -77,13 +77,5 @@ class TestUser < Test::Unit::TestCase
     that = User.find_by_email 'tim.julien@gmail.com'
     assert_equal true,User.add_friend(that)
   end
-
-  def test_add_and_remove_friend
-    that = User.find_by_email 'tim.julien@gmail.com'
-    User.add_friend that
-    User.remove_friend that
-    User.remove_friend that
-    User.add_friend that
-  end
   
 end

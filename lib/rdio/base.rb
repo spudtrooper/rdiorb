@@ -19,80 +19,106 @@ class Class
 end
 
 module Rdio
-  # string -> string
-  #
-  # Converts camel-case string to underscore-delimited one.
-  #
-  def camel2underscores(s)
-    return s if not s
-    return s if s == ''
-    def decapitilize(s)
-      s[0,1].downcase + s[1,s.length-1].to_s
-    end
-    s = decapitilize s 
-    while s.match /([A-Z]+)/
-      s = s.gsub /#{$1}/,'_'+ decapitilize($1)
-    end
-    s
-  end
 
-  # Adds 'str' to the array or string 'arr'
-  def add_to_array(arr,str)
-    if arr == nil
-      return [str.to_s]
-    end
-    if arr == ''
-      return [str.to_s]
-    end
-    if arr.is_a? Array
-      return arr + [str.to_s]
-    end
-    return arr.to_s + ',' + str.to_s
-  end
-  
-  # array -> string
-  #
-  # Creates a ','-separated string of the value of 'to_k' from all the
-  # values in 'objs'.  We also remove the nils from the input array.
-  #
-  def keys(objs)
-    (not objs) ? '' : objs.compact.map {|x| x.to_k}.join(',')
-  end
+  class << self
 
-  # object -> value
-  #
-  # Converts v which is probably a string, to a primitive value, so we
-  # can have primitives other than strings as attributes of BaseObjs.
-  #
-  def to_o(v)
-    if v == nil
-      return nil
+    # hash -> hash
+    #
+    # Uses the value of 'to_k' for all the iput hash values in the
+    # result hash. This is used to make sure that the arguments passed
+    # to create urls use keys for the values of objects like Artist,
+    # Track, etc.  Also, we use the simple name of classes.
+    #
+    def convert_args(args)
+      return nil if not args
+      res = {}
+      args.each do |k,v|
+        if v.is_a? Array
+          v = keys v
+        else
+          v = v.to_k
+        end
+        res[k] = v
+      end
+      return res
     end
-    s = v.to_s
-    if not s
-      return nil
+
+    # string -> string
+    #
+    # Converts camel-case string to underscore-delimited one.
+    #
+    def camel2underscores(s)
+      return s if not s
+      return s if s == ''
+      def decapitilize(s)
+        s[0,1].downcase + s[1,s.length-1].to_s
+      end
+      s = decapitilize s 
+      while s.match /([A-Z]+)/
+        s = s.gsub /#{$1}/,'_'+ decapitilize($1)
+      end
+      s
     end
-    if s == 'nil'
-      return nil
+
+    # Adds 'str' to the array or string 'arr'
+    def add_to_array(arr,str)
+      if arr == nil
+        return [str.to_s]
+      end
+      if arr == ''
+        return [str.to_s]
+      end
+      if arr.is_a? Array
+        return arr + [str.to_s]
+      end
+      return arr.to_s + ',' + str.to_s
     end
-    if s =~ /^\d+$/
-      return s.to_i
+    
+    # array -> string
+    #
+    # Creates a ','-separated string of the value of 'to_k' from all the
+    # values in 'objs'.  We also remove the nils from the input array.
+    #
+    def keys(objs)
+      (not objs) ? '' : objs.compact.map {|x| x.to_k}.join(',')
     end
-    if s =~ /^\d+\.?\d*$/
-      return s.to_f
+
+    # object -> value
+    #
+    # Converts v which is probably a string, to a primitive value, so we
+    # can have primitives other than strings as attributes of BaseObjs.
+    #
+    def to_o(v)
+      if v == nil
+        return nil
+      end
+      s = v.to_s
+      if not s
+        return nil
+      end
+      if s == 'nil'
+        return nil
+      end
+      if s =~ /^\d+$/
+        return s.to_i
+      end
+      if s =~ /^\d+\.?\d*$/
+        return s.to_f
+      end
+      if s == 'true'
+        return true
+      end
+      if s == 'false'
+        return false
+      end
+      if s =~ /^\[.*\]$/
+        s = s.gsub /^\[/,''
+        s = s.gsub /\]$/,''
+        return s.split(',').map {|x| Rdio::to_o x}
+      end
+      return s
     end
-    if s == 'true'
-      return true
-    end
-    if s == 'false'
-      return false
-    end
-    if s =~ /^\[.*\]$/
-      s = s.gsub /^\[/,''
-      s = s.gsub /\]$/,''
-      return s.split(',').map {|x| to_o x}
-    end
-    return s
+    
   end
 
   class << self
@@ -118,6 +144,7 @@ module Rdio
     end
 
     def fill(x)
+      return self if not x
       syms_to_types = Rdio::symbols_to_types || {}
       x.each do |k,v|
         sym = Rdio::camel2underscores(k).to_sym
@@ -141,7 +168,7 @@ module Rdio
             o.fill v
           end
         else
-          o = to_o v
+          o = Rdio::to_o v
         end
         begin
           sym_eq = (Rdio::camel2underscores(k)+'=').to_sym
@@ -236,32 +263,11 @@ module Rdio
       @oauth.get_pin
     end
 
-    # hash -> hash
-    #
-    # Uses the value of 'to_k' for all the iput hash values in the
-    # result hash. This is used to make sure that the arguments passed
-    # to create urls use keys for the values of objects like Artist,
-    # Track, etc.  Also, we use the simple name of classes.
-    #
-    def self.convert_args(args)
-      return nil if not args
-      res = {}
-      args.each do |k,v|
-        if v.is_a? Array
-          v = keys v
-        else
-          v = v.to_k
-        end
-        res[k] = v
-      end
-      return res
-    end
-
     def call(method,args,requires_auth=false)
       #
       # Convert object with keys just to use their keys
       #
-      args = BaseApi.convert_args args
+      args = Rdio::convert_args args
       if Rdio::log_methods
         Rdio::log "Called method: #{method}(#{args}) : auth=#{requires_auth}"
       end
@@ -327,7 +333,7 @@ module Rdio
       if type == Boolean or type == String or 
           type == Fixnum or type == Float
         return false if not result
-        return to_o result
+        return Rdio::to_o result
       end
       #
       # A mild hack, but for get the result is a hash of keys to
