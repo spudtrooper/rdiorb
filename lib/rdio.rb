@@ -7,14 +7,6 @@ require 'logger'
 
 # third party
 
-# internal requires
-require 'rdio/base'
-require 'rdio/api'
-require 'rdio/oauth'
-require 'rdio/datatypes'
-require 'rdio/types'
-require 'rdio/call' #TODO
-
 module Rdio
   VERSION = '0.0.1'
 
@@ -76,6 +68,14 @@ HERE
     return @api
   end
 end
+
+# internal requires
+require 'rdio/base'
+require 'rdio/api'
+require 'rdio/oauth'
+require 'rdio/datatypes'
+require 'rdio/types'
+require 'rdio/call'
 
 # Silly syntax so you can say Rd::io...blah...blah...blah
 module Rd
