@@ -165,14 +165,14 @@ module Rdio
     end
 
     # Get the albums in the user's collection by a particular artist.
-    def self.for_artist_in_collection(artist,user=nil)
-      Rdio::api.getAlbumsForArtistInCollection artist,user
+    def self.for_artist_in_collection(artist,user=nil,extras=nil)
+      Rdio::api.getAlbumsForArtistInCollection artist,user,extras
     end
 
     # Get all of the albums in the user's collection.
     def self.in_collection(user=nil,start=nil,count=nil,
-                          sort=nil,query=nil)
-      Rdio::api.getAlbumsInCollection user,start,count,sort,query
+                          sort=nil,query=nil,extras=nil)
+      Rdio::api.getAlbumsInCollection user,start,count,sort,query,extras
     end
 
     # Return new albums released across a timeframe.
@@ -267,8 +267,9 @@ module Rdio
     end
 
     # Get all of the tracks in the user's collection.
-    def self.in_collection(user=nil,start=nil,count=nil,sort=nil,query=nil)
-      Rdio::api.getTracksInCollection user,start,count,sort,query
+    def self.in_collection(user=nil,start=nil,count=nil,
+                           sort=nil,query=nil,extras=nil)
+      Rdio::api.getTracksInCollection user,start,count,sort,query,extras
     end
 
     # Get all of the tracks by this artist.
@@ -388,6 +389,28 @@ module Rdio
       Rdio::api.getTopCharts Playlist
     end
 
+    # Start or stop collaborating on this playlist.
+    def collaborating=(collaborating)
+      Rdio::api.setPlaylistCollaborating self,collaborating
+    end
+
+    # Start or stop collaborating on this playlist.
+    def collaboration_mode=(mode)
+      Rdio::api.setPlaylistCollaborationMode self,mode
+    end
+
+    # Saves the given order of tracks in a given playlist. The new
+    # order must have the same tracks as the previous order (this
+    # method may not be used to add/remove tracks).
+    def order=(tracks)
+      Rdio::api.setPlaylistOrder self,tracks
+    end
+
+    # Sets the name and description for a playlist.
+    def set_fields(name,description)
+      Rdio::api.setPlaylistFields self,name,description
+    end
+
   end
 
   # ----------------------------------------------------------------------
@@ -477,8 +500,9 @@ module Rdio
     end
 
     # Get all of the artist in a user's collection.
-    def artists_in_collection(start=nil,count=nil,sort=nil,query=nil)
-      api.getArtistsInCollection self,start,count,sort,query
+    def artists_in_collection(start=nil,count=nil,sort=nil,
+                              query=nil,extras=nil)
+      api.getArtistsInCollection self,start,count,sort,query,extras
     end
 
     # Which tracks from the given artist are in the user's collection.
@@ -487,8 +511,8 @@ module Rdio
     end
 
     # Get all of the tracks in the user's collection.
-    def tracks_in_collection(start=nil,count=nil,sort=nil,query=nil)
-      api.getTracksInCollection self,start,count,sort,query
+    def tracks_in_collection(start=nil,count=nil,sort=nil,query=nil,extras=nil)
+      api.getTracksInCollection self,start,count,sort,query,extras
     end
 
     # Which tracks on the given album are in the user's collection.
@@ -538,8 +562,8 @@ module Rdio
 
     # Find the most popular artists or albums for a user, their
     # friends or the whole site.
-    def heavy_rotation(friends=nil,limit=nil)
-      api.getHeavyRotation self,nil,friends,limit
+    def heavy_rotation(friends=nil,limit=nil,extras=nil)
+      api.getHeavyRotation self,nil,friends,limit,extras
     end
 
     # Find the most popular artists for a user, their friends or the

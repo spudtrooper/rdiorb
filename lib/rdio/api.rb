@@ -121,17 +121,19 @@ module Rdio
     end
     
     # Get the albums in the user's collection by a particular artist.
-    def getAlbumsForArtistInCollection(artist,user=nil)
+    def getAlbumsForArtistInCollection(artist,user=nil,extras=nil)
       method = 'getAlbumsForArtistInCollection'
       type = Album
       args = {:artist=>artist}
       args[:user] = user if user
+      args[:extras] = extras if extras
       auth = !!user
       return_object type,method,args,auth
     end
     
     # Get all of the albums in the user's collection.
-    def getAlbumsInCollection(user=nil,start=nil,count=nil,sort=nil,query=nil)
+    def getAlbumsInCollection(user=nil,start=nil,count=nil,
+                              sort=nil,query=nil,extras=nil)
       method = 'getAlbumsInCollection'
       type = Album
       args = {}
@@ -140,12 +142,14 @@ module Rdio
       args[:count] = count if count
       args[:sort] = sort if sort
       args[:query] = query if query
+      args[:extras] = extras if extras
       auth = !!user
       return_object type,method,args,auth
     end
     
     # Get all of the artist in a user's collection.
-    def getArtistsInCollection(user=nil,start=nil,count=nil,sort=nil,query=nil)
+    def getArtistsInCollection(user=nil,start=nil,count=nil,sort=nil,
+                               query=nil,extras=nil)
       method = 'getArtistsInCollection'
       type = Artist
       args = {}
@@ -154,13 +158,14 @@ module Rdio
       args[:count] = count if count
       args[:sort] = sort if sort
       args[:query] = query if query
+      args[:extras] = extras if extras
       auth = !!user
       return_object type,method,args,auth
     end
     
     # Find the most popular artists or albums for a user, their friends
     # or the whole site.
-    def getHeavyRotation(user=nil,type=nil,friends=nil,limit=nil)
+    def getHeavyRotation(user=nil,type=nil,friends=nil,limit=nil,extras=nil)
       method = 'getHeavyRotation'
       cls = TODO
       if type == 'artist'
@@ -173,6 +178,7 @@ module Rdio
       args[:type] = type if type
       args[:friends] = friends if friends
       args[:limit] = limit if limit
+      args[:extras] = extras if extras
       return_object cls,method,args
     end
     
@@ -276,7 +282,7 @@ module Rdio
     end
     
     # Get all of the tracks in the user's collection.
-    def getTracksInCollection(user=nil,start=nil,count=nil,sort=nil,query=nil)
+    def getTracksInCollection(user=nil,start=nil,count=nil,sort=nil,query=nil,extras=nil)
       method = 'getTracksInCollection'
       type = Track
       args = {}
@@ -285,6 +291,7 @@ module Rdio
       args[:count] = count if count
       args[:sort] = sort if sort
       args[:query] = query if query
+      args[:extras] = extras if extras
       return_object type,method,args
     end
     
@@ -310,7 +317,41 @@ module Rdio
       type = TODO
       args = {:playlist=>playlist,:index=>index,
         :count=>count,:tracks=>Rdio::keys(tracks)}
-      return_object type,method,args,truex
+      return_object type,method,args,true
+    end
+
+    # Start or stop collaborating on this playlist.
+    def setPlaylistCollaborating(playlist,collaborating)
+      method = 'setPlaylistCollaborating'
+      type = Boolean
+      args = {:playlist=>playlist,:collaborating=>collaborating}
+      return_object type,method,args,true
+    end
+
+    # Start or stop collaborating on this playlist.
+    def setPlaylistCollaborationMode(playlist,mode)
+      method = 'setPlaylistCollaborationMode'
+      type = Boolean
+      args = {:playlist=>playlist,:mode=>mode}
+      return_object type,method,args,true
+    end
+
+    # Saves the given order of tracks in a given playlist. The new
+    # order must have the same tracks as the previous order (this
+    # method may not be used to add/remove tracks).
+    def setPlaylistOrder(playlist,tracks)
+      method = 'setPlaylistOrder'
+      type = Boolean
+      args = {:playlist=>playlist,:tracks=>Rdio::keys(tracks)}
+      return_object type,method,args,true
+    end
+
+    # Sets the name and description for a playlist.
+    def setPlaylistFields(playlist,name,description)
+      method = 'setPlaylistFields'
+      type = Boolean
+      args = {:playlist=>playlist,:name=>name,:description=>description}
+      return_object type,method,args,true
     end
     
     # Search for artists, albums, tracks, users or all kinds of objects.

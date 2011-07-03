@@ -80,6 +80,9 @@ module Rdio
     # values in 'objs'.  We also remove the nils from the input array.
     #
     def keys(objs)
+      if objs.instance_of? String
+        objs = objs.split /,/
+      end
       (not objs) ? '' : objs.compact.map {|x| x.to_k}.join(',')
     end
 
