@@ -2,11 +2,11 @@ require File.dirname(__FILE__) + '/common'
 require File.dirname(__FILE__) + '/../lib/rdio'
 include Rdio
 
-class TestUser2 < Test::Unit::TestCase
+class TestUser2 < RdioTestCase
 
-  user = nil
+  @user = nil
 
-  def setup
+  def other_setup
     if not @user
       @user = User.find_by_email 'jeff@jeffpalm.com'
     end
@@ -41,13 +41,13 @@ class TestUser2 < Test::Unit::TestCase
     assert_equal 10,arr.length
   end
 
-  def test_tracks_in_collection
-    user = User.current
-    arr = user.tracks_in_collection
-    assert_length_at_least 100,arr,'track'
-    arr = user.tracks_in_collection 0,10
-    assert_equal 10,arr.length
-  end
+   def test_tracks_in_collection
+     user = User.current
+     arr = user.tracks_in_collection 0,100
+     assert_length_at_least 100,arr,'track'
+     arr = user.tracks_in_collection 0,10
+     assert_equal 10,arr.length
+   end
 
   def test_albums_for_artist_in_collection
     user = User.current

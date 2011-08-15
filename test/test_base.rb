@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/common'
 require File.dirname(__FILE__) + '/../lib/rdio'
 
-class TestSearch < Test::Unit::TestCase
+class TestSearch < RdioTestCase
 
   def test_add_to_array
     assert_equal ['1'],Rdio::add_to_array(nil,'1')

@@ -6,8 +6,19 @@ module Rdio
   # ----------------------------------------------------------------------
   class Api < BaseApi
     
-    def initialize(key,secret)
+    def initialize(key=nil,secret=nil)
       super key,secret
+    end
+
+    # AccessToken[token] -> Api
+    #
+    # Returns a new instance initialized from the passed in access
+    # token
+    #
+    def self.from_token(token)
+      api = Api.new
+      api.access_token = token
+      return api
     end
     
     # Add a friend to the current user.

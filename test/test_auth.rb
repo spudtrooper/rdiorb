@@ -2,7 +2,7 @@ require 'test/unit'
 require File.dirname(__FILE__) + '/../lib/rdio'
 include Rdio
 
-class TestAuth < Test::Unit::TestCase
+class TestAuth < RdioTestCase
 
   def test_current
     Rdio::reset

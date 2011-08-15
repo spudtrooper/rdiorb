@@ -511,7 +511,8 @@ module Rdio
     end
 
     # Get all of the tracks in the user's collection.
-    def tracks_in_collection(start=nil,count=nil,sort=nil,query=nil,extras=nil)
+    def tracks_in_collection(start=nil,count=nil,sort=nil,
+                             query=nil,extras=nil)
       api.getTracksInCollection self,start,count,sort,query,extras
     end
 

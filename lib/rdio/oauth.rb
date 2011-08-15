@@ -4,11 +4,13 @@ require 'oauth'
 module Rdio
 
   # ----------------------------------------------------------------------
-  # Performs OAuth authentication based on a key and secret
+  # Performs oob OAuth authentication based on a key and secret
   # ----------------------------------------------------------------------
   class RdioOAuth
 
     SITE = 'http://api.rdio.com'
+
+    attr_accessor :key, :secret
     
     # string[url] -> string
     #
@@ -23,7 +25,8 @@ module Rdio
       @secret = secret
       @get_pin = lambda do |url|
 
-        # Try to open using launchy, then if this doesn't work us open
+        # Try to open using launchy, then if this doesn't work use
+        # system open
         begin
           require 'rubygems'
           require 'launchy'
@@ -31,6 +34,7 @@ module Rdio
         rescue Exception => e
           Rdio::log.error e
           Rdio::log.info 'Install the \'launchy\' gem to avoid this error'
+          Rdio::log.info 'Trying system \'open\''
           system 'open',url
         end
         
@@ -44,6 +48,13 @@ module Rdio
       end
     end
 
+    # boolean[requires_auth] -> AccessToken
+    #
+    # Returns an appropriate oob access token. If requires_auth is
+    # true we'll return one needed for authenticated requests.
+    # Otherwise (default), we'll return one needed for unauthenticated
+    # requests.
+    #
     def access_token(requires_auth=false)
       requires_auth ? access_token_auth : access_token_no_auth
     end
@@ -53,7 +64,7 @@ module Rdio
     def access_token_no_auth
       consumer = OAuth::Consumer.new @key, @secret, {:site => SITE}
       consumer.http.read_timeout = 600
-      OAuth::AccessToken.new consumer
+      return OAuth::AccessToken.new consumer
     end
     
     def access_token_auth
@@ -69,7 +80,7 @@ module Rdio
       url = 'https://www.rdio.com/oauth/authorize?oauth_token=' + 
         request_token.token.to_s      
       oauth_verifier = @get_pin.call url
-      request_token.get_access_token({:oauth_verifier => oauth_verifier})
+      return request_token.get_access_token({:oauth_verifier => oauth_verifier})
     end
   end
 

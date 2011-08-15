@@ -37,14 +37,26 @@ module Rdio
     VERSION
   end
 
+  # String[key] String[secret] -> Api
+  #
   # Initializes and returns the shared Api instance and overwrites the
   # existing one.
+  #
   def self.init(key,secret)
     @api = Api.new key,secret
   end
 
+  # AccessToken[token] => Api
+  #
+  # Initializes and returns the shared Api instance from the passed in
+  # access_token instance
+  #
+  def self.init_with_token(token)
+    @api = Api.from_token token
+  end
+
   # Resets shared API to nil
-  def reset
+  def self.reset
     @api = nil
   end
 

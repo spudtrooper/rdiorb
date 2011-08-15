@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/common'
 require File.dirname(__FILE__) + '/../lib/rdio'
 include Rdio
 
-class TestCall < Test::Unit::TestCase
+class TestCall < RdioTestCase
 
   def test_get
     c = Call.new

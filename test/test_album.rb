@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/common'
 require File.dirname(__FILE__) + '/../lib/rdio'
 include Rdio
 
-class TestAlbum < Test::Unit::TestCase
+class TestAlbum < RdioTestCase
 
   def test_artist
     album = Album.get 'a446068'

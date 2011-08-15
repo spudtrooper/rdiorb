@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/common'
 require File.dirname(__FILE__) + '/../lib/rdio'
 include Rdio
 
-class TestTrack < Test::Unit::TestCase
+class TestTrack < RdioTestCase
 
   track = nil
   

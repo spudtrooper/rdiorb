@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/common'
 require File.dirname(__FILE__) + '/../lib/rdio'
 include Rdio
 
-class TestPlaylist < Test::Unit::TestCase
+class TestPlaylist < RdioTestCase
 
   def test_big_icon
     playlist = Playlist.get 'p3917','bigIcon'

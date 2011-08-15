@@ -1,7 +1,7 @@
 require 'test/unit'
 require File.dirname(__FILE__) + '/../lib/rdio'
 
-class TestUser < Test::Unit::TestCase
+class TestUser < RdioTestCase
 
   def test_api
     api = Rd::io

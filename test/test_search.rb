@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/common'
 require File.dirname(__FILE__) + '/../lib/rdio'
 include Rdio
 
-class TestSearch < Test::Unit::TestCase
+class TestSearch < RdioTestCase
 
   def test_search
     res = Search.counts 'Kanye West'

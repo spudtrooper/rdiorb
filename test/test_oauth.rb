@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/common'
 require File.dirname(__FILE__) + '/../lib/rdio'
 include Rdio
 
-class TestOAuth < Test::Unit::TestCase
+class TestOAuth < RdioTestCase
 
   def test_set_get_pin
     api = Rdio::api

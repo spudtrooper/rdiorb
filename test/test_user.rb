@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/common'
 require File.dirname(__FILE__) + '/../lib/rdio'
 include Rdio
 
-class TestUser < Test::Unit::TestCase
+class TestUser < RdioTestCase
 
   def test_find_by_email
     email = 'jeff@jeffpalm.com'

@@ -247,7 +247,12 @@ module Rdio
 
     attr_reader :oauth
 
-    def initialize(key,secret)
+    # string[key] string[secret]
+    #
+    # key and secret can be 'nil' because users can now set the
+    # access_token directly
+    #
+    def initialize(key=nil,secret=nil)
       @oauth = RdioOAuth.new key,secret
       @access_token_auth = nil
       @access_token_no_auth = nil
@@ -264,6 +269,15 @@ module Rdio
 
     def get_pin
       @oauth.get_pin
+    end
+
+    # Token -> Void
+    #
+    # Sets both unauthorized and authorized tokens to token
+    #
+    def access_token=(token)
+      @access_token_auth = token
+      @access_token_no_auth = token
     end
 
     def call(method,args,requires_auth=false)
@@ -293,6 +307,11 @@ module Rdio
         Rdio::log json
       end
       create_object type,json
+    end
+
+    # Forces authorization
+    def authorize
+      access_token true
     end
 
     private
@@ -359,16 +378,28 @@ module Rdio
     def access_token(requires_auth)
       if requires_auth
         if not @access_token_auth
+          if not @oauth.key or not @oauth.secret
+            raise 'You must set the access_token directly or ' +
+              'initialize this instance with a valid key/secret pair'
+          end
           @access_token_auth = @oauth.access_token requires_auth
         end
         res = @access_token_auth
       else
-        if not @access_token_no_auth
-          @access_token_no_auth = @oauth.access_token requires_auth
+        if @access_token_auth
+          res = @access_token_auth
+        else
+          if not @access_token_no_auth
+            if not @oauth.key or not @oauth.secret
+              raise 'You must set the access_token directly or ' +
+                'initialize this instance with a valid key/secret pair'
+            end
+            @access_token_no_auth = @oauth.access_token requires_auth
+          end
+          res = @access_token_no_auth
         end
-        res = @access_token_no_auth
       end
-      res
+      return res
     end
 
   end
