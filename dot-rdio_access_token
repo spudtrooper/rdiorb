@@ -1,0 +1,2 @@
+o:OAuth::AccessToken	:@params{	:oauth_token"Eqfne8gm55x353uvdjjzefn4xhxq6erxhpzqxusayg8vww3tdzxp7yw2m2bek47jr"oauth_token_secret"FGNehGEMjDqu:oauth_token_secret@	"oauth_token@:@token@:@secret@	:@consumerU:OAuth::Consumer{:key"6whspf9ezpydp24ztbjgr5nv:secret"kHm6vY5VqY:options{:	site"http://api.rdio.com:request_token_path"/oauth/request_token:
+proxy0:authorize_path"/oauth/authorize:scheme:header:signature_method"HMAC-SHA1:access_token_path"/oauth/access_token:http_method:	post:oauth_version"1.0

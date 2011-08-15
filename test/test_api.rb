@@ -1,5 +1,5 @@
+require File.dirname(__FILE__) + '/common'
 require 'test/unit'
-require File.dirname(__FILE__) + '/../lib/rdio'
 include Rdio
 
 class TestUser < RdioTestCase

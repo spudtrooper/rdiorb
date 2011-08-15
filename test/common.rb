@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'test/unit'
 include Test::Unit
+require File.dirname(__FILE__) + '/../lib/rdio'
 
 class TestCase
   def assert_not_nil(o)
@@ -51,3 +52,9 @@ class RdioTestCase < TestCase
   end
   
 end
+
+# Turn off this specific warning for tests:
+#
+#   Couldn't find symbol: radio_key => rr31531 for type: Rdio::Artist
+#
+Rdio::log_couldnt_find_symbols = false

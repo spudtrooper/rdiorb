@@ -20,6 +20,16 @@ module Rdio
     attr_accessor :log_methods
     attr_accessor :log_symbols
     attr_accessor :log_posts
+    #
+    # Specific setting to turn off warnings like the following:
+    #
+    #   Couldn't find symbol: radio_key => rr31531 for type: Rdio::Artist
+    #
+    # during tests, because we see it constantly and isn't really a
+    # problem.  By default it is true, but it is turned off for all
+    # tests.
+    attr_accessor :log_couldnt_find_symbols
+    
     def log(str)
       logger.debug { str }
     end
@@ -29,6 +39,7 @@ module Rdio
   self.log_methods = false
   self.log_symbols = false
   self.log_posts = false
+  self.log_couldnt_find_symbols = true
 
   @logger ||= ::Logger.new(STDERR)
   @api = nil

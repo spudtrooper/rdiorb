@@ -177,8 +177,10 @@ module Rdio
           sym_eq = (Rdio::camel2underscores(k)+'=').to_sym
           self.send sym_eq,o
         rescue Exception => e
-          Rdio::logger.warn "Couldn't find symbol: " +
-            "#{sym} => #{o} for type: #{self.class}"
+          if Rdio::log_couldnt_find_symbols
+            Rdio::logger.warn "Couldn't find symbol: " +
+              "#{sym} => #{o} for type: #{self.class}"
+          end
         end
       end
       self

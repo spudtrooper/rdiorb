@@ -1,5 +1,4 @@
 require File.dirname(__FILE__) + '/common'
-require File.dirname(__FILE__) + '/../lib/rdio'
 
 class TestSearch < RdioTestCase
 

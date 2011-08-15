@@ -1,5 +1,4 @@
-require 'test/unit'
-require File.dirname(__FILE__) + '/../lib/rdio'
+require File.dirname(__FILE__) + '/common'
 
 class TestNil < Test::Unit::TestCase
 
