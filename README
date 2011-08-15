@@ -27,6 +27,20 @@ see the options.  Here's an example:
   ....
 
 
-* TODO
+* TESTS
 
-Lots
+In order to run the rests, you must define the following environmental
+variables to the appropriate values:
+
+ RDIO_KEY
+ RDIO_SECRET
+
+You must also serialize an authrozied access token to the file
+.rdio_access_token.  This can be done with:
+
+ make .rdio_access_token
+
+  -or-
+
+ ./create_access_token
+

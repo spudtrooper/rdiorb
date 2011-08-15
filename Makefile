@@ -1,5 +1,5 @@
 NAME=rdio
-VERSION=0.0.93
+VERSION=0.0.96
 DATE=$(shell date +"%Y-%m-%d")
 
 .PHONY: test
@@ -10,6 +10,10 @@ DATE=$(shell date +"%Y-%m-%d")
 		-e 's/%DATE%/$(DATE)/g' \
 		-e 's/%VERSION%/$(VERSION)/g' \
 		> $@
+
+.rdio_access_token: create_access_token
+	chmod +x $<
+	./$<
 
 $(NAME)-$(VERSION).gem: $(NAME).gemspec rdoc
 	gem build $<

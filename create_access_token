@@ -1,0 +1,91 @@
+#!/usr/bin/env ruby
+#
+# Prints out an access token to STDOUT.  You can pass the following arguments:
+#
+#   - key
+#   - secret
+#
+# Or set them by the env vars:
+#
+#   - RDIO_KEY
+#   - RDIO_SECRET
+#
+# This is used to serialize an access_token for tests and so other
+# people can run the tests easily if they'd like to.
+#
+require 'rubygems'
+require 'oauth'
+
+class PrintAccessToken
+
+  SITE = 'http://api.rdio.com'
+  
+  
+  def main(argv)
+    key = ENV['RDIO_KEY']
+    secret = ENV['RDIO_SECRET']
+    if not argv.empty?
+      key = argv.shift
+    end
+    if not argv.empty?
+      secret = argv.shift
+    end
+    ok = true
+    if not key
+      STDERR.puts 'Must set ENV[\'RDIO_KEY\'] or pass rdio key as arg 1'
+      ok = false
+    end
+    if not secret
+      STDERR.puts 'Must set ENV[\'RDIO_SECRET\'] or pass rdio secret as arg 2'
+      ok = false
+    end
+    token = access_token key,secret
+    f = File.open '.rdio_access_token','w'
+    data = Marshal.dump token,f      
+  end
+  
+  private
+  
+  def get_pin(url)
+    #
+    # Try to open using launchy, then if this doesn't work use
+    # system open
+    #
+    begin
+      require 'rubygems'
+      require 'launchy'
+      Launchy.open url
+    rescue Exception => e
+      system 'open',url
+    end
+    #
+    # Get the pin from the user
+    #
+    oauth_verifier = nil
+    while not oauth_verifier or oauth_verifier == ''
+      print 'Enter the 4-digit PIN> '
+      STDOUT.flush
+      oauth_verifier = gets.strip
+    end
+    return oauth_verifier
+  end
+
+  def access_token(key,secret)
+    consumer = 
+      OAuth::Consumer.new(key,secret,
+                          {:site => SITE,
+                            :request_token_path => "/oauth/request_token",
+                            :authorize_path => "/oauth/authorize",
+                            :access_token_path => "/oauth/access_token",
+                            :http_method => :post})
+    consumer.http.read_timeout = 600
+    request_token = consumer.get_request_token({:oauth_callback => 'oob'})
+    url = 'https://www.rdio.com/oauth/authorize?oauth_token=' + 
+      request_token.token.to_s      
+    oauth_verifier = get_pin url
+    return request_token.get_access_token({:oauth_verifier => oauth_verifier})
+  end
+  
+end
+
+PrintAccessToken.new.main ARGV
