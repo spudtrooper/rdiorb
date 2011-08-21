@@ -31,7 +31,7 @@ require 'json'
 
 module Rdio
 
-  class SimpleRdio
+  class Rdio
     # the consumer and token can be accessed
     attr_accessor :consumer, :token
 
@@ -74,7 +74,7 @@ module Rdio
     private
 
     def signed_post(url, params)
-      auth = om(@consumer, url, params, @token)
+      auth = OM::om(@consumer, url, params, @token)
       url = URI.parse(url)
       http = Net::HTTP.new(url.host, url.port)
       req = Net::HTTP::Post.new(url.path, {'Authorization' => auth})
