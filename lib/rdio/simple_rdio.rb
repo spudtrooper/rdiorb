@@ -23,7 +23,6 @@
 # - changed class named from Rdio to SimpleRdio
 #
 
-require 'simple_om'
 require 'uri'
 require 'net/http'
 require 'cgi'
@@ -31,7 +30,7 @@ require 'json'
 
 module Rdio
 
-  class Rdio
+  class SimpleRdio
     # the consumer and token can be accessed
     attr_accessor :consumer, :token
 

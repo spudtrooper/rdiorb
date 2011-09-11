@@ -39,7 +39,7 @@ module Rdio
   self.log_methods = false
   self.log_symbols = false
   self.log_posts = false
-  self.log_couldnt_find_symbols = true
+  self.log_couldnt_find_symbols = false
 
   @logger ||= ::Logger.new(STDERR)
   @api = nil
@@ -100,7 +100,11 @@ require 'rdio/datatypes'
 require 'rdio/types'
 require 'rdio/call'
 
-# Silly syntax so you can say Rd::io...blah...blah...blah
+# simple additions
+require 'rdio/simple_om'
+require 'rdio/simple_rdio'
+
+# Silly syntax so you can say Rd::io.<method>
 module Rd
   
   # Returns the shared Rdio::Api instance from Rdio::api
