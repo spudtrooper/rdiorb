@@ -1,0 +1,94 @@
+#!/usr/bin/env ruby
+#
+# Creates a playlist for every artist in your library -- since the
+# Roku app doesn't have browsing by artists.  The following need to be
+# in the ENV:
+# 
+#  export RDIO_KEY=...  
+#  export RDIO_SECRET=...
+#
+# You can pass in the email or username as the first argument.  If not
+# provided we use the current user.
+#
+# You have to install the rdio gem, too.
+#
+
+require 'rubygems'
+require 'rdio'
+
+def main(args)
+
+  # Save all the argument, because we use gets for the PIN
+  argv = []
+  argv << args.shift while not args.empty?
+
+  # Always use the current user because we could pass other arguments
+  user = Rdio::User.current
+
+  # Turn off the warning for not finding symbols...It's quite annoying
+  Rdio::log_couldnt_find_symbols = false
+
+  
+  artists = []
+
+  
+  if argv.empty?
+    #
+    # Collect all the artists for this user for no args
+    #
+    start = 0
+    count = 10
+    while true
+      all = user.artists_in_collection start,count
+      break if not all or all.empty?
+      artists += all
+      puts "Found #{all.length} artists, have #{artists.length}"
+      start += count
+    end
+  else
+    #
+    # Otherwise, we assume the arguments are artist URLs
+    #
+    argv.each do |arg|
+      all = []
+      begin
+        artist = Rdio::Artist.from_url arg
+        all << artist if artist
+      rescue Exception => e
+        puts "Couldn't get artist #{arg} from url"
+        puts e
+      end
+      if all.empty?
+        begin
+          artist = Rdio::Artist.from_short_code arg
+          all << artist if artist
+        rescue Exception => e
+          puts "Couldn't get artist #{arg} from short code"
+          puts e
+        end
+      end
+      if all.empty?
+        begin
+          all = Rdio::Artist.search arg,nil,['name']
+        rescue Exception => e
+          puts e
+        end
+      end
+      artists += all
+      puts "Found #{all.length} artists, have #{artists.length}"
+    end
+  end
+  
+  # Go over all the artists, create a new playlist for each
+  artists.each do |artist|
+    name = artist.name
+    desc = "#{artist.name} All"
+    tracks = user.tracks_for_artist_in_collection artist
+    pl = Rdio::Playlist.create name,desc,tracks
+    next if not pl
+    puts "Added '#{pl.name}' with #{tracks.length} tracks"
+  end
+  
+end
+
+main ARGV
