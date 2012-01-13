@@ -35,7 +35,7 @@ variables to the appropriate values:
  RDIO_KEY
  RDIO_SECRET
 
-You must also serialize an authrozied access token to the file
+You must also serialize an authorized access token to the file
 .rdio_access_token.  This can be done with:
 
  make .rdio_access_token
