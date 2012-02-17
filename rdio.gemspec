@@ -27,7 +27,7 @@ Gem::Specification.new do |s|
 
   s.rdoc_options = ["--charset=UTF-8"]
   s.has_rdoc = false
-  s.extra_rdoc_files = %w[README LICENSE doc]
+  s.extra_rdoc_files = %w[README LICENSE]
 
   # = MANIFEST =
   s.files = %w[
