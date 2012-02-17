@@ -72,7 +72,7 @@ class TestUser2 < RdioTestCase
       end
     end
     if not found
-      assert_fail "Couldn't find #{name}"
+      fail "Couldn't find #{name}"
     end
   end
 
@@ -90,7 +90,7 @@ class TestUser2 < RdioTestCase
       end
     end
     if not found
-      assert_fail "Couldn't find #{name}"
+      fail "Couldn't find #{name}"
     end
   end
 
