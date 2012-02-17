@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.rubygems_version = '1.3.7'
 
   s.name              = 'rdio'
-  s.version           = '0.0.96'
+  s.version           = '0.0.98'
   s.date              = '2012-02-16'
   s.rubyforge_project = '%NAME'
 
