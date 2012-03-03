@@ -1,4 +1,4 @@
--*- outline -*-
+-*- org -*-
 
 * ABOUT
 
@@ -35,7 +35,9 @@ variables to the appropriate values:
  RDIO_KEY
  RDIO_SECRET
 
-You must also serialize an authrozied access token to the file
+There is a sample .rc file in dot-rdio.
+
+You must also serialize an authorized access token to the file
 .rdio_access_token.  This can be done with:
 
  make .rdio_access_token
@@ -44,3 +46,4 @@ You must also serialize an authrozied access token to the file
 
  ./create_access_token
 
+There is a sample in dot-rdio_access_token.
