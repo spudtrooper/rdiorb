@@ -64,7 +64,7 @@ class TestTrack < RdioTestCase
 
   def test_big_icon
     track = Track.get 't2979981','bigIcon'
-    assert_equal 'http://media.rd.io/album/1/b/b/000000000003bbb1/square-600.jpg', track.big_icon
+    assert track.big_icon =~ /.*\/album\/1\/b\/b\/000000000003bbb1\/square-600\.jpg/
   end
 
 end
