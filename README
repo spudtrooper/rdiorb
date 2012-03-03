@@ -2,6 +2,8 @@
 
 * ABOUT
 
+
+
 This is a ruby implementation of the rd.io API here:
 
   http:/developer.rdio.com
@@ -35,9 +37,7 @@ variables to the appropriate values:
  RDIO_KEY
  RDIO_SECRET
 
-There is a sample .rc file in dot-rdio.
-
-You must also serialize an authorized access token to the file
+There is a sample .rc file in dot-rdio.  You must also serialize an authorized access token to the file
 .rdio_access_token.  This can be done with:
 
  make .rdio_access_token
