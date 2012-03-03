@@ -2,8 +2,6 @@
 
 * ABOUT
 
-
-
 This is a ruby implementation of the rd.io API here:
 
   http:/developer.rdio.com
@@ -47,3 +45,10 @@ There is a sample .rc file in dot-rdio.  You must also serialize an authorized a
  ./create_access_token
 
 There is a sample in dot-rdio_access_token.
+
+* CONTRIBUTORS
+
+  Thanks for the pull requests that have been merged to the following:
+
+  - Scott Hyndman ( https://github.com/shyndman )
+  - Rick Fletcher ( https://github.com/rfletcher )
