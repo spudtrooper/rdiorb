@@ -148,7 +148,17 @@ module Rdio
 
     def fill(x)
       return self if not x
+      if Rdio::log_fill
+        Rdio::log "#{self.class}.fill #{x.class} : #{x}"
+      end
       syms_to_types = Rdio::symbols_to_types || {}
+      #
+      # https://github.com/spudtrooper/rdiorb/issues/9: Certain rubys
+      # don't declare 'each' on String.  In this case and others where
+      # the key is a mapped type and the resulting body isn't a Hash,
+      # make x a Hash
+      #
+      x = {x => nil} if not x.is_a? Hash
       x.each do |k,v|
         sym = Rdio::camel2underscores(k).to_sym
         #
@@ -158,9 +168,9 @@ module Rdio
         #
         type = syms_to_types[sym]
         if Rdio::log_symbols
-          Rdio::log "#{self.class}.#{sym} => #{type}"
+          Rdio::log "#{self.class}.#{sym} => #{type} v=#{v.class}"
         end
-        if type
+        if type and v.is_a? Enumerable
           #
           # Allow simple types that are used for arrays
           #
@@ -299,8 +309,7 @@ module Rdio
       if Rdio::log_posts
         Rdio::log "Post to url=#{url} method=#{method} args=#{args}"
       end
-      resp,data = access_token(requires_auth).post url,new_args
-      return data
+      return access_token(requires_auth).post(url,new_args).body
     end
 
     def return_object(type,method,args,requires_auth=false)

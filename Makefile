@@ -1,5 +1,5 @@
 NAME=rdio
-VERSION=0.0.96
+VERSION=0.0.98a
 DATE=$(shell date +"%Y-%m-%d")
 
 .PHONY: test
@@ -26,7 +26,9 @@ lib/rdio/api.rb: gen_api
 	chmod +x $<
 	./$< > $@
 
-all: $(NAME)-$(VERSION).gem
+all: gem
+
+gem: $(NAME)-$(VERSION).gem
 
 push: $(NAME)-$(VERSION).gem
 	gem push $<
