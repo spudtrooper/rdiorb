@@ -309,7 +309,16 @@ module Rdio
       if Rdio::log_posts
         Rdio::log "Post to url=#{url} method=#{method} args=#{args}"
       end
-      return access_token(requires_auth).post(url,new_args).body
+      #
+      # For backwards compatibility the response may have a 'body'
+      # attribute or a tuple could be returned.  Handle both cases.
+      #
+      resp,data = access_token(requires_auth).post url,new_args
+      begin
+        return resp.body
+      rescue
+      end
+      return data
     end
 
     def return_object(type,method,args,requires_auth=false)

@@ -32,9 +32,9 @@ module Rdio
           require 'launchy'
           Launchy.open url
         rescue Exception => e
-          Rdio::log.error e
-          Rdio::log.info 'Install the \'launchy\' gem to avoid this error'
-          Rdio::log.info 'Trying system \'open\''
+          Rdio::logger.error e
+          Rdio::logger.info 'Install the \'launchy\' gem to avoid this error'
+          Rdio::logger.info 'Trying system \'open\''
           system 'open',url
         end
         

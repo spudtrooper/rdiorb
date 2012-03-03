@@ -30,7 +30,7 @@ module Rdio
 
     attr_accessor :album_keys
 
-    # Returns an array of Album for the query and other params
+    # Returns an array of Artist for the query and other params
     def self.search(query,never_or=nil,extras=nil,start=nil,count=nil)
       extras = Rdio::add_to_array extras,'artists'
       Search.search query,Artist,never_or,extras,start,count
