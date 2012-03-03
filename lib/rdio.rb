@@ -29,11 +29,12 @@ module Rdio
     # problem.  By default it is true, but it is turned off for all
     # tests.
     attr_accessor :log_couldnt_find_symbols
-    
+
     def log(str)
       logger.debug { str }
     end
   end
+
   self.debug = false
   self.log_json = false
   self.log_methods = false
@@ -106,7 +107,7 @@ require 'rdio/simple_rdio'
 
 # Silly syntax so you can say Rd::io.<method>
 module Rd
-  
+
   # Returns the shared Rdio::Api instance from Rdio::api
   def self.io
     Rdio::api

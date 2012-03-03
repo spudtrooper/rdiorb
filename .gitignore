@@ -1,1 +1,5 @@
 .rdio
+rdio-*.gem
+doc
+.idea
+.rdio_access_token

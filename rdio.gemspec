@@ -5,9 +5,9 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.rubygems_version = '1.3.7'
 
-  s.name              = '%NAME%'
-  s.version           = '%VERSION%'
-  s.date              = '%DATE%'
+  s.name              = 'rdio'
+  s.version           = '0.0.98'
+  s.date              = '2012-02-16'
   s.rubyforge_project = '%NAME'
 
   s.summary     = "Rdio"

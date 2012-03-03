@@ -160,7 +160,7 @@ module Rdio
         if Rdio::log_symbols
           Rdio::log "#{self.class}.#{sym} => #{type}"
         end
-        if type
+        if type and v.is_a? Enumerable
           #
           # Allow simple types that are used for arrays
           #
@@ -299,8 +299,7 @@ module Rdio
       if Rdio::log_posts
         Rdio::log "Post to url=#{url} method=#{method} args=#{args}"
       end
-      resp,data = access_token(requires_auth).post url,new_args
-      return data
+      access_token(requires_auth).post(url,new_args).body
     end
 
     def return_object(type,method,args,requires_auth=false)
@@ -401,6 +400,7 @@ module Rdio
           res = @access_token_no_auth
         end
       end
+
       return res
     end
 

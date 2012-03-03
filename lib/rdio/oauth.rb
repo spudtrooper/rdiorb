@@ -11,7 +11,7 @@ module Rdio
     SITE = 'http://api.rdio.com'
 
     attr_accessor :key, :secret
-    
+
     # string[url] -> string
     #
     # Set this to allow a different way to enter the pin found for
@@ -32,12 +32,12 @@ module Rdio
           require 'launchy'
           Launchy.open url
         rescue Exception => e
-          Rdio::log.error e
-          Rdio::log.info 'Install the \'launchy\' gem to avoid this error'
-          Rdio::log.info 'Trying system \'open\''
+          Rdio::logger.error e
+          Rdio::logger.info 'Install the \'launchy\' gem to avoid this error'
+          Rdio::logger.info 'Trying system \'open\''
           system 'open',url
         end
-        
+
         oauth_verifier = nil
         while not oauth_verifier or oauth_verifier == ''
           print 'Enter the 4-digit PIN> '
@@ -66,9 +66,9 @@ module Rdio
       consumer.http.read_timeout = 600
       return OAuth::AccessToken.new consumer
     end
-    
+
     def access_token_auth
-      consumer = 
+      consumer =
         OAuth::Consumer.new(@key,@secret,
                             {:site => SITE,
                               :request_token_path => "/oauth/request_token",
@@ -77,8 +77,8 @@ module Rdio
                               :http_method => :post})
       consumer.http.read_timeout = 600
       request_token = consumer.get_request_token({:oauth_callback => 'oob'})
-      url = 'https://www.rdio.com/oauth/authorize?oauth_token=' + 
-        request_token.token.to_s      
+      url = 'https://www.rdio.com/oauth/authorize?oauth_token=' +
+        request_token.token.to_s
       oauth_verifier = @get_pin.call url
       return request_token.get_access_token({:oauth_verifier => oauth_verifier})
     end
