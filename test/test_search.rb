@@ -91,5 +91,5 @@ class TestSearch < RdioTestCase
     res = Search.search 'cat'
     assert_at_least 10,res.length,'length'
   end
-
+  
 end

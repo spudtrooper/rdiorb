@@ -45,6 +45,11 @@ class RdioTestCase < TestCase
 
   def teardown
     Rdio.reset
+    other_teardown
+  end
+
+  def other_teardown
+    # nothing
   end
 
   def test_default_test

@@ -338,6 +338,13 @@ module Rdio
       api.removeFromPlaylist self,index,count,tracks
     end
 
+    # Returns an array of tracks
+    def tracks
+      ids = track_keys
+      return [] if not ids
+      return ids.map {|id| Track.get id}
+    end
+
     # Returns an array of Playlist for the query and other params
     def self.search(query,never_or=nil,extras=nil,start=nil,count=nil)
       extras = Rdio::add_to_array extras,'playlists'
