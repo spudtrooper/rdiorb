@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.rubygems_version = '1.3.7'
 
   s.name              = 'rdio'
-  s.version           = '0.9.9'
+  s.version           = '0.0.99'
 
   s.summary     = "Rdio"
   s.description = "Ruby implementation of rd.io REST api"
