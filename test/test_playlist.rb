@@ -9,7 +9,7 @@ class TestPlaylist < RdioTestCase
   def other_setup
     name = 'test playlist'
     desc = 'description for test playlist'
-    tracks = [Track.get 't5483181']
+    tracks = [Track.get('t5483181')]
     playlist = Playlist.create name,desc,tracks,'trackKeys'
     assert_not_nil playlist
     @playlist = playlist
@@ -47,7 +47,7 @@ class TestPlaylist < RdioTestCase
     playlist = Playlist.get @playlist_key,'trackKeys'
     track_keys = ['t5734430','t5734492']
     playlist.order = track_keys
-  end 
+  end
 
   def test_set_fields
     playlist = Playlist.get @playlist_key

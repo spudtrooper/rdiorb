@@ -55,11 +55,7 @@ module Rdio
       method.upcase!
 
       # we want params as an Array of name / value pairs
-      if post_params.is_a?(Array)
-        params = post_params
-      else
-        params = post_params.collect
-      end
+      params = post_params.is_a?(Array) ? post_params : post_params.to_a
 
       # normalize the URL
       url = URI.parse(url)
@@ -140,7 +136,7 @@ module Rdio
             c == '-' or c == '.' or c == '_' or c == '~')
           c
         else
-          '%%%02X' % c[0]
+          '%%%02X' % c.ord
         end
       end
       chars.join

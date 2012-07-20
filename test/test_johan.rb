@@ -4,7 +4,7 @@ include Rdio
 class TestJohan < RdioTestCase
 
   def test_johan
-    r_tracks = [Track.get 't2979981']
+    r_tracks = [Track.get('t2979981')]
     if (!r_tracks.empty?)
       pl = Rdio::Playlist.create("Playlistify","Description...", r_tracks)
       #
