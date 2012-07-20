@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
 
   # Dependencies
   s.add_dependency('oauth', '>= 0.3.0')
+  s.add_dependency('json')
 
   # Requirements
   s.requirements << 'launchy gem to use authorized calls'
