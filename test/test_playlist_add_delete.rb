@@ -6,7 +6,7 @@ class TestPlaylist < RdioTestCase
   def test_add_delete
     name = 'test playlist'
     desc = 'description for test playlist'
-    tracks = [Track.get 't5483181']
+    tracks = [Track.get('t5483181')]
     playlist = Playlist.create name,desc,tracks,'trackKeys'
     assert_not_nil playlist
 

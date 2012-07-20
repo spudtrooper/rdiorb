@@ -1,1 +1,5 @@
+/.bundle
+/Gemfile.lock
 .rdio
+/vendor/ruby
+/.rdio_access_token
