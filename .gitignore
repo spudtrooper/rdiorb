@@ -4,3 +4,8 @@ doc
 .idea
 .rdio_access_token
 rdio.gemspec
+/.bundle
+/Gemfile.lock
+.rdio
+/vendor/ruby
+/.rdio_access_token

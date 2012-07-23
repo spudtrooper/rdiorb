@@ -1,8 +1,12 @@
+0.1.0
+ - pull https://github.com/danielevans/rdiorb/tree/feature/1_9_compatability
+
 0.0.96
  - allow for directly setting an access token, e.g.
    token = ...
    api.access_token = token
    api.<function>
+
 0.0.95
  - added CHANGES
  - force authentication from the start
