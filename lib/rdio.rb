@@ -20,6 +20,7 @@ module Rdio
     attr_accessor :log_methods
     attr_accessor :log_symbols
     attr_accessor :log_posts
+    attr_accessor :log_fill
     #
     # Specific setting to turn off warnings like the following:
     #
@@ -40,6 +41,7 @@ module Rdio
   self.log_symbols = false
   self.log_posts = false
   self.log_couldnt_find_symbols = false
+  self.log_fill = false
 
   @logger ||= ::Logger.new(STDERR)
   @api = nil
