@@ -26,7 +26,7 @@ require File.dirname(__FILE__) + '/rdio_consumer_credentials'
 require 'simple_rdio'
 
 # create an instance of the Rdio object with our consumer credentials
-rdio = Rdio::Rdio.new([RDIO_CONSUMER_KEY, RDIO_CONSUMER_SECRET])
+rdio = Rdio::SimpleRdio.new([RDIO_CONSUMER_KEY, RDIO_CONSUMER_SECRET])
 
 # authenticate against the Rdio service
 url = rdio.begin_authentication('oob')

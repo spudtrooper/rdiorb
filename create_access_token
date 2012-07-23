@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 #
-# Prints out an access token to STDOUT.  You can pass the following arguments:
+# Prints out an access token to STDOUT.  You can pass the following
+# arguments:
 #
 #   - key
 #   - secret
@@ -19,8 +20,7 @@ require 'oauth'
 class PrintAccessToken
 
   SITE = 'http://api.rdio.com'
-  
-  
+    
   def main(argv)
     key = ENV['RDIO_KEY']
     secret = ENV['RDIO_SECRET']
@@ -39,6 +39,7 @@ class PrintAccessToken
       STDERR.puts 'Must set ENV[\'RDIO_SECRET\'] or pass rdio secret as arg 2'
       ok = false
     end
+    return if not ok
     token = access_token key,secret
     f = File.open '.rdio_access_token','w'
     data = Marshal.dump token,f      

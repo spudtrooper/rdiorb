@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.name              = '%NAME%'
   s.version           = '%VERSION%'
   s.date              = '%DATE%'
-  s.rubyforge_project = '%NAME'
+  s.rubyforge_project = '%NAME%'
 
   s.summary     = "Rdio"
   s.description = "Ruby implementation of rd.io REST api"
@@ -27,7 +27,7 @@ Gem::Specification.new do |s|
 
   s.rdoc_options = ["--charset=UTF-8"]
   s.has_rdoc = false
-  s.extra_rdoc_files = %w[README LICENSE doc]
+  s.extra_rdoc_files = %w[README LICENSE]
 
   # = MANIFEST =
   s.files = %w[
@@ -40,6 +40,8 @@ Gem::Specification.new do |s|
     lib/rdio/datatypes.rb
     lib/rdio/types.rb
     lib/rdio/call.rb
+    lib/rdio/simple_om.rb
+    lib/rdio/simple_rdio.rb
   ]
   # = MANIFEST =
 
