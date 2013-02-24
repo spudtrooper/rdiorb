@@ -38,7 +38,7 @@ module Rdio
         else
           v = v.to_k
         end
-        res[k] = v
+        res[k.to_s] = v
       end
       return res
     end
