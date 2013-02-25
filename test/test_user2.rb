@@ -53,9 +53,11 @@ class TestUser2 < RdioTestCase
     artist = Artist.get 'rl65214|208750'
     albums = user.albums_for_artist_in_collection artist
     assert_not_nil albums
-    assert_equal 1,albums.length
+    assert_at_least 1,albums.length
     album = albums[0]
-    assert_equal 'Badmotorfinger',album.name
+    names = albums.map {|al| al.name}
+    assert_not_nil names.index 'Badmotorfinger'
+    assert_not_nil names.index 'King Animal (Deluxe Version)'
   end
 
   def test_tracks_for_artist_in_collection

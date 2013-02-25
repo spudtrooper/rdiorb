@@ -81,10 +81,10 @@ class TestSearch < RdioTestCase
   def test_convert_args
     assert_equal nil,Rdio::convert_args(nil)
     assert_equal ({}),Rdio::convert_args({})
-    assert_equal ({:one=>1}),Rdio::convert_args({:one=>1})
-    assert_equal ({:one=>'k'}),Rdio::convert_args({:one=>K.new})
-    assert_equal ({:one=>'k'}),Rdio::convert_args({:one=>[K.new]})
-    assert_equal ({:one=>'k,k'}),Rdio::convert_args({:one=>[K.new,K.new]})
+    assert_equal ({'one' => 1}),Rdio::convert_args({:one=>1})
+    assert_equal ({'one' => 'k'}),Rdio::convert_args({:one=>K.new})
+    assert_equal ({'one' => 'k'}),Rdio::convert_args({:one=>[K.new]})
+    assert_equal ({'one' => 'k,k'}),Rdio::convert_args({:one=>[K.new,K.new]})
   end
 
 end
