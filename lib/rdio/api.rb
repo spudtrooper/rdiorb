@@ -229,7 +229,7 @@ module Rdio
       method = 'getPlaybackToken'
       type = String
       args = {}
-      args[:domain] = domain if domain
+      args['domain'] = domain if domain
       return_object type,method,args,true
     end
       
